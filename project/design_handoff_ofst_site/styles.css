@@ -1,0 +1,141 @@
+/* OFST brand tokens — v2: bubbly + white-forward.
+   Background is #FFFFFF. Body text is #000000. Brand colors = accents only. */
+:root{
+  --ofst-bg: #FFFFFF;
+  --ofst-bg-alt: #FAFAF7;          /* very bright off-white for alternating sections */
+  --ofst-ink:  #000000;            /* body text is pure black now */
+  --ofst-deep: #264653;            /* ink accent for strong headings only */
+  --ofst-teal: #7EC8D8;
+  --ofst-coral:#FF6A6A;
+  --ofst-yellow:#FFCC5C;
+  --ofst-base: #E4DDD3;            /* demoted to an accent wash, not the page bg */
+  --ofst-mid:#4a4a4a;
+  --ofst-muted:#8a8a8a;
+  --ofst-soft:#F5F1EB;
+  --ofst-shadow: 0 1px 2px rgba(0,0,0,.04), 0 12px 30px -14px rgba(0,0,0,.15);
+  --ofst-shadow-lg: 0 2px 4px rgba(0,0,0,.05), 0 24px 44px -16px rgba(0,0,0,.2);
+  --ofst-radius-sm: 10px;
+  --ofst-radius: 16px;
+  --ofst-radius-lg: 22px;
+  --ofst-pill: 9999px;
+  /* Headings — bubbly, rounded */
+  --ofst-font-display: "Fredoka", "Baloo 2", "Bubblegum Sans", "Comic Sans MS", system-ui, -apple-system, sans-serif;
+  /* Body — clean, soft, readable everywhere */
+  --ofst-font: "Nunito", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Reset inside any .ofst scope */
+.ofst, .ofst *, .ofst *::before, .ofst *::after{ box-sizing:border-box; }
+.ofst{
+  font-family: var(--ofst-font);
+  color: var(--ofst-ink);
+  background: var(--ofst-bg);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.ofst h1,.ofst h2,.ofst h3,.ofst h4,.ofst .ofst-display{ font-family: var(--ofst-font-display); letter-spacing:-.01em; }
+.ofst h1,.ofst h2,.ofst h3,.ofst h4,.ofst p{ margin:0; }
+.ofst img{ display:block; max-width:100%; }
+.ofst button{ font-family:inherit; cursor:pointer; border:0; background:transparent; color:inherit; }
+.ofst a{ color:inherit; text-decoration:none; }
+
+/* Type scale — bubbly headings, clean body */
+.ofst-display{ font-family:var(--ofst-font-display); font-size:64px; font-weight:700; line-height:1.02; letter-spacing:-.02em; color:var(--ofst-ink); }
+.ofst-h1{ font-family:var(--ofst-font-display); font-size:38px; font-weight:700; line-height:1.1; color:var(--ofst-ink); }
+.ofst-h2{ font-family:var(--ofst-font-display); font-size:26px; font-weight:600; line-height:1.2; color:var(--ofst-ink); }
+.ofst-h3{ font-family:var(--ofst-font-display); font-size:20px; font-weight:600; line-height:1.3; color:var(--ofst-ink); }
+.ofst-body{ font-family:var(--ofst-font); font-size:16px; font-weight:400; line-height:1.65; color:#1a1a1a; }
+.ofst-small{ font-family:var(--ofst-font); font-size:14px; font-weight:600; line-height:1.5; }
+.ofst-eyebrow{ font-family:var(--ofst-font); font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--ofst-coral); }
+
+/* Buttons */
+.ofst-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  min-height:48px; padding:12px 24px;
+  font-size:16px; font-weight:600;
+  border-radius: var(--ofst-pill);
+  transition: transform .15s ease, filter .15s ease, background .15s ease, color .15s ease;
+  white-space:nowrap;
+}
+.ofst-btn:hover{ transform: translateY(-1px); filter:brightness(1.03); }
+.ofst-btn-primary{ background: var(--ofst-teal); color:#fff; }
+.ofst-btn-cta    { background: var(--ofst-coral); color:#fff; }
+.ofst-btn-dark   { background: var(--ofst-ink); color:#fff; }
+.ofst-btn-outline{ background: transparent; color: var(--ofst-ink); box-shadow: inset 0 0 0 2px var(--ofst-teal); }
+.ofst-btn-outline:hover{ background: rgba(126,200,216,.1); }
+.ofst-btn-ghost  { background: transparent; color: var(--ofst-ink); }
+.ofst-btn-sm     { min-height:40px; padding:8px 18px; font-size:14px; }
+
+/* Chips / badges — punchier on pure white */
+.ofst-chip{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:7px 14px; border-radius: var(--ofst-pill);
+  background: #fff; color: var(--ofst-ink);
+  font-size: 13px; font-weight:700; font-family:var(--ofst-font);
+  box-shadow: inset 0 0 0 1.5px rgba(0,0,0,.08);
+}
+.ofst-chip-yellow{ background: var(--ofst-yellow); color:#1a1a1a; box-shadow:none; }
+.ofst-chip-coral { background: var(--ofst-coral); color:#fff; box-shadow:none; }
+.ofst-chip-teal  { background: var(--ofst-teal); color:#0b3a46; box-shadow:none; }
+.ofst-chip-ink   { background: var(--ofst-deep); color: #fff; box-shadow:none; }
+
+/* Card */
+.ofst-card{
+  background:#fff; border-radius: var(--ofst-radius);
+  box-shadow: var(--ofst-shadow);
+  border:1px solid rgba(0,0,0,.04);
+  overflow:hidden;
+}
+
+/* Placeholder slide helper (for things we don't have real assets for) */
+.ofst-ph{
+  position:relative; overflow:hidden; background: var(--ofst-soft);
+  background-image:
+    repeating-linear-gradient(135deg, rgba(38,70,83,.04) 0 1px, transparent 1px 12px);
+  display:flex; align-items:center; justify-content:center;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size:11px; color: var(--ofst-mid);
+  letter-spacing:.04em;
+  text-align:center; padding:12px;
+}
+.ofst-ph-dark{ background:#2f5663; color:#cfe3e8; }
+
+/* Thin divider */
+.ofst-div{ height:1px; background: rgba(38,70,83,.1); }
+
+/* Focus visible */
+.ofst :focus-visible{ outline: 3px solid var(--ofst-coral); outline-offset: 2px; border-radius: 4px; }
+
+/* Image-fit for product photos */
+.ofst-img{ width:100%; height:100%; object-fit:cover; }
+
+/* Pill tab */
+.ofst-tab{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:8px 14px; border-radius: var(--ofst-pill);
+  background:#fff; color: var(--ofst-ink);
+  font-size:13px; font-weight:500;
+  box-shadow: 0 1px 2px rgba(38,70,83,.06);
+}
+.ofst-tab-active{ background: var(--ofst-coral); color:#fff; }
+
+/* Wavy yellow underline under hero key word */
+.ofst-squiggle{ position:relative; display:inline-block; }
+.ofst-squiggle::after{
+  content:""; position:absolute; left:0; right:0; bottom:-10px; height:10px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 10' preserveAspectRatio='none'><path d='M0 6 Q 10 0 20 6 T 40 6 T 60 6 T 80 6' stroke='%23FFCC5C' stroke-width='4' fill='none' stroke-linecap='round'/></svg>") repeat-x;
+  background-size: 80px 10px;
+}
+
+/* Underline link */
+.ofst-link{
+  color: var(--ofst-ink); font-weight:600; font-size:14px;
+  display:inline-flex; align-items:center; gap:6px;
+  border-bottom: 2px solid var(--ofst-coral);
+  padding-bottom: 2px;
+}
+
+/* Soft divider block */
+.ofst-rule{ height:2px; width:40px; background: var(--ofst-coral); border-radius:2px; }

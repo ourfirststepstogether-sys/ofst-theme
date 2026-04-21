@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>OFST — Full Site Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<style>html,body{margin:0;padding:0;background:#f0eee9;font-family:Inter,sans-serif;}</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="components/shared.jsx"></script>
+<script type="text/babel" src="components/homepage.jsx"></script>
+<script type="text/babel" src="components/header.jsx"></script>
+<script type="text/babel" src="components/shop-pages.jsx"></script>
+<script type="text/babel" src="components/content-pages.jsx"></script>
+<script type="text/babel" src="components/extras.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+const App = () => (
+  <DesignCanvas>
+    <DCSection id="overview" title="OFST — Site design overview" subtitle="Brand-locked: #E4DDD3 · #7EC8D8 · #264653 · #FF6A6A · #FFCC5C · Inter. Drag cards to reorder, click a label or the expand arrow to focus.">
+      <DCArtboard id="system" label="Design system — tokens & voice" width={980} height={1340}>
+        <DesignSystemPanel/>
+      </DCArtboard>
+      <DCArtboard id="sectionmap" label="Homepage → Tinker section map + sitemap" width={980} height={1340}>
+        <TinkerSectionMap/>
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="homepage" title="01 · Homepage (desktop, full flow)" subtitle="Hero → Featured STEM → Activities Together → Shop by Category → Real Parent Moments → Phone Book Banner → Newsletter → Final Gentle CTA → Footer">
+      <DCArtboard id="home-desktop" label="Homepage · 1280px" width={1280} height={4600}>
+        <Homepage/>
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="header" title="02 · Header & mega menu" subtitle="Sticky, parent-friendly nav. Mega menu for Shop — 3 category columns + 1 featured tile.">
+      <DCArtboard id="header-mega" label="Header · mega menu open" width={1280} height={680}>
+        <HeaderShowcase/>
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="shop" title="03 · Shop — Collection & Product pages" subtitle="The hero collection is Magnetic Wooden STEM Toys. Product page emphasizes trust, real-parent tested, and 'a note from the workshop'.">
+      <DCArtboard id="collection" label="Collection · Magnetic Wooden STEM Toys" width={1280} height={2100}>
+        <CollectionPage/>
+      </DCArtboard>
+      <DCArtboard id="product" label="Product · Magnetic Gear Wall Starter" width={1280} height={2300}>
+        <ProductPage/>
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="content" title="04 · Activities Together & Free Resources" subtitle="The content-hub side of the site — videos, bedtime stories, play guides, and downloadable PDFs.">
+      <DCArtboard id="activities" label="Activities Together · content hub" width={1280} height={1900}>
+        <ActivitiesHub/>
+      </DCArtboard>
+      <DCArtboard id="resources" label="Free Resources · download grid" width={1280} height={1500}>
+        <ResourcesPage/>
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="brand" title="05 · Our Story, FAQ & Policies" subtitle="Humble voice throughout. Policies use a left-rail nav shared across all legal pages.">
+      <DCArtboard id="story" label="Our Story" width={1280} height={1700}>
+        <OurStoryPage/>
+      </DCArtboard>
+      <DCArtboard id="faq" label="FAQ / Contact" width={1280} height={1500}>
+        <FAQContactPage/>
+      </DCArtboard>
+      <DCArtboard id="policies" label="Policies · Shipping & Returns" width={1280} height={1400}>
+        <PoliciesPage/>
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="mobile" title="06 · Mobile — one-handed, tired-parent optimized" subtitle="44px+ touch targets, large type, sticky bottom action bar on PDP, tab bar on home.">
+      <DCArtboard id="m-home" label="Mobile · Homepage" width={390} height={1700}>
+        <MobileHomepage/>
+      </DCArtboard>
+      <DCArtboard id="m-product" label="Mobile · Product" width={390} height={900}>
+        <MobileProduct/>
+      </DCArtboard>
+    </DCSection>
+  </DesignCanvas>
+);
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
