@@ -1,0 +1,237 @@
+/* OFST Design System — v2 bubbly + white-forward
+   Drop this file into your Tinker theme's assets/ folder and
+   reference it in theme.liquid or via the Tinker CSS bundle. */
+
+/* ── Tokens ─────────────────────────────────────────────── */
+:root {
+  --ofst-bg:        #FFFFFF;
+  --ofst-bg-alt:    #FAFAF7;
+  --ofst-ink:       #000000;
+  --ofst-deep:      #264653;
+  --ofst-teal:      #7EC8D8;
+  --ofst-coral:     #FF6A6A;
+  --ofst-yellow:    #FFCC5C;
+  --ofst-base:      #E4DDD3;
+  --ofst-mid:       #4a4a4a;
+  --ofst-muted:     #8a8a8a;
+  --ofst-soft:      #F5F1EB;
+
+  --ofst-shadow:    0 1px 2px rgba(0,0,0,.04), 0 12px 30px -14px rgba(0,0,0,.15);
+  --ofst-shadow-lg: 0 2px 4px rgba(0,0,0,.05), 0 24px 44px -16px rgba(0,0,0,.2);
+
+  --ofst-radius-sm: 10px;
+  --ofst-radius:    16px;
+  --ofst-radius-lg: 22px;
+  --ofst-pill:      9999px;
+
+  /* Bubbly heading font — Fredoka first, safe fallbacks for every device */
+  --ofst-font-display: "Fredoka", "Baloo 2", "Bubblegum Sans", "Comic Sans MS", system-ui, -apple-system, sans-serif;
+  /* Clean readable body */
+  --ofst-font-body:    "Nunito", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ── Base reset (scoped to .ofst-* sections) ─────────────── */
+.ofst-section,
+.ofst-section *,
+.ofst-section *::before,
+.ofst-section *::after { box-sizing: border-box; }
+
+.ofst-section {
+  font-family: var(--ofst-font-body);
+  color: var(--ofst-ink);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ofst-section h1,
+.ofst-section h2,
+.ofst-section h3,
+.ofst-section h4 {
+  font-family: var(--ofst-font-display);
+  letter-spacing: -.01em;
+  margin: 0;
+}
+.ofst-section p { margin: 0; }
+.ofst-section img { display: block; max-width: 100%; }
+.ofst-section button { font-family: inherit; cursor: pointer; border: 0; background: transparent; color: inherit; }
+.ofst-section a { color: inherit; text-decoration: none; }
+
+/* ── Type scale ──────────────────────────────────────────── */
+.ofst-display {
+  font-family: var(--ofst-font-display);
+  font-size: clamp(44px, 6vw, 78px);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -.02em;
+  color: #000;
+}
+.ofst-h1 {
+  font-family: var(--ofst-font-display);
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #000;
+}
+.ofst-h2 {
+  font-family: var(--ofst-font-display);
+  font-size: clamp(22px, 2.5vw, 28px);
+  font-weight: 600;
+  line-height: 1.2;
+  color: #000;
+}
+.ofst-h3 {
+  font-family: var(--ofst-font-display);
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 600;
+  line-height: 1.3;
+  color: #000;
+}
+.ofst-body {
+  font-family: var(--ofst-font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #1a1a1a;
+}
+.ofst-eyebrow {
+  font-family: var(--ofst-font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ofst-coral);
+  display: block;
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.ofst-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 26px;
+  font-family: var(--ofst-font-body);
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--ofst-pill);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform .15s ease, filter .15s ease;
+}
+.ofst-btn:hover { transform: translateY(-1px); filter: brightness(1.04); }
+.ofst-btn-primary  { background: var(--ofst-teal);  color: #fff; }
+.ofst-btn-cta      { background: var(--ofst-coral); color: #fff; }
+.ofst-btn-dark     { background: var(--ofst-deep);  color: #fff; }
+.ofst-btn-yellow   { background: var(--ofst-yellow); color: #1a1a1a; }
+.ofst-btn-outline  { background: transparent; color: #000; box-shadow: inset 0 0 0 2px var(--ofst-teal); }
+.ofst-btn-outline:hover { background: rgba(126,200,216,.1); }
+.ofst-btn-sm       { min-height: 40px; padding: 8px 18px; font-size: 14px; }
+
+/* ── Chips / badges ──────────────────────────────────────── */
+.ofst-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--ofst-pill);
+  background: #fff;
+  color: #000;
+  font-family: var(--ofst-font-body);
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1.5px rgba(0,0,0,.08);
+}
+.ofst-chip-yellow { background: var(--ofst-yellow); color: #1a1a1a; box-shadow: none; }
+.ofst-chip-coral  { background: var(--ofst-coral);  color: #fff;    box-shadow: none; }
+.ofst-chip-teal   { background: var(--ofst-teal);   color: #0b3a46; box-shadow: none; }
+.ofst-chip-ink    { background: var(--ofst-deep);   color: #fff;    box-shadow: none; }
+
+/* ── Cards ───────────────────────────────────────────────── */
+.ofst-card {
+  background: #fff;
+  border-radius: var(--ofst-radius);
+  box-shadow: var(--ofst-shadow);
+  border: 1px solid rgba(0,0,0,.04);
+  overflow: hidden;
+}
+
+/* ── Tabs ────────────────────────────────────────────────── */
+.ofst-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--ofst-pill);
+  background: #fff;
+  color: #000;
+  font-family: var(--ofst-font-body);
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(38,70,83,.06);
+  cursor: pointer;
+  border: none;
+}
+.ofst-tab-active { background: var(--ofst-coral); color: #fff; }
+
+/* ── Squiggle underline ──────────────────────────────────── */
+.ofst-squiggle { position: relative; display: inline-block; }
+.ofst-squiggle::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -10px;
+  height: 10px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 10' preserveAspectRatio='none'><path d='M0 6 Q 10 0 20 6 T 40 6 T 60 6 T 80 6' stroke='%23FFCC5C' stroke-width='4' fill='none' stroke-linecap='round'/></svg>") repeat-x;
+  background-size: 80px 10px;
+}
+
+/* ── Link with coral underline ───────────────────────────── */
+.ofst-link {
+  color: #000;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 2px solid var(--ofst-coral);
+  padding-bottom: 2px;
+  text-decoration: none;
+}
+
+/* ── Thin coral divider ──────────────────────────────────── */
+.ofst-rule { height: 2px; width: 40px; background: var(--ofst-coral); border-radius: 2px; }
+
+/* ── Container ───────────────────────────────────────────── */
+.ofst-container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 48px;
+  padding-right: 48px;
+}
+
+/* ── Focus states ────────────────────────────────────────── */
+.ofst-section :focus-visible {
+  outline: 3px solid var(--ofst-coral);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Image cover helper ──────────────────────────────────── */
+.ofst-img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .ofst-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "product-main": {
+      "type": "ofst-product-main",
+      "settings": {
+        "show_shop_pay": true
+      }
+    },
+    "product-tabs": {
+      "type": "ofst-product-tabs",
+      "settings": {
+        "workshop_sig": "Maya & the OFST workshop"
+      }
+    },
+    "product-related": {
+      "type": "ofst-product-related",
+      "settings": {
+        "heading": "Parents who bought this also picked up…"
+      }
+    }
+  },
+  "order": ["product-main", "product-tabs", "product-related"]
+}

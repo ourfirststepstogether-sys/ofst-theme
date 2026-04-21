@@ -1,0 +1,213 @@
+{% comment %} OFST Product tabs — What's in the box / Safety / Care / Notes {% endcomment %}
+
+<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
+
+<section id="ofst-pdptabs-{{ section.id }}" class="ofst-section ofst-pdp-tabs">
+  <div class="ofst-container">
+    {% comment %} Tab buttons {% endcomment %}
+    <div class="ofst-pdp-tabs__nav" role="tablist">
+      {% assign tab_labels = "What's in the box,Safety & ages,Care & materials,Real parent notes" | split: "," %}
+      {% for tab_label in tab_labels %}
+        <button
+          class="ofst-pdp-tabs__tab {% if forloop.first %}ofst-pdp-tabs__tab--active{% endif %}"
+          role="tab"
+          aria-selected="{{ forloop.first }}"
+          aria-controls="ofst-tab-{{ section.id }}-{{ forloop.index }}"
+          id="ofst-tabtrigger-{{ section.id }}-{{ forloop.index }}"
+          data-tab="{{ forloop.index }}">
+          {{ tab_label }}
+        </button>
+      {% endfor %}
+    </div>
+
+    {% comment %} Tab panels {% endcomment %}
+    <div
+      id="ofst-tab-{{ section.id }}-1"
+      class="ofst-pdp-tabs__panel ofst-pdp-tabs__panel--active"
+      role="tabpanel"
+      aria-labelledby="ofst-tabtrigger-{{ section.id }}-1">
+      <div class="ofst-pdp-tabs__two-col">
+        <div>
+          <h3 class="ofst-h2">In the box</h3>
+          <ul class="ofst-pdp-tabs__checklist">
+            {% if section.settings.box_items != blank %}
+              {% assign box_items = section.settings.box_items | split: ";" %}
+              {% for item in box_items %}
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ofst-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>
+                  {{ item | strip | escape }}
+                </li>
+              {% endfor %}
+            {% else %}
+              {% assign default_items = "1 birch mounting wall (28\" × 16\")|10 magnetic wooden gears (3 sizes)|4 crank handles + spindles|1 mounting kit (for walls)|1 zippered storage pouch|1 play guide with 12 setup ideas" | split: "|" %}
+              {% for item in default_items %}
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ofst-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>
+                  {{ item }}
+                </li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+        <div>
+          <h3 class="ofst-h2">A note from the workshop</h3>
+          <div class="ofst-pdp-tabs__workshop-note">
+            <p>{{ section.settings.workshop_note | default: "We cut these in a small shop in Michigan. The magnets are rated N42 and fully sealed — no little hands touch magnet. Each piece is sanded by a human who probably has a toddler pulling on their pant leg. If anything ever breaks, write us and we'll replace it. That's the whole policy." | escape }}</p>
+            <p class="ofst-pdp-tabs__workshop-sig">— {{ section.settings.workshop_sig | default: 'Maya & the OFST workshop' | escape }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="ofst-tab-{{ section.id }}-2"
+      class="ofst-pdp-tabs__panel"
+      role="tabpanel"
+      aria-labelledby="ofst-tabtrigger-{{ section.id }}-2"
+      hidden>
+      <div class="ofst-pdp-tabs__prose">
+        {{ section.settings.safety_content | default: '<p><strong>Ages:</strong> Recommended for 18 months and up. Under 18 months, adult supervision required at all times.</p><p><strong>Magnets:</strong> All N42 magnets are sealed inside birch and glue-locked. We test-pull every piece to a 22-pound standard. None are removable or loose.</p><p><strong>Finish:</strong> EWG-rated 1, water-based, food-safe. No heavy metals, no VOCs.</p><p><strong>Wood:</strong> FSC-certified birch from Wisconsin mills.</p>' }}
+      </div>
+    </div>
+
+    <div
+      id="ofst-tab-{{ section.id }}-3"
+      class="ofst-pdp-tabs__panel"
+      role="tabpanel"
+      aria-labelledby="ofst-tabtrigger-{{ section.id }}-3"
+      hidden>
+      <div class="ofst-pdp-tabs__prose">
+        {{ section.settings.care_content | default: '<p>Wipe clean with a damp cloth. Do not submerge in water. If the finish dulls after heavy play, a light coat of food-safe mineral oil brings it back.</p><p>Store flat or in the included zippered pouch. The magnetic pieces can be stacked — they won\'t demagnetise.</p>' }}
+      </div>
+    </div>
+
+    <div
+      id="ofst-tab-{{ section.id }}-4"
+      class="ofst-pdp-tabs__panel"
+      role="tabpanel"
+      aria-labelledby="ofst-tabtrigger-{{ section.id }}-4"
+      hidden>
+      <div class="ofst-pdp-tabs__prose">
+        {{ section.settings.notes_content | default: '<p>Real things parents have told us: "My 2yo plays with it for 45 minutes. Unheard of." · "The dog ate one gear and I emailed them — they sent three replacements." · "We use it on road trips. The magnetic wall clips to the window." We love hearing this stuff. Email us anytime.</p>' }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #ofst-pdptabs-{{ section.id }} {
+    padding: 40px 0;
+    background: #F6F1E8;
+  }
+  #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__nav {
+    display: flex;
+    gap: 6px;
+    border-bottom: 1px solid rgba(38,70,83,.12);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__tab {
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--ofst-font-body);
+    color: var(--ofst-mid);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color .15s;
+  }
+  #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__tab--active {
+    color: #000;
+    border-bottom-color: var(--ofst-coral);
+  }
+  #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__tab:hover { color: #000; }
+  /* Panels */
+  #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__panel { margin-top: 28px; }
+  #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__panel[hidden] { display: none; }
+  #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+  #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__checklist {
+    margin-top: 14px;
+    padding: 0; list-style: none;
+    display: grid;
+    gap: 10px;
+    font-size: 15px;
+    font-family: var(--ofst-font-body);
+    color: var(--ofst-deep);
+  }
+  #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__workshop-note {
+    margin-top: 14px;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ofst-mid);
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__workshop-sig {
+    margin-top: 14px;
+    font-size: 14px;
+    color: #000;
+    font-weight: 600;
+  }
+  #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__prose {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ofst-mid);
+    max-width: 780px;
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__prose p { margin: 0 0 14px; }
+  #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__prose p:last-child { margin-bottom: 0; }
+  #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__prose strong { color: #000; }
+
+  @media (max-width: 768px) {
+    #ofst-pdptabs-{{ section.id }} .ofst-pdp-tabs__two-col { grid-template-columns: 1fr; gap: 28px; }
+  }
+</style>
+
+<script>
+  (function() {
+    var section = document.getElementById('ofst-pdptabs-{{ section.id }}');
+    if (!section) return;
+    section.querySelectorAll('.ofst-pdp-tabs__tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var tabNum = tab.dataset.tab;
+        section.querySelectorAll('.ofst-pdp-tabs__tab').forEach(function(t) {
+          t.classList.remove('ofst-pdp-tabs__tab--active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        section.querySelectorAll('.ofst-pdp-tabs__panel').forEach(function(p) { p.hidden = true; p.classList.remove('ofst-pdp-tabs__panel--active'); });
+        tab.classList.add('ofst-pdp-tabs__tab--active');
+        tab.setAttribute('aria-selected', 'true');
+        var panel = document.getElementById('ofst-tab-{{ section.id }}-' + tabNum);
+        if (panel) { panel.hidden = false; panel.classList.add('ofst-pdp-tabs__panel--active'); }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "OFST Product Tabs",
+  "settings": [
+    { "type": "textarea", "id": "box_items",      "label": "Box items (separate with semicolons)" },
+    { "type": "textarea", "id": "workshop_note",  "label": "Note from the workshop" },
+    { "type": "text",     "id": "workshop_sig",   "label": "Workshop signature", "default": "Maya & the OFST workshop" },
+    { "type": "richtext", "id": "safety_content", "label": "Safety & ages content" },
+    { "type": "richtext", "id": "care_content",   "label": "Care & materials content" },
+    { "type": "richtext", "id": "notes_content",  "label": "Real parent notes content" }
+  ],
+  "presets": [{ "name": "OFST Product Tabs" }]
+}
+{% endschema %}

@@ -1,0 +1,100 @@
+{% comment %} OFST Related products {% endcomment %}
+
+<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
+
+<section id="ofst-related-{{ section.id }}" class="ofst-section ofst-related">
+  <div class="ofst-container">
+    <h2 class="ofst-h1 ofst-related__heading">{{ section.settings.heading | default: 'Parents who bought this also picked up…' | escape }}</h2>
+    <div class="ofst-related__grid">
+      {% if recommendations.performed? and recommendations.products_count > 0 %}
+        {% for product in recommendations.products limit: 4 %}
+          <div class="ofst-card ofst-related__card">
+            <a href="{{ product.url }}" class="ofst-related__card-link">
+              <div class="ofst-related__img-wrap">
+                {% if product.featured_image != blank %}
+                  {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'ofst-img-cover', alt: product.title | escape }}
+                {% else %}
+                  <div class="ofst-related__img-ph">[ {{ product.title | escape }} ]</div>
+                {% endif %}
+              </div>
+              <div class="ofst-related__info">
+                <p class="ofst-related__name">{{ product.title | escape }}</p>
+                <p class="ofst-related__price">{{ product.price | money }}</p>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      {% else %}
+        {% comment %} Fallback: first 4 products from the same collection {% endcomment %}
+        {% assign source_collection = product.collections.first %}
+        {% for rel in source_collection.products limit: 5 %}
+          {% unless rel.id == product.id %}
+            <div class="ofst-card ofst-related__card">
+              <a href="{{ rel.url }}" class="ofst-related__card-link">
+                <div class="ofst-related__img-wrap">
+                  {% if rel.featured_image != blank %}
+                    {{ rel.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'ofst-img-cover', alt: rel.title | escape }}
+                  {% else %}
+                    <div class="ofst-related__img-ph">[ {{ rel.title | escape }} ]</div>
+                  {% endif %}
+                </div>
+                <div class="ofst-related__info">
+                  <p class="ofst-related__name">{{ rel.title | escape }}</p>
+                  <p class="ofst-related__price">{{ rel.price | money }}</p>
+                </div>
+              </a>
+            </div>
+          {% endunless %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #ofst-related-{{ section.id }} {
+    padding: 60px 0 80px;
+    background: var(--ofst-base);
+  }
+  #ofst-related-{{ section.id }} .ofst-related__heading { font-size: clamp(20px,2.5vw,28px); margin-bottom: 20px; }
+  #ofst-related-{{ section.id }} .ofst-related__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  #ofst-related-{{ section.id }} .ofst-related__card-link { display: block; text-decoration: none; color: inherit; }
+  #ofst-related-{{ section.id }} .ofst-related__img-wrap {
+    aspect-ratio: 1/1;
+    background: #EFE7DB;
+    border-radius: 0;
+  }
+  #ofst-related-{{ section.id }} .ofst-related__img-ph {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: ui-monospace,monospace; font-size: 11px; color: var(--ofst-mid); padding: 8px; text-align: center;
+  }
+  #ofst-related-{{ section.id }} .ofst-related__info { padding: 14px; }
+  #ofst-related-{{ section.id }} .ofst-related__name {
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--ofst-font-body);
+    color: #000;
+    transition: color .15s;
+  }
+  #ofst-related-{{ section.id }} .ofst-related__card-link:hover .ofst-related__name { color: var(--ofst-coral); }
+  #ofst-related-{{ section.id }} .ofst-related__price { font-size: 14px; margin-top: 4px; color: var(--ofst-mid); font-family: var(--ofst-font-body); }
+
+  @media (max-width: 900px) {
+    #ofst-related-{{ section.id }} .ofst-related__grid { grid-template-columns: repeat(2,1fr); }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "OFST Related Products",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Parents who bought this also picked up…" }
+  ],
+  "presets": [{ "name": "OFST Related Products" }]
+}
+{% endschema %}

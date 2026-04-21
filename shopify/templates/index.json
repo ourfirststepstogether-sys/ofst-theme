@@ -1,0 +1,178 @@
+{
+  "sections": {
+    "hero": {
+      "type": "ofst-hero",
+      "settings": {
+        "badge_text": "🌱 New · Magnetic Gear Wall just landed",
+        "heading_line1": "Hey fellow warrior —",
+        "heading_line2": "let's play together today.",
+        "accent_word": "together",
+        "body_text": "Magnetic wooden STEM toys, bedtime stories, and honest play ideas from parents figuring this out right alongside you. One real moment at a time.",
+        "cta_primary_text": "Shop magnetic toys",
+        "cta_primary_url": "/collections/magnetic-wooden-stem-toys",
+        "cta_secondary_text": "Explore activities",
+        "cta_secondary_url": "/pages/activities-together",
+        "testimonial_quote": "\"My two-year-old played with the gear wall for 45 minutes. 45 minutes. Unheard of.\"",
+        "testimonial_author": "Jamie, dad of two",
+        "show_secondary_placeholder": true
+      }
+    },
+    "featured-stem": {
+      "type": "ofst-featured-stem",
+      "settings": {
+        "eyebrow": "The hero stuff ✨",
+        "body_text": "Solid birch. Strong magnets. No screens, no batteries, no flashing lights. Just real hands building real things — together."
+      }
+    },
+    "activities-teaser": {
+      "type": "ofst-activities-teaser",
+      "settings": {
+        "eyebrow": "Activities Together 🎈",
+        "heading": "Helpful stuff, from parents who've been there.",
+        "body_text": "Short videos, bedtime stories, and honest play guides — made for the days the toddler is feral and you're out of ideas.",
+        "feature_tag": "Video · 3 min",
+        "feature_title": "Setting up the gear wall (without losing your mind)",
+        "feature_subtitle": "Watch Maya walk through it in real time — toddler interruptions included.",
+        "feature_url": "/pages/activities-together"
+      },
+      "blocks": {
+        "card-1": {
+          "type": "activity_card",
+          "settings": {
+            "kind": "Bedtime story",
+            "duration": "6 min read",
+            "title": "Little Gear Who Wouldn't Turn",
+            "tone": "yellow"
+          }
+        },
+        "card-2": {
+          "type": "activity_card",
+          "settings": {
+            "kind": "Play guide",
+            "duration": "Free PDF",
+            "title": "10 ways to play with pipes (that aren't the obvious 3)",
+            "tone": "coral"
+          }
+        },
+        "card-3": {
+          "type": "activity_card",
+          "settings": {
+            "kind": "Parent note",
+            "duration": "5 min read",
+            "title": "On the 4pm meltdown and magnetic toys",
+            "tone": "warm"
+          }
+        }
+      },
+      "blocks_order": ["card-1", "card-2", "card-3"]
+    },
+    "shop-by-category": {
+      "type": "ofst-shop-by-category",
+      "settings": {
+        "eyebrow": "Shop by category 🛍️",
+        "heading": "Find what fits your kid today."
+      },
+      "blocks": {
+        "cat-1": {
+          "type": "category",
+          "settings": {
+            "title": "Magnetic Wooden STEM Toys",
+            "subtitle": "14 pieces · the hero collection",
+            "tone": "teal",
+            "collection_url": "/collections/magnetic-wooden-stem-toys"
+          }
+        },
+        "cat-2": {
+          "type": "category",
+          "settings": {
+            "title": "Phone Book Covers",
+            "subtitle": "A parent tool, in disguise",
+            "tone": "yellow",
+            "collection_url": "/collections/phone-book-covers"
+          }
+        },
+        "cat-3": {
+          "type": "category",
+          "settings": {
+            "title": "Kids Clothing",
+            "subtitle": "Soft, honest, made-to-last",
+            "tone": "coral",
+            "collection_url": "/collections/kids-clothing"
+          }
+        }
+      },
+      "blocks_order": ["cat-1", "cat-2", "cat-3"]
+    },
+    "testimonials": {
+      "type": "ofst-testimonials",
+      "settings": {
+        "eyebrow": "Real parent moments 💖",
+        "heading": "Not reviews. Just honest notes from fellow parents."
+      },
+      "blocks": {
+        "tmn-1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "\"I bought it skeptical. My 3yo is still building things with it six months later. It's the toy we've kept.\"",
+            "author": "Sana, mom of one",
+            "location": "Austin, TX"
+          }
+        },
+        "tmn-2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "\"It got both kids to play side-by-side instead of fighting. I don't know what witchcraft this is.\"",
+            "author": "Derek & Pri",
+            "location": "Portland, OR"
+          }
+        },
+        "tmn-3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "\"Honestly? I use the phone book cover more than she does. No shame.\"",
+            "author": "Lauren, mom of two",
+            "location": "Columbus, OH"
+          }
+        }
+      },
+      "blocks_order": ["tmn-1", "tmn-2", "tmn-3"]
+    },
+    "phone-book-banner": {
+      "type": "ofst-phone-book-banner",
+      "settings": {
+        "badge_text": "The unusual one 📓",
+        "heading": "A phone book cover, for the way parents actually use phones.",
+        "body_text": "Yes, a phone book cover. Hand-bound, refillable, keeps little hands busy during the pediatrician waiting room. A strange little thing we're weirdly proud of.",
+        "cta_text": "Discover this special parent tool",
+        "cta_url": "/collections/for-adults"
+      }
+    },
+    "newsletter": {
+      "type": "ofst-newsletter",
+      "settings": {
+        "heading": "Join the Journey",
+        "body_text": "Weekly meal ideas, new toy releases, play guides, and occasional discount codes — straight to your inbox. Unsubscribe whenever. No judgment.",
+        "placeholder": "your@inbox.com",
+        "submit_text": "Count me in",
+        "fine_print": "~1 email a week. Pinky promise."
+      }
+    },
+    "final-cta": {
+      "type": "ofst-final-cta",
+      "settings": {
+        "quote": "\"We're taking these first steps together — one real moment at a time.\"",
+        "signature": "— The OFST family"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "featured-stem",
+    "activities-teaser",
+    "shop-by-category",
+    "testimonials",
+    "phone-book-banner",
+    "newsletter",
+    "final-cta"
+  ]
+}

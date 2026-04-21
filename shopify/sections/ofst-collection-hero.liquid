@@ -1,0 +1,116 @@
+{% comment %} OFST Collection hero — top of any collection page {% endcomment %}
+
+<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
+
+<section id="ofst-colhero-{{ section.id }}" class="ofst-section ofst-col-hero">
+  <div class="ofst-container">
+    {% comment %} Breadcrumb {% endcomment %}
+    <p class="ofst-col-hero__crumb">
+      <a href="{{ routes.root_url }}">Home</a> /
+      <a href="{{ routes.collections_url }}">Shop</a> /
+      <span>{{ collection.title | default: 'Collection' }}</span>
+    </p>
+
+    <div class="ofst-col-hero__inner">
+      <div class="ofst-col-hero__copy">
+        {% if section.settings.badge_text != blank %}
+          <span class="ofst-chip ofst-chip-coral ofst-col-hero__badge">{{ section.settings.badge_text | escape }}</span>
+        {% endif %}
+        <h1 class="ofst-display ofst-col-hero__heading">{{ collection.title | default: section.settings.heading | escape }}</h1>
+        <p class="ofst-body ofst-col-hero__body">{{ collection.description | default: section.settings.body_text | strip_html }}</p>
+        <div class="ofst-col-hero__trust">
+          <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ofst-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6l8-3z"/></svg> Parent-tested</span>
+          <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ofst-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6l8-3z"/></svg> Non-toxic finish</span>
+          <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ofst-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6l8-3z"/></svg> Ages 18m+</span>
+        </div>
+      </div>
+
+      <div class="ofst-col-hero__media">
+        {% if collection.image != blank %}
+          {{ collection.image | image_url: width: 900 | image_tag: loading: 'eager', class: 'ofst-img-cover', alt: collection.title | escape }}
+        {% elsif section.settings.hero_image != blank %}
+          {{ section.settings.hero_image | image_url: width: 900 | image_tag: loading: 'eager', class: 'ofst-img-cover', alt: '' }}
+        {% else %}
+          <div class="ofst-col-hero__img-ph">[ collection hero image ]</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #ofst-colhero-{{ section.id }} {
+    background: linear-gradient(180deg, #CDE6ED 0%, var(--ofst-base) 100%);
+    padding: 48px 0 56px;
+  }
+  #ofst-colhero-{{ section.id }} .ofst-col-hero__crumb {
+    font-size: 13px;
+    color: var(--ofst-mid);
+    margin-bottom: 14px;
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-colhero-{{ section.id }} .ofst-col-hero__crumb a {
+    color: var(--ofst-mid);
+    text-decoration: none;
+  }
+  #ofst-colhero-{{ section.id }} .ofst-col-hero__crumb a:hover { color: var(--ofst-coral); }
+  #ofst-colhero-{{ section.id }} .ofst-col-hero__crumb span { color: #000; font-weight: 600; }
+  #ofst-colhero-{{ section.id }} .ofst-col-hero__inner {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  #ofst-colhero-{{ section.id }} .ofst-col-hero__badge { margin-bottom: 14px; display: inline-flex; }
+  #ofst-colhero-{{ section.id }} .ofst-col-hero__heading {
+    font-size: clamp(36px,4.5vw,52px);
+    margin-top: 14px;
+    line-height: 1.05;
+  }
+  #ofst-colhero-{{ section.id }} .ofst-col-hero__body { margin-top: 14px; max-width: 520px; color: var(--ofst-mid); }
+  #ofst-colhero-{{ section.id }} .ofst-col-hero__trust {
+    margin-top: 20px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--ofst-mid);
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-colhero-{{ section.id }} .ofst-col-hero__trust span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  #ofst-colhero-{{ section.id }} .ofst-col-hero__media {
+    aspect-ratio: 4/3;
+    border-radius: var(--ofst-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--ofst-shadow-lg);
+  }
+  #ofst-colhero-{{ section.id }} .ofst-col-hero__img-ph {
+    width: 100%; height: 100%;
+    background: #EFE7DB;
+    display: flex; align-items: center; justify-content: center;
+    font-family: ui-monospace,monospace; font-size: 11px; color: var(--ofst-mid);
+    padding: 12px; text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    #ofst-colhero-{{ section.id }} .ofst-col-hero__inner { grid-template-columns: 1fr; }
+    #ofst-colhero-{{ section.id }} .ofst-col-hero__media { aspect-ratio: 16/9; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "OFST Collection Hero",
+  "settings": [
+    { "type": "text",         "id": "badge_text",  "label": "Badge",  "default": "The hero collection" },
+    { "type": "text",         "id": "heading",     "label": "Heading fallback (if collection has no title)" },
+    { "type": "textarea",     "id": "body_text",   "label": "Body fallback (if collection has no description)" },
+    { "type": "image_picker", "id": "hero_image",  "label": "Hero image fallback (if collection has no image)" }
+  ],
+  "presets": [{ "name": "OFST Collection Hero" }]
+}
+{% endschema %}

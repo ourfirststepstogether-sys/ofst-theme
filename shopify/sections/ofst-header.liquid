@@ -1,0 +1,505 @@
+{% comment %}
+  OFST Header with Mega Menu — sticky, parent-friendly navigation.
+  Shop mega menu: 3 columns (Wooden STEM Toys, Kids Clothing, For Adults) + featured tile.
+  Drop this into your Tinker theme as a replacement or reference for header.liquid.
+{% endcomment %}
+
+<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
+
+<header id="ofst-header-{{ section.id }}" class="ofst-section ofst-header" role="banner">
+  <div class="ofst-header__inner ofst-container">
+    {% comment %} Logo {% endcomment %}
+    <a href="{{ routes.root_url }}" class="ofst-header__logo" aria-label="{{ shop.name }}">
+      {% if section.settings.logo != blank %}
+        {{ section.settings.logo | image_url: width: 140 | image_tag: loading: 'eager', alt: shop.name, class: 'ofst-header__logo-img' }}
+      {% else %}
+        {% render 'ofst-logo', size: 24 %}
+      {% endif %}
+    </a>
+
+    {% comment %} Primary nav {% endcomment %}
+    <nav class="ofst-header__nav" aria-label="Main navigation">
+      <ul class="ofst-header__nav-list" role="list">
+        {% comment %} Shop — triggers mega menu {% endcomment %}
+        <li class="ofst-header__nav-item ofst-header__nav-item--has-mega" data-mega="shop">
+          <button class="ofst-header__nav-link ofst-header__nav-link--btn" aria-expanded="false" aria-controls="ofst-mega-{{ section.id }}" aria-haspopup="true">
+            Shop
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+        </li>
+        <li class="ofst-header__nav-item">
+          <a href="{{ section.settings.activities_url | default: '/pages/activities-together' }}" class="ofst-header__nav-link">Activities Together</a>
+        </li>
+        <li class="ofst-header__nav-item">
+          <a href="{{ section.settings.resources_url | default: '/pages/free-resources' }}" class="ofst-header__nav-link">Free Resources</a>
+        </li>
+        <li class="ofst-header__nav-item">
+          <a href="{{ section.settings.story_url | default: '/pages/our-story' }}" class="ofst-header__nav-link">Our Story</a>
+        </li>
+      </ul>
+    </nav>
+
+    {% comment %} Right side icons {% endcomment %}
+    <div class="ofst-header__actions">
+      {% comment %} Search {% endcomment %}
+      <a href="{{ routes.search_url }}" class="ofst-header__icon-btn" aria-label="Search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      </a>
+
+      {% comment %} Account {% endcomment %}
+      {% if shop.customer_accounts_enabled %}
+        <a href="{{ routes.account_url }}" class="ofst-header__icon-btn" aria-label="Account">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c1-4 5-6 8-6s7 2 8 6"/></svg>
+        </a>
+      {% endif %}
+
+      {% comment %} Cart {% endcomment %}
+      <a href="{{ routes.cart_url }}" class="ofst-header__icon-btn ofst-header__cart-btn" aria-label="Cart ({{ cart.item_count }} items)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h2l2 11h11l2-8H7"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>
+        {% if cart.item_count > 0 %}
+          <span class="ofst-header__cart-count" aria-hidden="true">{{ cart.item_count }}</span>
+        {% endif %}
+      </a>
+
+      {% comment %} Mobile menu toggle {% endcomment %}
+      <button class="ofst-header__menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="ofst-mobile-nav-{{ section.id }}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  {% comment %} ────────────────────────────────────────────
+      Shop Mega Menu
+      3 columns: Wooden STEM Toys | Kids Clothing | For Adults
+      + Featured tile with product image
+  ──────────────────────────────────────────── {% endcomment %}
+  <div id="ofst-mega-{{ section.id }}" class="ofst-mega" role="region" aria-label="Shop menu" hidden>
+    <div class="ofst-container ofst-mega__inner">
+
+      {% comment %} Column 1: Wooden STEM Toys {% endcomment %}
+      <div class="ofst-mega__col">
+        <h4 class="ofst-mega__col-title">Wooden STEM Toys</h4>
+        <ul class="ofst-mega__list" role="list">
+          <li><a href="/collections/gear-walls">Gear Walls</a></li>
+          <li><a href="/collections/pipe-ramp-sets">Pipe &amp; Ramp Sets</a></li>
+          <li><a href="/collections/building-magnets">Building Magnets</a></li>
+          <li><a href="/collections/expansion-packs">Expansion Packs</a></li>
+          <li><a href="/collections/starter-kits">Starter Kits</a></li>
+          <li class="ofst-mega__all"><a href="/collections/magnetic-wooden-stem-toys">All Wooden Toys →</a></li>
+        </ul>
+      </div>
+
+      {% comment %} Column 2: Kids Clothing {% endcomment %}
+      <div class="ofst-mega__col">
+        <h4 class="ofst-mega__col-title">Kids Clothing</h4>
+        <ul class="ofst-mega__list" role="list">
+          <li><a href="/collections/kids-basics">Basics</a></li>
+          <li><a href="/collections/kids-sleepwear">Sleepwear</a></li>
+          <li><a href="/collections/organic-line">Organic Line</a></li>
+          <li><a href="/collections/kids-gift-sets">Gift Sets</a></li>
+          <li class="ofst-mega__all"><a href="/collections/kids-clothing">All Clothing →</a></li>
+        </ul>
+      </div>
+
+      {% comment %} Column 3: For Adults {% endcomment %}
+      <div class="ofst-mega__col">
+        <h4 class="ofst-mega__col-title">For Adults</h4>
+        <ul class="ofst-mega__list" role="list">
+          <li><a href="/collections/phone-book-covers">Phone Book Covers</a></li>
+          <li><a href="/collections/parent-journals">Parent Journals</a></li>
+          <li><a href="/collections/coffee-mugs">Coffee &amp; Mugs</a></li>
+          <li><a href="/collections/gift-bundles">Gift Bundles</a></li>
+          <li class="ofst-mega__all"><a href="/collections/for-adults">All For Adults →</a></li>
+        </ul>
+      </div>
+
+      {% comment %} Featured tile {% endcomment %}
+      <div class="ofst-mega__feature">
+        {% if section.settings.mega_feature_image != blank %}
+          {{ section.settings.mega_feature_image | image_url: width: 500 | image_tag: loading: 'lazy', class: 'ofst-mega__feature-img', alt: 'Featured product' }}
+        {% else %}
+          <div class="ofst-mega__feature-img ofst-mega__feature-img--ph">[ product image ]</div>
+        {% endif %}
+        <div class="ofst-mega__feature-overlay" aria-hidden="true"></div>
+        <div class="ofst-mega__feature-body">
+          <span class="ofst-chip ofst-chip-yellow" style="font-size:11px">{{ section.settings.mega_feature_badge | default: 'Just landed' }}</span>
+          <h5 class="ofst-mega__feature-title">{{ section.settings.mega_feature_title | default: 'The Magnetic Gear Wall Starter' | escape }}</h5>
+          <p class="ofst-mega__feature-sub">{{ section.settings.mega_feature_sub | default: 'Our #1 toy, now with 8 extra gears.' | escape }}</p>
+          <a href="{{ section.settings.mega_feature_url | default: '/products/magnetic-gear-wall-starter' }}" class="ofst-mega__feature-link">
+            Shop it
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    {% comment %} Bottom trust strip {% endcomment %}
+    <div class="ofst-mega__trust-strip ofst-container">
+      <span class="ofst-mega__trust-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ofst-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg>
+        Free shipping on orders $60+
+      </span>
+      <span class="ofst-mega__trust-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ofst-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+        30-day no-questions returns
+      </span>
+      <a href="/collections/sale" class="ofst-mega__trust-sale">Shop the Sale →</a>
+    </div>
+  </div>
+
+  {% comment %} Mobile nav drawer {% endcomment %}
+  <div id="ofst-mobile-nav-{{ section.id }}" class="ofst-mobile-nav" hidden aria-label="Mobile navigation">
+    <button class="ofst-mobile-nav__close" aria-label="Close menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <nav>
+      <ul class="ofst-mobile-nav__list" role="list">
+        <li><a href="/collections/magnetic-wooden-stem-toys">Wooden STEM Toys</a></li>
+        <li><a href="/collections/kids-clothing">Kids Clothing</a></li>
+        <li><a href="/collections/for-adults">For Adults</a></li>
+        <li><a href="{{ section.settings.activities_url | default: '/pages/activities-together' }}">Activities Together</a></li>
+        <li><a href="{{ section.settings.resources_url | default: '/pages/free-resources' }}">Free Resources</a></li>
+        <li><a href="{{ section.settings.story_url | default: '/pages/our-story' }}">Our Story</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* ── Header shell ── */
+  #ofst-header-{{ section.id }} {
+    background: #F6F1E8;
+    border-bottom: 1px solid rgba(38,70,83,.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  #ofst-header-{{ section.id }} .ofst-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+  /* Logo */
+  #ofst-header-{{ section.id }} .ofst-header__logo {
+    flex-shrink: 0;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  #ofst-header-{{ section.id }} .ofst-header__logo-img { height: 32px; width: auto; }
+  /* Nav */
+  #ofst-header-{{ section.id }} .ofst-header__nav { margin-left: 28px; }
+  #ofst-header-{{ section.id }} .ofst-header__nav-list {
+    display: flex;
+    gap: 22px;
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  #ofst-header-{{ section.id }} .ofst-header__nav-link,
+  #ofst-header-{{ section.id }} .ofst-header__nav-link--btn {
+    font-size: 15px;
+    font-weight: 500;
+    font-family: var(--ofst-font-body);
+    color: var(--ofst-deep);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color .15s;
+  }
+  #ofst-header-{{ section.id }} .ofst-header__nav-link:hover,
+  #ofst-header-{{ section.id }} .ofst-header__nav-link--btn:hover { color: var(--ofst-coral); }
+  /* Actions */
+  #ofst-header-{{ section.id }} .ofst-header__actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--ofst-deep);
+  }
+  #ofst-header-{{ section.id }} .ofst-header__icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    border-radius: 18px;
+    text-decoration: none;
+    color: inherit;
+    transition: background .15s, color .15s;
+  }
+  #ofst-header-{{ section.id }} .ofst-header__icon-btn:hover {
+    background: rgba(38,70,83,.06);
+    color: var(--ofst-coral);
+  }
+  /* Cart count bubble */
+  #ofst-header-{{ section.id }} .ofst-header__cart-btn { position: relative; }
+  #ofst-header-{{ section.id }} .ofst-header__cart-count {
+    position: absolute;
+    top: -4px; right: -6px;
+    background: var(--ofst-coral);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 10px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--ofst-font-body);
+  }
+  /* Menu toggle (mobile only) */
+  #ofst-header-{{ section.id }} .ofst-header__menu-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    border-radius: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ofst-deep);
+    transition: background .15s;
+  }
+  #ofst-header-{{ section.id }} .ofst-header__menu-btn:hover { background: rgba(38,70,83,.06); }
+
+  /* ── Mega Menu ── */
+  #ofst-header-{{ section.id }} .ofst-mega {
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    background: #fff;
+    box-shadow: 0 24px 48px -16px rgba(38,70,83,.22);
+    border-top: 1px solid rgba(38,70,83,.06);
+    z-index: 99;
+  }
+  #ofst-header-{{ section.id }} .ofst-mega__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.3fr;
+    gap: 48px;
+    padding-top: 36px;
+    padding-bottom: 40px;
+  }
+  #ofst-header-{{ section.id }} .ofst-mega__col-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ofst-mid);
+    margin-bottom: 16px;
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-header-{{ section.id }} .ofst-mega__list {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: grid;
+    gap: 10px;
+  }
+  #ofst-header-{{ section.id }} .ofst-mega__list a {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ofst-deep);
+    text-decoration: none;
+    transition: color .15s;
+  }
+  #ofst-header-{{ section.id }} .ofst-mega__list a:hover { color: var(--ofst-coral); }
+  #ofst-header-{{ section.id }} .ofst-mega__all a {
+    font-weight: 600;
+    color: var(--ofst-coral) !important;
+  }
+  /* Featured tile */
+  #ofst-header-{{ section.id }} .ofst-mega__feature {
+    border-radius: var(--ofst-radius);
+    overflow: hidden;
+    position: relative;
+    min-height: 220px;
+    box-shadow: var(--ofst-shadow);
+  }
+  #ofst-header-{{ section.id }} .ofst-mega__feature-img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  #ofst-header-{{ section.id }} .ofst-mega__feature-img--ph {
+    background: #EFE7DB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: ui-monospace,monospace;
+    font-size: 11px;
+    color: var(--ofst-mid);
+    text-align: center;
+    padding: 12px;
+  }
+  #ofst-header-{{ section.id }} .ofst-mega__feature-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(38,70,83,.85));
+  }
+  #ofst-header-{{ section.id }} .ofst-mega__feature-body {
+    position: absolute;
+    left: 18px; right: 18px; bottom: 16px;
+    color: #fff;
+  }
+  #ofst-header-{{ section.id }} .ofst-mega__feature-title {
+    margin-top: 10px;
+    font-family: var(--ofst-font-display);
+    font-size: 18px;
+    font-weight: 700;
+  }
+  #ofst-header-{{ section.id }} .ofst-mega__feature-sub {
+    font-size: 13px;
+    opacity: .9;
+    margin-top: 4px;
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-header-{{ section.id }} .ofst-mega__feature-link {
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ofst-yellow);
+    text-decoration: none;
+  }
+  /* Trust strip */
+  #ofst-header-{{ section.id }} .ofst-mega__trust-strip {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(38,70,83,.08);
+    font-size: 13px;
+    color: var(--ofst-mid);
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-header-{{ section.id }} .ofst-mega__trust-item { display: inline-flex; align-items: center; gap: 6px; }
+  #ofst-header-{{ section.id }} .ofst-mega__trust-sale {
+    margin-left: auto;
+    color: var(--ofst-coral);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 13px;
+  }
+
+  /* ── Mobile nav drawer ── */
+  #ofst-header-{{ section.id }} .ofst-mobile-nav {
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    z-index: 200;
+    padding: 24px 20px;
+    overflow-y: auto;
+  }
+  #ofst-header-{{ section.id }} .ofst-mobile-nav__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; height: 40px;
+    border-radius: 20px;
+    background: var(--ofst-soft);
+    border: none;
+    cursor: pointer;
+    color: var(--ofst-deep);
+    margin-bottom: 24px;
+  }
+  #ofst-header-{{ section.id }} .ofst-mobile-nav__list {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: grid;
+    gap: 0;
+  }
+  #ofst-header-{{ section.id }} .ofst-mobile-nav__list li a {
+    display: block;
+    padding: 16px 0;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: var(--ofst-font-display);
+    color: #000;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    transition: color .15s;
+  }
+  #ofst-header-{{ section.id }} .ofst-mobile-nav__list li a:hover { color: var(--ofst-coral); }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    #ofst-header-{{ section.id }} .ofst-header__nav    { display: none; }
+    #ofst-header-{{ section.id }} .ofst-header__menu-btn { display: inline-flex; }
+    #ofst-header-{{ section.id }} .ofst-mega           { display: none !important; }
+  }
+</style>
+
+<script>
+  (function() {
+    var header  = document.getElementById('ofst-header-{{ section.id }}');
+    var megaBtn = header.querySelector('[data-mega="shop"] button');
+    var mega    = document.getElementById('ofst-mega-{{ section.id }}');
+    var menuBtn = header.querySelector('.ofst-header__menu-btn');
+    var mobileNav = document.getElementById('ofst-mobile-nav-{{ section.id }}');
+    var mobileClose = header.querySelector('.ofst-mobile-nav__close');
+
+    if (megaBtn && mega) {
+      megaBtn.addEventListener('click', function() {
+        var open = mega.hidden;
+        mega.hidden = !open;
+        megaBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      document.addEventListener('click', function(e) {
+        if (!header.contains(e.target)) { mega.hidden = true; megaBtn.setAttribute('aria-expanded','false'); }
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') { mega.hidden = true; megaBtn.setAttribute('aria-expanded','false'); }
+      });
+    }
+
+    if (menuBtn && mobileNav) {
+      menuBtn.addEventListener('click', function() {
+        mobileNav.hidden = false;
+        document.body.style.overflow = 'hidden';
+      });
+      if (mobileClose) {
+        mobileClose.addEventListener('click', function() {
+          mobileNav.hidden = true;
+          document.body.style.overflow = '';
+        });
+      }
+    }
+
+    /* Shrink padding on scroll */
+    var lastY = 0;
+    window.addEventListener('scroll', function() {
+      var y = window.scrollY;
+      header.style.boxShadow = y > 10 ? '0 2px 16px rgba(0,0,0,.08)' : '';
+      lastY = y;
+    }, { passive: true });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "OFST Header",
+  "settings": [
+    { "type": "image_picker", "id": "logo",               "label": "Logo image (overrides wordmark)" },
+    { "type": "url",          "id": "activities_url",     "label": "Activities Together URL" },
+    { "type": "url",          "id": "resources_url",      "label": "Free Resources URL" },
+    { "type": "url",          "id": "story_url",          "label": "Our Story URL" },
+    { "type": "header",       "label": "Mega menu featured tile" },
+    { "type": "image_picker", "id": "mega_feature_image", "label": "Featured image" },
+    { "type": "text",         "id": "mega_feature_badge", "label": "Badge",          "default": "Just landed" },
+    { "type": "text",         "id": "mega_feature_title", "label": "Title",           "default": "The Magnetic Gear Wall Starter" },
+    { "type": "text",         "id": "mega_feature_sub",   "label": "Subtitle",        "default": "Our #1 toy, now with 8 extra gears." },
+    { "type": "url",          "id": "mega_feature_url",   "label": "Link" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,168 @@
+{% comment %} OFST Free Resources download grid {% endcomment %}
+
+<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
+
+{% comment %} Header {% endcomment %}
+<section id="ofst-res-{{ section.id }}" class="ofst-section ofst-res">
+  <div class="ofst-container" style="text-align:center">
+    {% if section.settings.badge_text != blank %}
+      <span class="ofst-chip ofst-chip-coral">{{ section.settings.badge_text | escape }}</span>
+    {% endif %}
+    <h1 class="ofst-display ofst-res__heading">{{ section.settings.heading | default: 'Free resources for the middle of it.' | escape }}</h1>
+    <p class="ofst-body ofst-res__body">{{ section.settings.body_text | default: "Printables, checklists, and scripts we made because we needed them ourselves. Steal them, print them, scribble on them. Pass them along." | escape }}</p>
+  </div>
+</section>
+
+{% comment %} Grid {% endcomment %}
+<section id="ofst-res-grid-{{ section.id }}" class="ofst-section ofst-res-grid">
+  <div class="ofst-container">
+    <div class="ofst-res-grid__grid">
+      {% for block in section.blocks %}
+        {% assign bg = '#FFD8D8' %}
+        {% assign fg = '#A03939' %}
+        {% if block.settings.tone == 'yellow' %}
+          {% assign bg = '#FFE9B8' %}
+          {% assign fg = '#7a5a10' %}
+        {% elsif block.settings.tone == 'teal' %}
+          {% assign bg = '#CDE6ED' %}
+          {% assign fg = '#1f6478' %}
+        {% elsif block.settings.tone == 'warm' %}
+          {% assign bg = '#EFE7DB' %}
+          {% assign fg = '#56524E' %}
+        {% endif %}
+        <article class="ofst-card ofst-res-grid__card" {{ block.shopify_attributes }}>
+          <div class="ofst-res-grid__top" style="background:{{ bg }}">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="{{ fg }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 3h8l4 4v14H7z"/>
+              <path d="M15 3v5h4"/>
+              <text x="8" y="17" font-size="5" fill="{{ fg }}" stroke="none" font-weight="700" font-family="ui-monospace,monospace">PDF</text>
+            </svg>
+            <p class="ofst-res-grid__pages" style="color:{{ fg }}">{{ block.settings.pages | escape }}</p>
+            <h3 class="ofst-res-grid__title" style="color:{{ fg }}">{{ block.settings.title | escape }}</h3>
+          </div>
+          <div class="ofst-res-grid__bottom">
+            <p class="ofst-res-grid__desc">{{ block.settings.description | escape }}</p>
+            <a href="{{ block.settings.download_url | default: '#' }}"
+               class="ofst-btn ofst-btn-dark ofst-btn-sm ofst-res-grid__dl-btn"
+               {% if block.settings.download_url != blank %}download{% endif %}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>
+              Download
+            </a>
+          </div>
+        </article>
+      {% endfor %}
+
+      {% comment %} Fallback placeholder cards {% endcomment %}
+      {% if section.blocks.size == 0 %}
+        {% assign ph_resources = "The rainy-day activity deck,30 printable cards for screen-free afternoons,30 cards,coral|Meltdown playbook,A single laminated sheet that lives on your fridge,1 page,yellow|Toddler-led gear wall guide,12 ways to play by developmental stage,14 pages,teal|Bedtime routine worksheet,Fill-in for your family's actual bedtime,2 pages,warm|The honest chore chart,Ages 2–8 with notes on what didn't work,4 pages,coral|Gift-ask script for grandparents,What to ask for and how to ask nicely,1 page,yellow|Pediatrician visit prep sheet,Questions notes and a coloring page,3 pages,teal|Sunday reset checklist,The list we actually use on Sundays,1 page,warm" | split: "|" %}
+        {% for ph in ph_resources %}
+          {% assign ph_parts = ph | split: "," %}
+          {% assign ph_bg = '#FFD8D8' %}
+          {% assign ph_fg = '#A03939' %}
+          {% if ph_parts[3] == 'yellow' %}{% assign ph_bg = '#FFE9B8' %}{% assign ph_fg = '#7a5a10' %}
+          {% elsif ph_parts[3] == 'teal' %}{% assign ph_bg = '#CDE6ED' %}{% assign ph_fg = '#1f6478' %}
+          {% elsif ph_parts[3] == 'warm' %}{% assign ph_bg = '#EFE7DB' %}{% assign ph_fg = '#56524E' %}
+          {% endif %}
+          <article class="ofst-card ofst-res-grid__card">
+            <div class="ofst-res-grid__top" style="background:{{ ph_bg }}">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="{{ ph_fg }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v5h4"/></svg>
+              <p class="ofst-res-grid__pages" style="color:{{ ph_fg }}">{{ ph_parts[2] }} · PDF</p>
+              <h3 class="ofst-res-grid__title" style="color:{{ ph_fg }}">{{ ph_parts[0] }}</h3>
+            </div>
+            <div class="ofst-res-grid__bottom">
+              <p class="ofst-res-grid__desc">{{ ph_parts[1] }}</p>
+              <button class="ofst-btn ofst-btn-dark ofst-btn-sm ofst-res-grid__dl-btn">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>
+                Download
+              </button>
+            </div>
+          </article>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #ofst-res-{{ section.id }} {
+    padding: 56px 0 40px;
+    background: linear-gradient(180deg, #FFF3D1 0%, var(--ofst-base) 100%);
+  }
+  #ofst-res-{{ section.id }} .ofst-res__heading { font-size: clamp(36px,4.5vw,54px); margin-top: 14px; line-height: 1.05; }
+  #ofst-res-{{ section.id }} .ofst-res__body { margin: 14px auto 0; max-width: 620px; color: var(--ofst-mid); }
+  /* Grid */
+  #ofst-res-grid-{{ section.id }} { padding: 20px 0 80px; background: var(--ofst-base); }
+  #ofst-res-grid-{{ section.id }} .ofst-res-grid__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  #ofst-res-grid-{{ section.id }} .ofst-res-grid__card { display: flex; flex-direction: column; }
+  #ofst-res-grid-{{ section.id }} .ofst-res-grid__top {
+    aspect-ratio: 4/5;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  #ofst-res-grid-{{ section.id }} .ofst-res-grid__pages {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-res-grid-{{ section.id }} .ofst-res-grid__title {
+    font-family: var(--ofst-font-display);
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -.01em;
+    margin-top: 6px;
+  }
+  #ofst-res-grid-{{ section.id }} .ofst-res-grid__bottom {
+    padding: 14px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+  #ofst-res-grid-{{ section.id }} .ofst-res-grid__desc { font-size: 13px; color: var(--ofst-mid); line-height: 1.5; font-family: var(--ofst-font-body); }
+  #ofst-res-grid-{{ section.id }} .ofst-res-grid__dl-btn { margin-top: auto; }
+
+  @media (max-width: 1024px) {
+    #ofst-res-grid-{{ section.id }} .ofst-res-grid__grid { grid-template-columns: repeat(3,1fr); }
+  }
+  @media (max-width: 768px) {
+    #ofst-res-grid-{{ section.id }} .ofst-res-grid__grid { grid-template-columns: repeat(2,1fr); }
+  }
+  @media (max-width: 480px) {
+    #ofst-res-grid-{{ section.id }} .ofst-res-grid__grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "OFST Free Resources",
+  "settings": [
+    { "type": "text",     "id": "badge_text", "label": "Badge",     "default": "Free forever · no signup on most" },
+    { "type": "text",     "id": "heading",    "label": "Heading",   "default": "Free resources for the middle of it." },
+    { "type": "textarea", "id": "body_text",  "label": "Body copy", "default": "Printables, checklists, and scripts we made because we needed them ourselves. Steal them, print them, scribble on them. Pass them along." }
+  ],
+  "blocks": [
+    {
+      "type": "resource",
+      "name": "Resource card",
+      "settings": [
+        { "type": "text",   "id": "title",        "label": "Title",        "default": "The rainy-day activity deck" },
+        { "type": "text",   "id": "description",  "label": "Description",  "default": "30 printable cards for screen-free afternoons" },
+        { "type": "text",   "id": "pages",        "label": "Pages / size", "default": "30 cards · PDF" },
+        { "type": "select", "id": "tone",         "label": "Background tone", "options": [{"value":"coral","label":"Coral"},{"value":"yellow","label":"Yellow"},{"value":"teal","label":"Teal"},{"value":"warm","label":"Warm"}], "default": "coral" },
+        { "type": "url",    "id": "download_url", "label": "Download URL" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "OFST Free Resources" }]
+}
+{% endschema %}

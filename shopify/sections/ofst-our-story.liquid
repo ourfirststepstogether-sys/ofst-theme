@@ -1,0 +1,123 @@
+{% comment %} OFST Our Story page sections {% endcomment %}
+
+<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
+
+<article id="ofst-story-{{ section.id }}" class="ofst-section ofst-story">
+  {% comment %} Intro {% endcomment %}
+  <div class="ofst-story__intro ofst-container">
+    <span class="ofst-eyebrow" style="color:var(--ofst-teal)">{{ section.settings.eyebrow | default: 'Our story' }}</span>
+    <h1 class="ofst-display ofst-story__headline">{{ section.settings.headline | default: 'Started with one tired Tuesday.' | escape }}</h1>
+    <p class="ofst-body ofst-story__lead">{{ section.settings.lead_text | default: "Maya and Dan had a 2-year-old, a pile of plastic toys that flashed and sang but never actually got played with, and about 14 minutes to themselves between nap and dinner. They started making magnetic wooden gear walls in the garage. Friends asked. Then strangers asked. OFST is that garage, six years later." | escape }}</p>
+  </div>
+
+  {% comment %} Photo pair {% endcomment %}
+  <div class="ofst-story__photos ofst-container">
+    {% if section.settings.image_1 != blank %}
+      <div class="ofst-story__photo">{{ section.settings.image_1 | image_url: width: 800 | image_tag: loading: 'lazy', class: 'ofst-img-cover', alt: section.settings.image_1.alt | escape }}</div>
+    {% else %}
+      <div class="ofst-story__photo ofst-story__photo--ph">[ workshop photo · Maya & Dan at the workbench ]</div>
+    {% endif %}
+    {% if section.settings.image_2 != blank %}
+      <div class="ofst-story__photo">{{ section.settings.image_2 | image_url: width: 800 | image_tag: loading: 'lazy', class: 'ofst-img-cover', alt: section.settings.image_2.alt | escape }}</div>
+    {% else %}
+      <div class="ofst-story__photo ofst-story__photo--ph">[ child playing with gear wall · natural light ]</div>
+    {% endif %}
+  </div>
+
+  {% comment %} Values trio {% endcomment %}
+  <div class="ofst-story__values ofst-container">
+    {% for block in section.blocks %}
+      <div class="ofst-story__value" {{ block.shopify_attributes }}>
+        <div class="ofst-story__value-num" aria-hidden="true">{{ forloop.index }}</div>
+        <h3 class="ofst-h2 ofst-story__value-title">{{ block.settings.title | escape }}</h3>
+        <p class="ofst-story__value-text">{{ block.settings.text | escape }}</p>
+      </div>
+    {% endfor %}
+
+    {% comment %} Fallback values {% endcomment %}
+    {% if section.blocks.size == 0 %}
+      {% assign values = "Real first steps,We build the stuff we wish existed when our kids took theirs.|No judgment,Screen time happens. Frozen nuggets happen. We don't pretend otherwise.|Hustle together,Small shop in Michigan. Six people two dogs a lot of sawdust." | split: "|" %}
+      {% for val in values %}
+        {% assign val_parts = val | split: "," %}
+        <div class="ofst-story__value">
+          <div class="ofst-story__value-num" aria-hidden="true">{{ forloop.index }}</div>
+          <h3 class="ofst-h2 ofst-story__value-title">{{ val_parts[0] }}</h3>
+          <p class="ofst-story__value-text">{{ val_parts[1] }}</p>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</article>
+
+<style>
+  #ofst-story-{{ section.id }} { background: var(--ofst-base); }
+  #ofst-story-{{ section.id }} .ofst-story__intro { padding: 64px 0; }
+  #ofst-story-{{ section.id }} .ofst-story__headline { font-size: clamp(36px,4.5vw,54px); margin-top: 8px; line-height: 1.05; max-width: 860px; }
+  #ofst-story-{{ section.id }} .ofst-story__lead { margin-top: 20px; font-size: 19px; line-height: 1.6; color: var(--ofst-mid); max-width: 800px; }
+  /* Photos */
+  #ofst-story-{{ section.id }} .ofst-story__photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding-bottom: 64px;
+  }
+  #ofst-story-{{ section.id }} .ofst-story__photo {
+    aspect-ratio: 4/3;
+    border-radius: var(--ofst-radius-lg);
+    overflow: hidden;
+  }
+  #ofst-story-{{ section.id }} .ofst-story__photo--ph {
+    background: #EFE7DB;
+    display: flex; align-items: center; justify-content: center;
+    font-family: ui-monospace,monospace; font-size: 11px; color: var(--ofst-mid); padding: 12px; text-align: center;
+  }
+  /* Values */
+  #ofst-story-{{ section.id }} .ofst-story__values {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    padding-bottom: 80px;
+  }
+  #ofst-story-{{ section.id }} .ofst-story__value-num {
+    width: 36px; height: 36px;
+    border-radius: 18px;
+    background: var(--ofst-coral);
+    color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+    font-family: var(--ofst-font-display);
+  }
+  #ofst-story-{{ section.id }} .ofst-story__value-title { margin-top: 14px; font-size: 22px; }
+  #ofst-story-{{ section.id }} .ofst-story__value-text { margin-top: 8px; font-size: 15px; color: var(--ofst-mid); line-height: 1.65; font-family: var(--ofst-font-body); }
+
+  @media (max-width: 768px) {
+    #ofst-story-{{ section.id }} .ofst-story__photos { grid-template-columns: 1fr; }
+    #ofst-story-{{ section.id }} .ofst-story__values { grid-template-columns: 1fr; gap: 24px; }
+    #ofst-story-{{ section.id }} .ofst-story__intro { padding: 40px 0; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "OFST Our Story",
+  "settings": [
+    { "type": "text",         "id": "eyebrow",   "label": "Eyebrow",   "default": "Our story" },
+    { "type": "text",         "id": "headline",  "label": "Headline",  "default": "Started with one tired Tuesday." },
+    { "type": "textarea",     "id": "lead_text", "label": "Lead text", "default": "Maya and Dan had a 2-year-old, a pile of plastic toys that flashed and sang but never actually got played with, and about 14 minutes to themselves between nap and dinner. They started making magnetic wooden gear walls in the garage. Friends asked. Then strangers asked. OFST is that garage, six years later." },
+    { "type": "image_picker", "id": "image_1",   "label": "Photo 1" },
+    { "type": "image_picker", "id": "image_2",   "label": "Photo 2" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "limit": 3,
+      "settings": [
+        { "type": "text",     "id": "title", "label": "Title", "default": "Real first steps" },
+        { "type": "textarea", "id": "text",  "label": "Text",  "default": "We build the stuff we wish existed when our kids took theirs." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "OFST Our Story" }]
+}
+{% endschema %}

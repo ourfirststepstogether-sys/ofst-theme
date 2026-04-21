@@ -1,0 +1,121 @@
+{% comment %} OFST Phone Book / For Adults Banner — Section 6 of 8 on the homepage {% endcomment %}
+
+<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
+
+<section id="ofst-pbb-{{ section.id }}" class="ofst-section ofst-pbb">
+  <div class="ofst-container">
+    <div class="ofst-pbb__card">
+      {% comment %} Left: copy {% endcomment %}
+      <div class="ofst-pbb__copy">
+        <span class="ofst-chip ofst-pbb__badge">{{ section.settings.badge_text | default: 'The unusual one 📓' | escape }}</span>
+        <h2 class="ofst-pbb__heading">{{ section.settings.heading | default: 'A phone book cover, for the way parents actually use phones.' | escape }}</h2>
+        <p class="ofst-pbb__body">{{ section.settings.body_text | default: "Yes, a phone book cover. Hand-bound, refillable, keeps little hands busy during the pediatrician waiting room. A strange little thing we're weirdly proud of." | escape }}</p>
+        {% if section.settings.cta_text != blank %}
+          <a href="{{ section.settings.cta_url | default: '/collections/for-adults' }}" class="ofst-btn ofst-btn-cta ofst-pbb__cta">
+            {{ section.settings.cta_text | escape }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        {% endif %}
+      </div>
+
+      {% comment %} Right: lifestyle image {% endcomment %}
+      <div class="ofst-pbb__media">
+        {% if section.settings.image != blank %}
+          {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', class: 'ofst-img-cover', alt: section.settings.image.alt | escape }}
+        {% else %}
+          <div class="ofst-pbb__img-placeholder">[ lifestyle · phone book cover in a parent's lap at a pediatrician waiting room · warm overhead light ]</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #ofst-pbb-{{ section.id }} {
+    padding: 96px 0;
+    background: #fff;
+  }
+  #ofst-pbb-{{ section.id }} .ofst-pbb__card {
+    border-radius: var(--ofst-radius-lg);
+    overflow: hidden;
+    background: var(--ofst-deep);
+    color: #fff;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 440px;
+  }
+  #ofst-pbb-{{ section.id }} .ofst-pbb__copy {
+    padding: 56px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  #ofst-pbb-{{ section.id }} .ofst-pbb__badge {
+    background: rgba(255,204,92,.25);
+    color: var(--ofst-yellow);
+    box-shadow: none;
+    align-self: flex-start;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  #ofst-pbb-{{ section.id }} .ofst-pbb__heading {
+    font-family: var(--ofst-font-display);
+    font-size: clamp(26px,3vw,42px);
+    font-weight: 700;
+    line-height: 1.05;
+    margin-top: 18px;
+    letter-spacing: -.02em;
+    color: #fff;
+  }
+  #ofst-pbb-{{ section.id }} .ofst-pbb__body {
+    margin-top: 18px;
+    font-size: 17px;
+    color: rgba(255,255,255,.82);
+    max-width: 460px;
+    line-height: 1.65;
+  }
+  #ofst-pbb-{{ section.id }} .ofst-pbb__cta { margin-top: 28px; align-self: flex-start; }
+  #ofst-pbb-{{ section.id }} .ofst-pbb__media {
+    position: relative;
+    background: #3a5f6e;
+  }
+  #ofst-pbb-{{ section.id }} .ofst-pbb__media img { width: 100%; height: 100%; object-fit: cover; }
+  #ofst-pbb-{{ section.id }} .ofst-pbb__img-placeholder {
+    width: 100%; height: 100%;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: ui-monospace,monospace;
+    font-size: 11px;
+    color: #cfe3e8;
+    padding: 24px;
+    text-align: center;
+    background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.04) 0 1px, transparent 1px 14px);
+  }
+
+  @media (max-width: 900px) {
+    #ofst-pbb-{{ section.id }} .ofst-pbb__card { grid-template-columns: 1fr; }
+    #ofst-pbb-{{ section.id }} .ofst-pbb__media { min-height: 240px; }
+    #ofst-pbb-{{ section.id }} .ofst-pbb__copy  { padding: 36px 28px; }
+  }
+  @media (max-width: 600px) {
+    #ofst-pbb-{{ section.id }} { padding: 56px 0; }
+    #ofst-pbb-{{ section.id }} .ofst-pbb__heading { font-size: 26px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "OFST Phone Book / For Adults Banner",
+  "settings": [
+    { "type": "text",         "id": "badge_text", "label": "Badge",    "default": "The unusual one 📓" },
+    { "type": "textarea",     "id": "heading",    "label": "Heading",  "default": "A phone book cover, for the way parents actually use phones." },
+    { "type": "textarea",     "id": "body_text",  "label": "Body",     "default": "Yes, a phone book cover. Hand-bound, refillable, keeps little hands busy during the pediatrician waiting room. A strange little thing we're weirdly proud of." },
+    { "type": "text",         "id": "cta_text",   "label": "CTA text", "default": "Discover this special parent tool" },
+    { "type": "url",          "id": "cta_url",    "label": "CTA link" },
+    { "type": "image_picker", "id": "image",      "label": "Lifestyle image" }
+  ],
+  "presets": [{ "name": "OFST Phone Book Banner" }]
+}
+{% endschema %}
