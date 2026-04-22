@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "policies": {
+      "type": "ofst-policies",
+      "settings": {
+        "eyebrow": "Legal & policies"
+      }
+    }
+  },
+  "order": ["policies"]
+}

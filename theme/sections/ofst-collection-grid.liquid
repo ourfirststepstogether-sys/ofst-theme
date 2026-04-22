@@ -1,0 +1,212 @@
+{% comment %} OFST Collection grid with sticky filter bar {% endcomment %}
+
+<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
+
+{% comment %} Sticky filter bar {% endcomment %}
+<div id="ofst-filter-{{ section.id }}" class="ofst-section ofst-filter-bar">
+  <div class="ofst-container ofst-filter-bar__inner">
+    <button class="ofst-btn ofst-btn-outline ofst-btn-sm ofst-filter-bar__btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18M6 12h12M10 19h4"/></svg>
+      Filters
+    </button>
+
+    {% comment %} Filter chips (customize via settings or use Shopify filter tags) {% endcomment %}
+    {% if collection.all_tags.size > 0 %}
+      {% for tag in collection.all_tags limit: 6 %}
+        <a href="{{ collection.url }}?filter={{ tag | url_encode }}" class="ofst-tab {{ 'ofst-tab-active' if current_tags contains tag }}">{{ tag }}</a>
+      {% endfor %}
+    {% else %}
+      <span class="ofst-tab">Ages 18m–3</span>
+      <span class="ofst-tab">Ages 3–6</span>
+      <span class="ofst-tab">Ages 6+</span>
+      <span class="ofst-tab">Starter sets</span>
+      <span class="ofst-tab">Under $100</span>
+    {% endif %}
+
+    <span class="ofst-filter-bar__count">
+      {% if collection.products_count > 0 %}
+        {{ collection.products_count }} products
+      {% endif %}
+      <span class="ofst-filter-bar__sort">
+        Sort: Best selling
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </span>
+    </span>
+  </div>
+</div>
+
+{% comment %} Product grid {% endcomment %}
+<section id="ofst-grid-{{ section.id }}" class="ofst-section ofst-coll-grid">
+  <div class="ofst-container">
+    <div class="ofst-coll-grid__products">
+      {% paginate collection.products by section.settings.products_per_page %}
+        {% for product in collection.products %}
+          <article class="ofst-card ofst-coll-grid__card">
+            <a href="{{ product.url }}" class="ofst-coll-grid__card-link" aria-label="{{ product.title | escape }}">
+              <div class="ofst-coll-grid__img-wrap">
+                {% if product.featured_image != blank %}
+                  {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'ofst-img-cover', alt: product.featured_image.alt | default: product.title | escape }}
+                {% else %}
+                  <div class="ofst-coll-grid__img-ph">[ {{ product.title | escape }} ]</div>
+                {% endif %}
+
+                {% for tag in product.tags %}
+                  {% if tag == 'best-seller' %}
+                    <span class="ofst-chip ofst-chip-yellow ofst-coll-grid__badge">Best seller</span>
+                  {% elsif tag == 'new' %}
+                    <span class="ofst-chip ofst-chip-coral ofst-coll-grid__badge">New</span>
+                  {% endif %}
+                {% endfor %}
+
+                <button class="ofst-coll-grid__wishlist" aria-label="Save {{ product.title | escape }}" onclick="event.preventDefault()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 10c0 5.5-7 10-7 10z"/></svg>
+                </button>
+              </div>
+
+              <div class="ofst-coll-grid__card-body">
+                <div class="ofst-coll-grid__meta">
+                  {% if product.metafields.custom.age_range != blank %}
+                    <span>Ages {{ product.metafields.custom.age_range }}</span>
+                    <span class="ofst-coll-grid__dot">·</span>
+                  {% endif %}
+                  {% if product.metafields.reviews.rating.value != blank %}
+                    <span class="ofst-coll-grid__rating">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="#FFB629" stroke="none"><path d="M12 3l2.6 5.5 6 .6-4.5 4 1.3 6L12 16l-5.4 3.1 1.3-6-4.5-4 6-.6z"/></svg>
+                      {{ product.metafields.reviews.rating.value }}
+                      ({{ product.metafields.reviews.rating_count }})
+                    </span>
+                  {% endif %}
+                </div>
+
+                <h3 class="ofst-coll-grid__name">{{ product.title | escape }}</h3>
+
+                <div class="ofst-coll-grid__footer">
+                  <span class="ofst-coll-grid__price">{{ product.price | money }}</span>
+                  <button class="ofst-btn ofst-btn-primary ofst-btn-sm" aria-label="Add {{ product.title | escape }} to cart">Add to cart</button>
+                </div>
+              </div>
+            </a>
+          </article>
+        {% else %}
+          <p class="ofst-coll-grid__empty">No products found in this collection.</p>
+        {% endfor %}
+
+        {% comment %} Pagination {% endcomment %}
+        {% if paginate.pages > 1 %}
+          <div class="ofst-coll-grid__pagination" role="navigation" aria-label="Pagination">
+            {{ paginate | default_pagination }}
+          </div>
+        {% endif %}
+      {% endpaginate %}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Filter bar */
+  #ofst-filter-{{ section.id }} {
+    padding: 24px 0;
+    background: var(--ofst-base);
+    border-bottom: 1px solid rgba(38,70,83,.08);
+    position: sticky;
+    top: 62px;
+    z-index: 10;
+  }
+  #ofst-filter-{{ section.id }} .ofst-filter-bar__inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  #ofst-filter-{{ section.id }} .ofst-filter-bar__count {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--ofst-mid);
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-filter-{{ section.id }} .ofst-filter-bar__sort {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--ofst-muted);
+    cursor: pointer;
+  }
+
+  /* Grid */
+  #ofst-grid-{{ section.id }} {
+    padding: 40px 0 80px;
+    background: var(--ofst-base);
+  }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__card { display: flex; flex-direction: column; }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__card-link { display: flex; flex-direction: column; text-decoration: none; color: inherit; flex: 1; }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__img-wrap {
+    position: relative;
+    aspect-ratio: 1/1;
+    background: #EFE7DB;
+    overflow: hidden;
+  }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__img-ph {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: ui-monospace,monospace; font-size: 11px; color: var(--ofst-mid);
+    padding: 12px; text-align: center;
+  }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__badge { position: absolute; top: 12px; left: 12px; font-size: 11px; }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__wishlist {
+    position: absolute; top: 10px; right: 10px;
+    background: #fff;
+    width: 36px; height: 36px; border-radius: 18px;
+    display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,.08);
+    border: none; cursor: pointer;
+    color: var(--ofst-mid);
+    transition: color .15s;
+  }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__wishlist:hover { color: var(--ofst-coral); }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__card-body { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--ofst-mid);
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__dot { color: var(--ofst-muted); }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__rating { display: inline-flex; align-items: center; gap: 2px; }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__name { font-size: 16px; font-weight: 600; margin-top: 6px; color: #000; transition: color .15s; }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__card-link:hover .ofst-coll-grid__name { color: var(--ofst-coral); }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__footer { margin-top: auto; padding-top: 14px; display: flex; align-items: center; justify-content: space-between; }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__price { font-family: var(--ofst-font-display); font-size: 20px; font-weight: 700; color: #000; }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__empty { grid-column: span 3; text-align: center; color: var(--ofst-mid); padding: 40px 0; font-family: var(--ofst-font-body); }
+  #ofst-grid-{{ section.id }} .ofst-coll-grid__pagination { grid-column: span 3; display: flex; justify-content: center; margin-top: 40px; gap: 8px; font-family: var(--ofst-font-body); }
+
+  @media (max-width: 900px) {
+    #ofst-grid-{{ section.id }} .ofst-coll-grid__products { grid-template-columns: repeat(2,1fr); }
+    #ofst-grid-{{ section.id }} .ofst-coll-grid__empty,
+    #ofst-grid-{{ section.id }} .ofst-coll-grid__pagination { grid-column: span 2; }
+  }
+  @media (max-width: 560px) {
+    #ofst-grid-{{ section.id }} .ofst-coll-grid__products { grid-template-columns: repeat(2,1fr); gap: 12px; }
+    #ofst-grid-{{ section.id }} .ofst-coll-grid__card-body { padding: 12px 12px 14px; }
+    #ofst-grid-{{ section.id }} .ofst-coll-grid__name { font-size: 14px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "OFST Collection Grid",
+  "settings": [
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 6, "max": 24, "step": 6, "default": 12 }
+  ],
+  "presets": [{ "name": "OFST Collection Grid" }]
+}
+{% endschema %}

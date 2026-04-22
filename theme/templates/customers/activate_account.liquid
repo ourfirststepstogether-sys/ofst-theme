@@ -1,0 +1,23 @@
+<section class="ofst-section">
+  <div class="ofst-container ofst-customer">
+    <h1 class="ofst-h1">{{ 'customer.activate_account.title' | t }}</h1>
+    <p>{{ 'customer.activate_account.subtext' | t }}</p>
+
+    {% form 'activate_customer_password' %}
+      {{ form.errors | default_errors }}
+      <label for="Password">{{ 'customer.activate_account.password' | t }}</label>
+      <input type="password" name="customer[password]" id="Password" autocomplete="new-password" required>
+
+      <label for="PasswordConfirm">{{ 'customer.activate_account.password_confirm' | t }}</label>
+      <input type="password" name="customer[password_confirmation]" id="PasswordConfirm" autocomplete="new-password" required>
+
+      <button type="submit" class="ofst-btn ofst-btn-cta">{{ 'customer.activate_account.submit' | t }}</button>
+      <button type="submit" name="decline" class="ofst-btn ofst-btn-outline">{{ 'customer.activate_account.cancel' | t }}</button>
+    {% endform %}
+  </div>
+</section>
+<style>
+  .ofst-customer { max-width: 480px; padding: 48px 20px; }
+  .ofst-customer label { display: block; margin: 16px 0 4px; font-family: var(--ofst-font-display); font-weight: 600; }
+  .ofst-customer input { width: 100%; padding: 10px 14px; border: 2px solid var(--ofst-ink); border-radius: 10px; font-family: var(--ofst-font-body); }
+</style>

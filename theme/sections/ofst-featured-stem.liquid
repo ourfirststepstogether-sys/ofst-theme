@@ -1,0 +1,180 @@
+{% comment %} OFST Featured STEM — Section 2 of 8 on the homepage {% endcomment %}
+
+<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
+
+<section id="ofst-fstem-{{ section.id }}" class="ofst-section ofst-featured-stem">
+  <div class="ofst-container">
+    <div class="ofst-fstem__header">
+      <div>
+        <span class="ofst-eyebrow">{{ section.settings.eyebrow | default: 'The hero stuff ✨' }}</span>
+        <h2 class="ofst-h1 ofst-fstem__heading">
+          Magnetic wooden toys that actually
+          <span style="color:var(--ofst-coral)">hold their attention</span>.
+        </h2>
+        {% if section.settings.body_text != blank %}
+          <p class="ofst-body ofst-fstem__body">{{ section.settings.body_text | escape }}</p>
+        {% endif %}
+      </div>
+      {% if section.settings.collection != blank %}
+        <a href="{{ section.settings.collection.url }}" class="ofst-link">
+          See all wooden toys
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="ofst-fstem__grid">
+      {% assign source_collection = section.settings.collection %}
+      {% if source_collection != blank %}
+        {% for product in source_collection.products limit: 4 %}
+          <article class="ofst-card ofst-fstem__card">
+            <a href="{{ product.url }}" class="ofst-fstem__card-link" aria-label="{{ product.title | escape }}">
+              <div class="ofst-fstem__card-img-wrap">
+                {% if product.featured_image != blank %}
+                  {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'ofst-img-cover', alt: product.featured_image.alt | default: product.title | escape }}
+                {% else %}
+                  <div class="ofst-fstem__no-img">[ {{ product.title | escape }} ]</div>
+                {% endif %}
+
+                {% if product.metafields.custom.badge != blank %}
+                  <span class="ofst-chip {% if product.metafields.custom.badge == 'New' %}ofst-chip-coral{% else %}ofst-chip-yellow{% endif %} ofst-fstem__badge">
+                    {{ product.metafields.custom.badge }}
+                  </span>
+                {% endif %}
+
+                <button class="ofst-fstem__wishlist" aria-label="Save {{ product.title | escape }}">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 10c0 5.5-7 10-7 10z"/></svg>
+                </button>
+              </div>
+
+              <div class="ofst-fstem__card-body">
+                {% if product.metafields.custom.age_range != blank %}
+                  <p class="ofst-fstem__ages">{{ product.metafields.custom.age_range }}</p>
+                {% endif %}
+                <h3 class="ofst-h3 ofst-fstem__name">{{ product.title | escape }}</h3>
+                <div class="ofst-fstem__footer">
+                  <span class="ofst-fstem__price">{{ product.price | money }}</span>
+                  <button class="ofst-btn ofst-btn-primary ofst-btn-sm" data-product-id="{{ product.id }}" aria-label="Add {{ product.title | escape }} to cart">Add</button>
+                </div>
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+      {% else %}
+        {% comment %} Placeholder cards when no collection is set {% endcomment %}
+        {% assign placeholder_products = "Magnetic Gear Wall — Starter,Pipe & Ramp Play Wall,Big Gears Expansion Set,Pipe Builder Add-On" | split: "," %}
+        {% assign placeholder_prices   = "$148,$186,$68,$54"       | split: "," %}
+        {% assign placeholder_badges   = "Best seller,New,,"       | split: "," %}
+        {% assign placeholder_ages     = "Ages 2–6,Ages 3–7,Ages 3+,Ages 3+" | split: "," %}
+        {% for name in placeholder_products %}
+          <article class="ofst-card ofst-fstem__card">
+            <div class="ofst-fstem__card-link">
+              <div class="ofst-fstem__card-img-wrap">
+                <div class="ofst-fstem__no-img">[ product image ]</div>
+                {% if placeholder_badges[forloop.index0] != blank %}
+                  <span class="ofst-chip {% if placeholder_badges[forloop.index0] == 'New' %}ofst-chip-coral{% else %}ofst-chip-yellow{% endif %} ofst-fstem__badge">{{ placeholder_badges[forloop.index0] }}</span>
+                {% endif %}
+              </div>
+              <div class="ofst-fstem__card-body">
+                <p class="ofst-fstem__ages">{{ placeholder_ages[forloop.index0] }}</p>
+                <h3 class="ofst-h3 ofst-fstem__name">{{ name }}</h3>
+                <div class="ofst-fstem__footer">
+                  <span class="ofst-fstem__price">{{ placeholder_prices[forloop.index0] }}</span>
+                  <button class="ofst-btn ofst-btn-primary ofst-btn-sm">Add</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #ofst-fstem-{{ section.id }} {
+    padding: 96px 0;
+    background: #fff;
+  }
+  #ofst-fstem-{{ section.id }} .ofst-fstem__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+  }
+  #ofst-fstem-{{ section.id }} .ofst-fstem__heading { margin-top: 10px; font-size: clamp(26px,3.2vw,44px); }
+  #ofst-fstem-{{ section.id }} .ofst-fstem__body    { margin-top: 12px; max-width: 620px; }
+  /* Grid */
+  #ofst-fstem-{{ section.id }} .ofst-fstem__grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 20px;
+  }
+  #ofst-fstem-{{ section.id }} .ofst-fstem__card { display: flex; flex-direction: column; }
+  #ofst-fstem-{{ section.id }} .ofst-fstem__card-link { display: flex; flex-direction: column; text-decoration: none; color: inherit; flex: 1; }
+  #ofst-fstem-{{ section.id }} .ofst-fstem__card-link:hover .ofst-fstem__name { color: var(--ofst-coral); }
+  /* Image */
+  #ofst-fstem-{{ section.id }} .ofst-fstem__card-img-wrap {
+    position: relative;
+    aspect-ratio: 1/1;
+    background: #EFE7DB;
+    overflow: hidden;
+  }
+  #ofst-fstem-{{ section.id }} .ofst-fstem__no-img {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: ui-monospace,monospace; font-size: 11px; color: var(--ofst-mid);
+    padding: 12px; text-align: center;
+  }
+  #ofst-fstem-{{ section.id }} .ofst-fstem__badge { position: absolute; top: 12px; left: 12px; font-size: 11px; }
+  #ofst-fstem-{{ section.id }} .ofst-fstem__wishlist {
+    position: absolute; top: 10px; right: 10px;
+    background: #fff;
+    width: 36px; height: 36px; border-radius: 18px;
+    display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,.08);
+    border: none; cursor: pointer;
+    color: var(--ofst-mid);
+    transition: color .15s;
+  }
+  #ofst-fstem-{{ section.id }} .ofst-fstem__wishlist:hover { color: var(--ofst-coral); }
+  /* Card body */
+  #ofst-fstem-{{ section.id }} .ofst-fstem__card-body { padding: 16px 16px 18px; display: flex; flex-direction: column; flex: 1; }
+  #ofst-fstem-{{ section.id }} .ofst-fstem__ages { font-size: 12px; color: var(--ofst-mid); font-weight: 700; }
+  #ofst-fstem-{{ section.id }} .ofst-fstem__name { font-size: 17px; margin-top: 4px; line-height: 1.3; transition: color .15s; }
+  #ofst-fstem-{{ section.id }} .ofst-fstem__footer {
+    margin-top: auto;
+    padding-top: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #ofst-fstem-{{ section.id }} .ofst-fstem__price {
+    font-family: var(--ofst-font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: #000;
+  }
+
+  @media (max-width: 1024px) {
+    #ofst-fstem-{{ section.id }} .ofst-fstem__grid { grid-template-columns: repeat(2,1fr); }
+  }
+  @media (max-width: 640px) {
+    #ofst-fstem-{{ section.id }} { padding: 56px 0; }
+    #ofst-fstem-{{ section.id }} .ofst-fstem__grid { grid-template-columns: repeat(2,1fr); gap: 12px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "OFST Featured STEM Toys",
+  "settings": [
+    { "type": "text",       "id": "eyebrow",   "label": "Eyebrow text", "default": "The hero stuff ✨" },
+    { "type": "textarea",   "id": "body_text",  "label": "Body copy", "default": "Solid birch. Strong magnets. No screens, no batteries, no flashing lights. Just real hands building real things — together." },
+    { "type": "collection", "id": "collection", "label": "Product collection" }
+  ],
+  "presets": [{ "name": "OFST Featured STEM Toys" }]
+}
+{% endschema %}

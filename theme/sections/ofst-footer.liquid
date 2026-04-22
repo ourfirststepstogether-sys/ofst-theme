@@ -1,0 +1,208 @@
+{% comment %} OFST Site Footer {% endcomment %}
+
+<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
+
+<footer id="ofst-footer-{{ section.id }}" class="ofst-section ofst-footer" role="contentinfo">
+  <div class="ofst-footer__main ofst-container">
+    {% comment %} Brand column {% endcomment %}
+    <div class="ofst-footer__brand">
+      <a href="{{ routes.root_url }}" class="ofst-footer__logo-link" aria-label="{{ shop.name }}">
+        {% render 'ofst-logo', variant: 'white', size: 26 %}
+      </a>
+      <p class="ofst-footer__tagline">{{ section.settings.tagline | default: 'Real first steps. No judgment. Just hustle together. Magnetic wooden STEM toys and thoughtful parent tools, made for the messy, beautiful middle.' | escape }}</p>
+
+      {% comment %} Inline newsletter {% endcomment %}
+      {% form 'customer', class: 'ofst-footer__nl-form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="ofst-footer__nl-row">
+          <input type="email" name="contact[email]" placeholder="your@inbox.com" autocomplete="email" required class="ofst-footer__nl-input" aria-label="Email for newsletter">
+          <button type="submit" class="ofst-footer__nl-btn">Join the Journey</button>
+        </div>
+      {% endform %}
+    </div>
+
+    {% comment %} Link columns {% endcomment %}
+    <div class="ofst-footer__links">
+      <h4 class="ofst-footer__col-title">Shop</h4>
+      <ul class="ofst-footer__col-list" role="list">
+        <li><a href="/collections/magnetic-wooden-stem-toys">Magnetic Wooden STEM Toys</a></li>
+        <li><a href="/collections/phone-book-covers">Phone Book Covers</a></li>
+        <li><a href="/collections/kids-clothing">Kids Clothing</a></li>
+        <li><a href="/products/gift-card">Gift Cards</a></li>
+        <li><a href="/collections/sale">Sale</a></li>
+      </ul>
+    </div>
+    <div class="ofst-footer__links">
+      <h4 class="ofst-footer__col-title">Helpful Stuff</h4>
+      <ul class="ofst-footer__col-list" role="list">
+        <li><a href="/pages/activities-together">Activities Together</a></li>
+        <li><a href="/pages/free-resources">Free Resources</a></li>
+        <li><a href="/blogs/bedtime-stories">Bedtime Stories</a></li>
+        <li><a href="/blogs/play-guides">Play Guides</a></li>
+        <li><a href="/pages/our-story">Our Story</a></li>
+      </ul>
+    </div>
+    <div class="ofst-footer__links">
+      <h4 class="ofst-footer__col-title">Care</h4>
+      <ul class="ofst-footer__col-list" role="list">
+        <li><a href="/pages/shipping-and-returns">Shipping &amp; Returns</a></li>
+        <li><a href="/pages/faq">FAQ / Contact</a></li>
+        <li><a href="/pages/safety-and-compliance">Safety &amp; Compliance</a></li>
+        <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+        <li><a href="/policies/terms-of-service">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+
+  {% comment %} Bottom bar {% endcomment %}
+  <div class="ofst-footer__bottom ofst-container">
+    <span class="ofst-footer__copy">
+      &copy; {{ 'now' | date: '%Y' }} Our First Steps &nbsp;·&nbsp;
+      <em style="color:var(--ofst-yellow);font-style:normal">Real First Steps. No Judgment. Just Hustle Together.</em>
+    </span>
+    <div class="ofst-footer__social" aria-label="Social media">
+      {% if section.settings.instagram_url != blank %}
+        <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+      {% else %}
+        <span>Instagram</span>
+      {% endif %}
+      {% if section.settings.tiktok_url != blank %}
+        <a href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener" aria-label="TikTok">TikTok</a>
+      {% else %}
+        <span>TikTok</span>
+      {% endif %}
+      <span>Pinterest</span>
+      <span>YouTube</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  #ofst-footer-{{ section.id }} {
+    background: var(--ofst-deep);
+    color: #fff;
+    padding: 56px 0 0;
+  }
+  #ofst-footer-{{ section.id }} .ofst-footer__main {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 48px;
+  }
+  /* Brand col */
+  #ofst-footer-{{ section.id }} .ofst-footer__logo-link { text-decoration: none; }
+  #ofst-footer-{{ section.id }} .ofst-footer__tagline {
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(255,255,255,.78);
+    max-width: 320px;
+    font-family: var(--ofst-font-body);
+  }
+  /* Newsletter form */
+  #ofst-footer-{{ section.id }} .ofst-footer__nl-form { margin-top: 20px; }
+  #ofst-footer-{{ section.id }} .ofst-footer__nl-row {
+    display: flex;
+    gap: 8px;
+    background: rgba(255,255,255,.08);
+    padding: 6px;
+    border-radius: var(--ofst-pill);
+    max-width: 360px;
+  }
+  #ofst-footer-{{ section.id }} .ofst-footer__nl-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    flex: 1;
+    padding: 0 14px;
+    font-size: 14px;
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-footer-{{ section.id }} .ofst-footer__nl-input::placeholder { color: rgba(255,255,255,.5); }
+  #ofst-footer-{{ section.id }} .ofst-footer__nl-btn {
+    background: var(--ofst-coral);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: var(--ofst-pill);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    font-family: var(--ofst-font-body);
+    white-space: nowrap;
+    transition: filter .15s;
+  }
+  #ofst-footer-{{ section.id }} .ofst-footer__nl-btn:hover { filter: brightness(1.06); }
+  /* Link cols */
+  #ofst-footer-{{ section.id }} .ofst-footer__col-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    color: #fff;
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-footer-{{ section.id }} .ofst-footer__col-list {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: grid;
+    gap: 10px;
+    font-size: 14px;
+    color: rgba(255,255,255,.78);
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-footer-{{ section.id }} .ofst-footer__col-list a {
+    color: rgba(255,255,255,.78);
+    text-decoration: none;
+    transition: color .15s;
+  }
+  #ofst-footer-{{ section.id }} .ofst-footer__col-list a:hover { color: var(--ofst-yellow); }
+  /* Bottom bar */
+  #ofst-footer-{{ section.id }} .ofst-footer__bottom {
+    border-top: 1px solid rgba(255,255,255,.12);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 24px;
+    font-size: 13px;
+    color: rgba(255,255,255,.6);
+    font-family: var(--ofst-font-body);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  #ofst-footer-{{ section.id }} .ofst-footer__social {
+    display: flex;
+    gap: 14px;
+  }
+  #ofst-footer-{{ section.id }} .ofst-footer__social a,
+  #ofst-footer-{{ section.id }} .ofst-footer__social span {
+    color: rgba(255,255,255,.6);
+    text-decoration: none;
+    transition: color .15s;
+  }
+  #ofst-footer-{{ section.id }} .ofst-footer__social a:hover { color: var(--ofst-teal); }
+
+  @media (max-width: 1024px) {
+    #ofst-footer-{{ section.id }} .ofst-footer__main { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    #ofst-footer-{{ section.id }} .ofst-footer__main { grid-template-columns: 1fr; gap: 28px; }
+    #ofst-footer-{{ section.id }} .ofst-footer__bottom { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "OFST Footer",
+  "settings": [
+    { "type": "textarea", "id": "tagline",       "label": "Brand tagline", "default": "Real first steps. No judgment. Just hustle together. Magnetic wooden STEM toys and thoughtful parent tools, made for the messy, beautiful middle." },
+    { "type": "url",      "id": "instagram_url", "label": "Instagram URL" },
+    { "type": "url",      "id": "tiktok_url",    "label": "TikTok URL" },
+    { "type": "url",      "id": "pinterest_url", "label": "Pinterest URL" },
+    { "type": "url",      "id": "youtube_url",   "label": "YouTube URL" }
+  ]
+}
+{% endschema %}

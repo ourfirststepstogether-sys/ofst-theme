@@ -1,0 +1,271 @@
+{% comment %} OFST Activities Together content hub {% endcomment %}
+
+<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
+
+{% comment %} Page header {% endcomment %}
+<section id="ofst-acthub-{{ section.id }}" class="ofst-section ofst-acthub">
+  <div class="ofst-container">
+    <div class="ofst-acthub__header">
+      <span class="ofst-eyebrow">{{ section.settings.eyebrow | default: 'Activities Together' }}</span>
+      <h1 class="ofst-display ofst-acthub__heading">{{ section.settings.heading | default: "The helpful stuff. From parents who've been there." | escape }}</h1>
+      <p class="ofst-body ofst-acthub__body">{{ section.settings.body_text | default: "Short videos, bedtime stories, play guides, and honest notes from the middle of it. No pretending it's easy." | escape }}</p>
+
+      {% comment %} Filter tabs — tie to Shopify blog tags {% endcomment %}
+      <div class="ofst-acthub__tabs" role="tablist">
+        <a href="{{ blog.url }}" class="ofst-tab {{ 'ofst-tab-active' unless current_tags }}">All</a>
+        <a href="{{ blog.url }}/tagged/videos"          class="ofst-tab {{ 'ofst-tab-active' if current_tags contains 'videos' }}">Videos</a>
+        <a href="{{ blog.url }}/tagged/bedtime-stories" class="ofst-tab {{ 'ofst-tab-active' if current_tags contains 'bedtime-stories' }}">Bedtime stories</a>
+        <a href="{{ blog.url }}/tagged/play-guides"     class="ofst-tab {{ 'ofst-tab-active' if current_tags contains 'play-guides' }}">Play guides</a>
+        <a href="{{ blog.url }}/tagged/parent-notes"    class="ofst-tab {{ 'ofst-tab-active' if current_tags contains 'parent-notes' }}">Parent notes</a>
+        <a href="{{ blog.url }}/tagged/sensory-play"    class="ofst-tab {{ 'ofst-tab-active' if current_tags contains 'sensory-play' }}">Sensory play</a>
+        <a href="{{ blog.url }}/tagged/rainy-day"       class="ofst-tab {{ 'ofst-tab-active' if current_tags contains 'rainy-day' }}">Rainy-day rescue</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% comment %} Featured video {% endcomment %}
+{% if section.settings.feature_article != blank or section.settings.feature_image != blank %}
+<section id="ofst-acthub-feat-{{ section.id }}" class="ofst-acthub-feat ofst-section">
+  <div class="ofst-container">
+    <div class="ofst-acthub-feat__card">
+      {% if section.settings.feature_image != blank %}
+        {{ section.settings.feature_image | image_url: width: 1600 | image_tag: loading: 'lazy', class: 'ofst-acthub-feat__img', alt: '' }}
+      {% elsif section.settings.feature_article.image != blank %}
+        {{ section.settings.feature_article.image | image_url: width: 1600 | image_tag: loading: 'lazy', class: 'ofst-acthub-feat__img', alt: '' }}
+      {% else %}
+        <div class="ofst-acthub-feat__img ofst-acthub-feat__img--ph">[ lifestyle · parents & kids at play ]</div>
+      {% endif %}
+      <div class="ofst-acthub-feat__overlay" aria-hidden="true"></div>
+
+      {% if section.settings.feature_video_url != blank %}
+        <a href="{{ section.settings.feature_video_url }}" class="ofst-acthub-feat__play" aria-label="Play video">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="var(--ofst-coral)" stroke="none" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>
+        </a>
+      {% endif %}
+
+      <div class="ofst-acthub-feat__body">
+        <span class="ofst-chip ofst-chip-coral" style="font-size:11px">{{ section.settings.feature_tag | default: 'Video · 4 min' | escape }}</span>
+        <h2 class="ofst-acthub-feat__title">{{ section.settings.feature_title | default: "The 15-minute gear wall reset (when they're losing it)" | escape }}</h2>
+        <p class="ofst-acthub-feat__sub">{{ section.settings.feature_sub | default: "It's 4:47pm, dinner isn't started, and everyone is unraveling. Here's the reset Maya uses — honestly, imperfectly." | escape }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% comment %} Article grid {% endcomment %}
+<section id="ofst-acthub-grid-{{ section.id }}" class="ofst-section ofst-acthub-grid">
+  <div class="ofst-container">
+    <div class="ofst-acthub-grid__grid">
+      {% if blog != blank %}
+        {% for article in blog.articles limit: section.settings.articles_per_page %}
+          {% assign tone = 'warm' %}
+          {% if article.tags contains 'videos'          %} {% assign tone = 'teal' %}
+          {% elsif article.tags contains 'bedtime-stories' %} {% assign tone = 'yellow' %}
+          {% elsif article.tags contains 'play-guides'  %} {% assign tone = 'coral' %}
+          {% endif %}
+
+          <article class="ofst-card ofst-acthub-grid__card">
+            <a href="{{ article.url }}" class="ofst-acthub-grid__card-link">
+              <div class="ofst-acthub-grid__img-wrap" style="background:{% if tone == 'teal' %}#CDE6ED{% elsif tone == 'yellow' %}#FFE9B8{% elsif tone == 'coral' %}#FFD8D8{% else %}#E8DFD2{% endif %}">
+                {% if article.image != blank %}
+                  {{ article.image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'ofst-img-cover', alt: article.image.alt | default: article.title | escape }}
+                {% else %}
+                  <div class="ofst-acthub-grid__img-ph" aria-hidden="true">
+                    {% if article.tags contains 'bedtime-stories' %}
+                      <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#264653" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-4 2V5z"/><path d="M8 7h8M8 11h8"/></svg>
+                    {% elsif article.tags contains 'videos' %}
+                      <svg width="52" height="52" viewBox="0 0 24 24" fill="#264653" stroke="none"><path d="M8 5l11 7-11 7z"/></svg>
+                    {% else %}
+                      <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#264653" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></svg>
+                    {% endif %}
+                  </div>
+                {% endif %}
+                {% if article.tags contains 'videos' %}
+                  <div class="ofst-acthub-grid__video-badge">▶ {{ article.metafields.custom.duration | default: 'Watch' }}</div>
+                {% endif %}
+              </div>
+              <div class="ofst-acthub-grid__body">
+                <span class="ofst-acthub-grid__meta">
+                  {% for tag in article.tags limit: 1 %}{{ tag | replace: '-', ' ' | capitalize }}{% endfor %}
+                  {% if article.metafields.custom.duration != blank %} · {{ article.metafields.custom.duration }}{% endif %}
+                </span>
+                <h3 class="ofst-acthub-grid__title">{{ article.title | escape }}</h3>
+                <span class="ofst-link" style="margin-top:12px;border-bottom-color:var(--ofst-teal);font-size:13px">
+                  Read / watch
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </span>
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+      {% else %}
+        {% comment %} Placeholder cards {% endcomment %}
+        {% assign ph_cards = "teal,Video,Building a pipe run with a 3yo who has opinions|yellow,Bedtime story,Little Gear Who Wouldn't Turn|coral,Play guide,10 ways to play with pipes|warm,Parent note,On the 4pm meltdown and magnetic toys|teal,Video,One toy three ages: same gear wall different play|yellow,Bedtime story,The Pipe That Wanted to Go Sideways" | split: "|" %}
+        {% for ph in ph_cards %}
+          {% assign ph_parts = ph | split: "," %}
+          <article class="ofst-card ofst-acthub-grid__card">
+            <div class="ofst-acthub-grid__img-wrap" style="background:{% if ph_parts[0] == 'teal' %}#CDE6ED{% elsif ph_parts[0] == 'yellow' %}#FFE9B8{% elsif ph_parts[0] == 'coral' %}#FFD8D8{% else %}#E8DFD2{% endif %}">
+              <div class="ofst-acthub-grid__img-ph" aria-hidden="true">
+                {% if ph_parts[1] == 'Bedtime story' %}
+                  <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#264653" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-4 2V5z"/><path d="M8 7h8M8 11h8"/></svg>
+                {% elsif ph_parts[1] == 'Video' %}
+                  <svg width="52" height="52" viewBox="0 0 24 24" fill="#264653" stroke="none"><path d="M8 5l11 7-11 7z"/></svg>
+                {% else %}
+                  <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#264653" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></svg>
+                {% endif %}
+              </div>
+            </div>
+            <div class="ofst-acthub-grid__body">
+              <span class="ofst-acthub-grid__meta">{{ ph_parts[1] }}</span>
+              <h3 class="ofst-acthub-grid__title">{{ ph_parts[2] }}</h3>
+            </div>
+          </article>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Hub header */
+  #ofst-acthub-{{ section.id }} {
+    padding: 48px 0 32px;
+    background: var(--ofst-base);
+  }
+  #ofst-acthub-{{ section.id }} .ofst-acthub__header { text-align: center; }
+  #ofst-acthub-{{ section.id }} .ofst-acthub__heading {
+    font-size: clamp(36px,4.5vw,52px);
+    margin: 8px auto 0;
+    max-width: 820px;
+    line-height: 1.05;
+  }
+  #ofst-acthub-{{ section.id }} .ofst-acthub__body { margin: 14px auto 0; max-width: 620px; color: var(--ofst-mid); }
+  #ofst-acthub-{{ section.id }} .ofst-acthub__tabs {
+    margin-top: 22px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-decoration: none;
+  }
+  #ofst-acthub-{{ section.id }} .ofst-acthub__tabs .ofst-tab { text-decoration: none; }
+  /* Featured */
+  #ofst-acthub-feat-{{ section.id }} { padding: 24px 0 56px; background: var(--ofst-base); }
+  #ofst-acthub-feat-{{ section.id }} .ofst-acthub-feat__card {
+    border-radius: var(--ofst-radius-lg);
+    overflow: hidden;
+    position: relative;
+    min-height: 420px;
+    box-shadow: var(--ofst-shadow-lg);
+  }
+  #ofst-acthub-feat-{{ section.id }} .ofst-acthub-feat__img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  #ofst-acthub-feat-{{ section.id }} .ofst-acthub-feat__img--ph {
+    background: #CDE6ED;
+    display: flex; align-items: center; justify-content: center;
+    font-family: ui-monospace,monospace; font-size: 11px; color: var(--ofst-mid); padding: 12px; text-align: center;
+  }
+  #ofst-acthub-feat-{{ section.id }} .ofst-acthub-feat__overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(38,70,83,.2) 0%, rgba(38,70,83,.85) 90%);
+  }
+  #ofst-acthub-feat-{{ section.id }} .ofst-acthub-feat__play {
+    position: absolute;
+    top: 46%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 80px; height: 80px;
+    border-radius: 40px;
+    background: rgba(255,255,255,.95);
+    display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    transition: transform .15s;
+  }
+  #ofst-acthub-feat-{{ section.id }} .ofst-acthub-feat__play:hover { transform: translate(-50%,-50%) scale(1.07); }
+  #ofst-acthub-feat-{{ section.id }} .ofst-acthub-feat__body {
+    position: absolute;
+    left: 32px; right: 32px; bottom: 28px;
+    color: #fff;
+  }
+  #ofst-acthub-feat-{{ section.id }} .ofst-acthub-feat__title {
+    font-family: var(--ofst-font-display);
+    font-size: clamp(22px,2.5vw,32px);
+    font-weight: 700;
+    margin-top: 12px;
+    max-width: 620px;
+    line-height: 1.1;
+    color: #fff;
+  }
+  #ofst-acthub-feat-{{ section.id }} .ofst-acthub-feat__sub { font-size: 15px; opacity: .9; margin-top: 10px; max-width: 560px; font-family: var(--ofst-font-body); }
+  /* Grid */
+  #ofst-acthub-grid-{{ section.id }} { padding: 0 0 80px; background: var(--ofst-base); }
+  #ofst-acthub-grid-{{ section.id }} .ofst-acthub-grid__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  #ofst-acthub-grid-{{ section.id }} .ofst-acthub-grid__card { display: flex; flex-direction: column; }
+  #ofst-acthub-grid-{{ section.id }} .ofst-acthub-grid__card-link { display: flex; flex-direction: column; text-decoration: none; color: inherit; flex: 1; }
+  #ofst-acthub-grid-{{ section.id }} .ofst-acthub-grid__img-wrap {
+    aspect-ratio: 4/3;
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #ofst-acthub-grid-{{ section.id }} .ofst-acthub-grid__img-ph { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+  #ofst-acthub-grid-{{ section.id }} .ofst-acthub-grid__video-badge {
+    position: absolute; top: 14px; right: 14px;
+    background: rgba(38,70,83,.85);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: var(--ofst-pill);
+    font-size: 11px;
+    font-weight: 600;
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-acthub-grid-{{ section.id }} .ofst-acthub-grid__body { padding: 18px 20px 22px; flex: 1; }
+  #ofst-acthub-grid-{{ section.id }} .ofst-acthub-grid__meta {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ofst-mid);
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-acthub-grid-{{ section.id }} .ofst-acthub-grid__title { font-size: 17px; font-weight: 600; margin-top: 6px; line-height: 1.35; color: #000; }
+
+  @media (max-width: 900px) {
+    #ofst-acthub-grid-{{ section.id }} .ofst-acthub-grid__grid { grid-template-columns: repeat(2,1fr); }
+    #ofst-acthub-feat-{{ section.id }} .ofst-acthub-feat__card { min-height: 280px; }
+  }
+  @media (max-width: 600px) {
+    #ofst-acthub-{{ section.id }} { padding: 36px 0 24px; }
+    #ofst-acthub-grid-{{ section.id }} .ofst-acthub-grid__grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "OFST Activities Hub",
+  "settings": [
+    { "type": "text",         "id": "eyebrow",              "label": "Eyebrow",          "default": "Activities Together" },
+    { "type": "text",         "id": "heading",              "label": "Heading",           "default": "The helpful stuff. From parents who've been there." },
+    { "type": "textarea",     "id": "body_text",            "label": "Body copy",         "default": "Short videos, bedtime stories, play guides, and honest notes from the middle of it. No pretending it's easy." },
+    { "type": "blog",         "id": "blog",                 "label": "Blog" },
+    { "type": "range",        "id": "articles_per_page",    "label": "Articles per page", "min": 3, "max": 12, "step": 3, "default": 6 },
+    { "type": "header",       "label": "Featured video" },
+    { "type": "image_picker", "id": "feature_image",        "label": "Feature image" },
+    { "type": "url",          "id": "feature_video_url",    "label": "Video link" },
+    { "type": "text",         "id": "feature_tag",          "label": "Tag",               "default": "Video · 4 min" },
+    { "type": "text",         "id": "feature_title",        "label": "Title",             "default": "The 15-minute gear wall reset (when they're losing it)" },
+    { "type": "textarea",     "id": "feature_sub",          "label": "Subtitle",          "default": "It's 4:47pm, dinner isn't started, and everyone is unraveling. Here's the reset Maya uses — honestly, imperfectly." },
+    { "type": "article",      "id": "feature_article",      "label": "Featured article (optional)" }
+  ],
+  "presets": [{ "name": "OFST Activities Hub" }]
+}
+{% endschema %}

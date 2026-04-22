@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "activities-hub": {
+      "type": "ofst-activities-hub",
+      "settings": {
+        "eyebrow": "Activities Together",
+        "heading": "The helpful stuff. From parents who've been there.",
+        "body_text": "Short videos, bedtime stories, play guides, and honest notes from the middle of it. No pretending it's easy.",
+        "articles_per_page": 6,
+        "feature_tag": "Video · 4 min",
+        "feature_title": "The 15-minute gear wall reset (when they're losing it)",
+        "feature_sub": "It's 4:47pm, dinner isn't started, and everyone is unraveling. Here's the reset Maya uses — honestly, imperfectly."
+      }
+    }
+  },
+  "order": ["activities-hub"]
+}

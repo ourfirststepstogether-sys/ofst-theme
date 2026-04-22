@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "collection-hero": {
+      "type": "ofst-collection-hero",
+      "settings": {
+        "badge_text": "The hero collection"
+      }
+    },
+    "collection-grid": {
+      "type": "ofst-collection-grid",
+      "settings": {
+        "products_per_page": 12
+      }
+    }
+  },
+  "order": ["collection-hero", "collection-grid"]
+}

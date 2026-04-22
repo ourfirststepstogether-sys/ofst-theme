@@ -1,0 +1,69 @@
+<section class="ofst-section">
+  <div class="ofst-container">
+    <h1 class="ofst-h1">{{ 'customer.addresses.title' | t }}</h1>
+    <p><a href="{{ routes.account_url }}" class="ofst-link">&larr; {{ 'customer.account.return' | t }}</a></p>
+
+    {% paginate customer.addresses by 5 %}
+      <div class="ofst-addresses">
+        {% for address in customer.addresses %}
+          <article class="ofst-address-card">
+            {% if address == customer.default_address %}<span class="ofst-chip ofst-chip-yellow">{{ 'customer.addresses.default' | t }}</span>{% endif %}
+            <p>{{ address | format_address }}</p>
+            <p>{{ address.phone }}</p>
+            <p>
+              <a href="#edit-{{ address.id }}" onclick="document.getElementById('edit-{{ address.id }}').hidden=false;return false;" class="ofst-link">{{ 'customer.addresses.edit' | t }}</a>
+              &nbsp;·&nbsp;
+              <a href="#" class="ofst-link" data-delete="{{ address.url }}">{{ 'customer.addresses.delete' | t }}</a>
+            </p>
+            <div id="edit-{{ address.id }}" hidden>
+              {% form 'customer_address', address %}
+                {{ form.errors | default_errors }}
+                <input type="text" name="address[first_name]" value="{{ form.first_name }}" placeholder="{{ 'customer.addresses.first_name' | t }}">
+                <input type="text" name="address[last_name]" value="{{ form.last_name }}" placeholder="{{ 'customer.addresses.last_name' | t }}">
+                <input type="text" name="address[address1]" value="{{ form.address1 }}" placeholder="{{ 'customer.addresses.address1' | t }}">
+                <input type="text" name="address[city]" value="{{ form.city }}" placeholder="{{ 'customer.addresses.city' | t }}">
+                <input type="text" name="address[country]" value="{{ form.country }}" placeholder="{{ 'customer.addresses.country' | t }}">
+                <input type="text" name="address[zip]" value="{{ form.zip }}" placeholder="{{ 'customer.addresses.zip' | t }}">
+                <input type="text" name="address[phone]" value="{{ form.phone }}" placeholder="{{ 'customer.addresses.phone' | t }}">
+                <button type="submit" class="ofst-btn ofst-btn-cta">{{ 'customer.addresses.update' | t }}</button>
+              {% endform %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      <details class="ofst-address-new">
+        <summary class="ofst-btn ofst-btn-outline">{{ 'customer.addresses.add_new' | t }}</summary>
+        {% form 'customer_address', customer.new_address %}
+          {{ form.errors | default_errors }}
+          <input type="text" name="address[first_name]" placeholder="{{ 'customer.addresses.first_name' | t }}">
+          <input type="text" name="address[last_name]" placeholder="{{ 'customer.addresses.last_name' | t }}">
+          <input type="text" name="address[address1]" placeholder="{{ 'customer.addresses.address1' | t }}">
+          <input type="text" name="address[city]" placeholder="{{ 'customer.addresses.city' | t }}">
+          <input type="text" name="address[country]" placeholder="{{ 'customer.addresses.country' | t }}">
+          <input type="text" name="address[zip]" placeholder="{{ 'customer.addresses.zip' | t }}">
+          <input type="text" name="address[phone]" placeholder="{{ 'customer.addresses.phone' | t }}">
+          <button type="submit" class="ofst-btn ofst-btn-cta">{{ 'customer.addresses.add' | t }}</button>
+        {% endform %}
+      </details>
+    {% endpaginate %}
+  </div>
+</section>
+<style>
+  .ofst-addresses { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 24px; }
+  .ofst-address-card { border: 1px solid var(--ofst-base); border-radius: 14px; padding: 16px; }
+  .ofst-address-card input { display: block; width: 100%; padding: 8px 12px; border: 1px solid var(--ofst-ink); border-radius: 8px; margin: 6px 0; }
+  .ofst-address-new { margin-top: 24px; }
+  .ofst-address-new[open] summary { margin-bottom: 12px; }
+  .ofst-address-new input { display: block; width: 100%; max-width: 420px; padding: 8px 12px; border: 1px solid var(--ofst-ink); border-radius: 8px; margin: 6px 0; }
+</style>
+<script>
+  document.querySelectorAll('[data-delete]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      if (confirm("{{ 'customer.addresses.delete_confirm' | t }}")) {
+        Shopify.postLink(btn.dataset.delete, {parameters: {_method: 'delete'}});
+      }
+    });
+  });
+</script>

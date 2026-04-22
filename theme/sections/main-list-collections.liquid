@@ -1,0 +1,46 @@
+<section class="ofst-section" id="ofst-collections-{{ section.id }}">
+  <div class="ofst-container">
+    <header class="ofst-collections-head">
+      <span class="ofst-eyebrow">Browse by collection</span>
+      <h1 class="ofst-h1">Shop all collections</h1>
+    </header>
+
+    <div class="ofst-collections-grid">
+      {% for collection in collections %}
+        <a href="{{ collection.url }}" class="ofst-collection-card">
+          {% if collection.image %}
+            <div class="ofst-collection-card__media"><img src="{{ collection.image | image_url: width: 800 }}" alt="{{ collection.title | escape }}" loading="lazy"></div>
+          {% elsif collection.products.first.featured_image %}
+            <div class="ofst-collection-card__media"><img src="{{ collection.products.first.featured_image | image_url: width: 800 }}" alt="{{ collection.title | escape }}" loading="lazy"></div>
+          {% else %}
+            <div class="ofst-collection-card__media ofst-collection-card__media--empty"></div>
+          {% endif %}
+          <div class="ofst-collection-card__body">
+            <h2 class="ofst-h3">{{ collection.title }}</h2>
+            <span class="ofst-muted">{{ collection.products_count }} items</span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #ofst-collections-{{ section.id }} { padding: 48px 0 80px; }
+  #ofst-collections-{{ section.id }} .ofst-collections-head { text-align: center; margin-bottom: 32px; }
+  #ofst-collections-{{ section.id }} .ofst-collections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  #ofst-collections-{{ section.id }} .ofst-collection-card { display: block; text-decoration: none; color: inherit; border: 1px solid var(--ofst-base); border-radius: 18px; overflow: hidden; background: #fff; }
+  #ofst-collections-{{ section.id }} .ofst-collection-card__media { aspect-ratio: 4/3; background: var(--ofst-teal); }
+  #ofst-collections-{{ section.id }} .ofst-collection-card__media img { width: 100%; height: 100%; object-fit: cover; }
+  #ofst-collections-{{ section.id }} .ofst-collection-card__body { padding: 14px 18px 18px; }
+  @media (max-width: 900px) { #ofst-collections-{{ section.id }} .ofst-collections-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { #ofst-collections-{{ section.id }} .ofst-collections-grid { grid-template-columns: 1fr; } }
+</style>
+
+{% schema %}
+{
+  "name": "Collections list",
+  "settings": [],
+  "presets": [{ "name": "Collections list" }]
+}
+{% endschema %}

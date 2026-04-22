@@ -1,0 +1,60 @@
+{% comment %} OFST Final Gentle CTA — Section 8 of 8 on the homepage {% endcomment %}
+
+<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
+
+<section id="ofst-cta-{{ section.id }}" class="ofst-section ofst-final-cta">
+  <div class="ofst-container">
+    <div class="ofst-rule ofst-cta__rule" aria-hidden="true"></div>
+    <p class="ofst-cta__quote">{{ section.settings.quote | default: '"We\'re taking these first steps together — one real moment at a time."' | escape }}</p>
+    <p class="ofst-cta__sig">{{ section.settings.signature | default: '— The OFST family' | escape }}</p>
+
+    {% if section.settings.cta_text != blank %}
+      <a href="{{ section.settings.cta_url | default: '/collections/all' }}" class="ofst-btn ofst-btn-cta ofst-cta__btn">
+        {{ section.settings.cta_text | escape }}
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  #ofst-cta-{{ section.id }} {
+    padding: 60px 0 100px;
+    background: #fff;
+    text-align: center;
+  }
+  #ofst-cta-{{ section.id }} .ofst-cta__rule {
+    margin: 0 auto 24px;
+  }
+  #ofst-cta-{{ section.id }} .ofst-cta__quote {
+    font-size: clamp(18px,2vw,22px);
+    font-style: italic;
+    color: var(--ofst-deep);
+    max-width: 640px;
+    margin: 0 auto;
+    font-weight: 500;
+    line-height: 1.4;
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-cta-{{ section.id }} .ofst-cta__sig {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--ofst-mid);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  #ofst-cta-{{ section.id }} .ofst-cta__btn { margin-top: 28px; }
+</style>
+
+{% schema %}
+{
+  "name": "OFST Final Gentle CTA",
+  "settings": [
+    { "type": "textarea", "id": "quote",     "label": "Quote",     "default": "\"We're taking these first steps together — one real moment at a time.\"" },
+    { "type": "text",     "id": "signature", "label": "Signature", "default": "— The OFST family" },
+    { "type": "text",     "id": "cta_text",  "label": "Button text (optional)" },
+    { "type": "url",      "id": "cta_url",   "label": "Button link" }
+  ],
+  "presets": [{ "name": "OFST Final CTA" }]
+}
+{% endschema %}

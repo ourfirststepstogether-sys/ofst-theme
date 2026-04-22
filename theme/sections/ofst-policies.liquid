@@ -1,0 +1,115 @@
+{% comment %} OFST Policies page with left-rail nav {% endcomment %}
+
+<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
+
+<section id="ofst-pol-{{ section.id }}" class="ofst-section ofst-pol">
+  <div class="ofst-container">
+    <div class="ofst-pol__layout">
+      {% comment %} Left-rail nav {% endcomment %}
+      <aside class="ofst-pol__rail">
+        <span class="ofst-eyebrow">Policies</span>
+        <nav class="ofst-pol__rail-nav" aria-label="Policy navigation">
+          {% assign pol_links = "Shipping & Returns,/pages/shipping-and-returns|Privacy Policy,/policies/privacy-policy|Terms of Service,/policies/terms-of-service|Safety & Compliance,/pages/safety-and-compliance|Accessibility,/pages/accessibility" | split: "|" %}
+          {% for pol_link in pol_links %}
+            {% assign link_parts = pol_link | split: "," %}
+            <a href="{{ link_parts[1] }}" class="ofst-pol__rail-link {% if request.path == link_parts[1] %}ofst-pol__rail-link--active{% endif %}">{{ link_parts[0] }}</a>
+          {% endfor %}
+        </nav>
+      </aside>
+
+      {% comment %} Content {% endcomment %}
+      <article class="ofst-pol__content">
+        <h1 class="ofst-display ofst-pol__heading">{{ page.title | default: 'Shipping & Returns' | escape }}</h1>
+        <p class="ofst-pol__date">Last updated: {{ section.settings.last_updated | default: 'April 2026' | escape }}</p>
+
+        {% if page.content != blank %}
+          <div class="ofst-pol__prose">{{ page.content }}</div>
+        {% else %}
+          {% comment %} Fallback static content {% endcomment %}
+          <div class="ofst-pol__prose">
+            {% assign policy_sections = "When your order ships,Most orders leave our Michigan workshop within 2 business days. Big wall sets can take up to 4 because we sand them by hand. We'll email tracking the moment it leaves.|Free shipping,On orders over $60 within the US. International is $24 flat to Canada Mexico UK EU and Australia.|Returns — the short version,30 days any reason free return label. Kid outgrew it partner hates it it didn't spark joy — send it back.|Returns — the small print,Products should come back in usable condition. If something was defective you don't even need to return it — we send a replacement.|Lifetime breakage replacement,If any wooden piece splits warps or a magnet ever pops loose email care@ofst.co with a photo. We send a new piece free forever. This applies whether you bought it last week or in 2021." | split: "|" %}
+            {% for pol_section in policy_sections %}
+              {% assign pol_parts = pol_section | split: "," %}
+              <div class="ofst-pol__section">
+                <h3 class="ofst-h2 ofst-pol__section-title" style="font-size:20px">{{ pol_parts[0] }}</h3>
+                <p>{{ pol_parts[1] }}</p>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  #ofst-pol-{{ section.id }} {
+    padding: 56px 0 80px;
+    background: var(--ofst-base);
+  }
+  #ofst-pol-{{ section.id }} .ofst-pol__layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 48px;
+    align-items: flex-start;
+  }
+  /* Rail */
+  #ofst-pol-{{ section.id }} .ofst-pol__rail-nav {
+    margin-top: 14px;
+    display: grid;
+    gap: 6px;
+  }
+  #ofst-pol-{{ section.id }} .ofst-pol__rail-link {
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: transparent;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--ofst-mid);
+    text-decoration: none;
+    transition: background .15s, color .15s;
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-pol-{{ section.id }} .ofst-pol__rail-link:hover { background: rgba(255,255,255,.6); color: #000; }
+  #ofst-pol-{{ section.id }} .ofst-pol__rail-link--active { background: #fff; color: #000; font-weight: 600; }
+  /* Content */
+  #ofst-pol-{{ section.id }} .ofst-pol__heading { font-size: clamp(28px,3.5vw,40px); }
+  #ofst-pol-{{ section.id }} .ofst-pol__date { font-size: 13px; color: var(--ofst-mid); margin-top: 6px; font-family: var(--ofst-font-body); }
+  #ofst-pol-{{ section.id }} .ofst-pol__prose {
+    margin-top: 28px;
+    display: grid;
+    gap: 24px;
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-pol-{{ section.id }} .ofst-pol__section {}
+  #ofst-pol-{{ section.id }} .ofst-pol__section-title { margin-bottom: 8px; }
+  #ofst-pol-{{ section.id }} .ofst-pol__prose p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ofst-mid);
+    margin: 0;
+  }
+  #ofst-pol-{{ section.id }} .ofst-pol__prose h1,
+  #ofst-pol-{{ section.id }} .ofst-pol__prose h2,
+  #ofst-pol-{{ section.id }} .ofst-pol__prose h3 {
+    font-family: var(--ofst-font-display);
+    color: #000;
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 768px) {
+    #ofst-pol-{{ section.id }} .ofst-pol__layout { grid-template-columns: 1fr; }
+    #ofst-pol-{{ section.id }} .ofst-pol__rail-nav { display: flex; flex-wrap: wrap; gap: 6px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "OFST Policies",
+  "settings": [
+    { "type": "text", "id": "last_updated", "label": "Last updated text", "default": "April 2026" }
+  ],
+  "presets": [{ "name": "OFST Policies" }]
+}
+{% endschema %}

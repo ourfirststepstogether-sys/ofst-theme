@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "our-story": {
+      "type": "ofst-our-story",
+      "settings": {
+        "eyebrow": "Our story",
+        "headline": "Started with one tired Tuesday.",
+        "lead_text": "Maya and Dan had a 2-year-old, a pile of plastic toys that flashed and sang but never actually got played with, and about 14 minutes to themselves between nap and dinner. They started making magnetic wooden gear walls in the garage. Friends asked. Then strangers asked. OFST is that garage, six years later."
+      },
+      "blocks": {
+        "val-1": { "type": "value", "settings": { "title": "Real first steps", "text": "We build the stuff we wish existed when our kids took theirs." } },
+        "val-2": { "type": "value", "settings": { "title": "No judgment", "text": "Screen time happens. Frozen nuggets happen. We don't pretend otherwise." } },
+        "val-3": { "type": "value", "settings": { "title": "Hustle together", "text": "Small shop in Michigan. Six people, two dogs, a lot of sawdust." } }
+      },
+      "blocks_order": ["val-1","val-2","val-3"]
+    }
+  },
+  "order": ["our-story"]
+}

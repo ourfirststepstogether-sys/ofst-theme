@@ -1,0 +1,66 @@
+<section class="ofst-section" id="ofst-article-{{ section.id }}">
+  <div class="ofst-container">
+    <article class="ofst-article">
+      <header class="ofst-article__head">
+        <span class="ofst-eyebrow"><a href="{{ blog.url }}" class="ofst-link">&larr; {{ blog.title }}</a></span>
+        <h1 class="ofst-h1">{{ article.title | escape }}</h1>
+        <p class="ofst-muted">{{ 'blogs.article.posted_by_html' | t: author: article.author, date: article.published_at | date: "%B %-d, %Y" }}</p>
+      </header>
+
+      {% if article.image %}
+        <div class="ofst-article__hero">
+          <img src="{{ article.image | image_url: width: 1600 }}" alt="{{ article.image.alt | escape }}">
+        </div>
+      {% endif %}
+
+      <div class="ofst-rte">{{ article.content }}</div>
+
+      {% if blog.comments_enabled? %}
+        <div class="ofst-article__comments">
+          <h2 class="ofst-h2">{{ 'blogs.article.comments' | t: count: article.comments_count }}</h2>
+          {% if article.comments.size > 0 %}
+            {% for comment in article.comments %}
+              <div class="ofst-comment">
+                <strong>{{ comment.author }}</strong>
+                <p>{{ comment.content }}</p>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          {% form 'new_comment', article %}
+            {% if form.posted_successfully? %}
+              <p class="ofst-success">{{ 'blogs.article.success' | t }}</p>
+            {% endif %}
+            <label>{{ 'blogs.article.name' | t }}<input type="text" name="comment[author]" required></label>
+            <label>{{ 'blogs.article.email' | t }}<input type="email" name="comment[email]" required></label>
+            <label>{{ 'blogs.article.message' | t }}<textarea name="comment[body]" rows="4" required></textarea></label>
+            <button type="submit" class="ofst-btn ofst-btn-cta">{{ 'blogs.article.post' | t }}</button>
+          {% endform %}
+        </div>
+      {% endif %}
+    </article>
+  </div>
+</section>
+
+<style>
+  #ofst-article-{{ section.id }} { padding: 48px 0 80px; }
+  #ofst-article-{{ section.id }} .ofst-article { max-width: 72ch; margin: 0 auto; }
+  #ofst-article-{{ section.id }} .ofst-article__head { text-align: center; margin-bottom: 24px; }
+  #ofst-article-{{ section.id }} .ofst-article__hero { margin: 24px 0; border-radius: 18px; overflow: hidden; }
+  #ofst-article-{{ section.id }} .ofst-article__hero img { width: 100%; height: auto; display: block; }
+  #ofst-article-{{ section.id }} .ofst-rte { font-family: var(--ofst-font-body); font-size: 1.0625rem; line-height: 1.75; }
+  #ofst-article-{{ section.id }} .ofst-rte p { margin: 0 0 1em; }
+  #ofst-article-{{ section.id }} .ofst-rte h2, #ofst-article-{{ section.id }} .ofst-rte h3 { font-family: var(--ofst-font-display); margin: 1.6em 0 .4em; }
+  #ofst-article-{{ section.id }} .ofst-article__comments { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--ofst-base); }
+  #ofst-article-{{ section.id }} .ofst-article__comments label { display: block; margin: 12px 0; }
+  #ofst-article-{{ section.id }} .ofst-article__comments input, #ofst-article-{{ section.id }} .ofst-article__comments textarea { display: block; width: 100%; padding: 8px 12px; border: 1px solid var(--ofst-ink); border-radius: 8px; margin-top: 4px; }
+  #ofst-article-{{ section.id }} .ofst-comment { padding: 12px 0; border-bottom: 1px solid var(--ofst-base); }
+</style>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": [],
+  "presets": [{ "name": "Article" }]
+}
+{% endschema %}

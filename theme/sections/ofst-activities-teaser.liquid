@@ -1,0 +1,247 @@
+{% comment %} OFST Activities Together teaser — Section 3 of 8 on the homepage {% endcomment %}
+
+<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
+
+<section id="ofst-act-{{ section.id }}" class="ofst-section ofst-act-teaser">
+  <div class="ofst-container">
+    {% comment %} Header row {% endcomment %}
+    <div class="ofst-act__header">
+      <div>
+        <span class="ofst-eyebrow" style="color:var(--ofst-teal)">{{ section.settings.eyebrow | default: 'Activities Together 🎈' }}</span>
+        <h2 class="ofst-h1 ofst-act__heading">{{ section.settings.heading | default: "Helpful stuff, from parents who've been there." | escape }}</h2>
+        {% if section.settings.body_text != blank %}
+          <p class="ofst-body ofst-act__body">{{ section.settings.body_text | escape }}</p>
+        {% endif %}
+      </div>
+      <div class="ofst-act__tabs" role="tablist">
+        <button class="ofst-tab ofst-tab-active" role="tab" aria-selected="true">All</button>
+        <button class="ofst-tab" role="tab">Videos</button>
+        <button class="ofst-tab" role="tab">Stories</button>
+        <button class="ofst-tab" role="tab">Guides</button>
+      </div>
+    </div>
+
+    <div class="ofst-act__grid">
+      {% comment %} ── Big featured card {% endcomment %}
+      <article class="ofst-act__feature">
+        {% if section.settings.feature_image != blank %}
+          {{ section.settings.feature_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'ofst-img-cover ofst-act__feature-img', alt: section.settings.feature_image.alt | escape }}
+        {% else %}
+          <div class="ofst-act__feature-img" style="background:#CDE6ED;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:11px;color:var(--ofst-mid);">[ lifestyle video thumbnail ]</div>
+        {% endif %}
+        <div class="ofst-act__feature-overlay" aria-hidden="true"></div>
+
+        <a href="{{ section.settings.feature_url | default: '/pages/activities-together' }}" class="ofst-act__play-btn" aria-label="Play video">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="var(--ofst-coral)" stroke="none" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>
+        </a>
+
+        <div class="ofst-act__feature-body">
+          <span class="ofst-chip ofst-chip-coral" style="font-size:11px">{{ section.settings.feature_tag | default: 'Video · 3 min' }}</span>
+          <h3 class="ofst-h2 ofst-act__feature-title">{{ section.settings.feature_title | default: "Setting up the gear wall (without losing your mind)" | escape }}</h3>
+          <p class="ofst-act__feature-sub">{{ section.settings.feature_subtitle | default: "Watch Maya walk through it in real time — toddler interruptions included." | escape }}</p>
+        </div>
+      </article>
+
+      {% comment %} ── Three supporting cards {% endcomment %}
+      {% assign card_count = 0 %}
+      {% for block in section.blocks %}
+        {% if card_count < 3 %}
+          {% assign card_count = card_count | plus: 1 %}
+          <article class="ofst-card ofst-act__small-card" {{ block.shopify_attributes }}>
+            <div class="ofst-act__small-img" style="background:{% if block.settings.tone == 'yellow' %}#FFE9B8{% elsif block.settings.tone == 'coral' %}#FFD8D8{% elsif block.settings.tone == 'teal' %}#CDE6ED{% else %}#E8DFD2{% endif %}">
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'ofst-img-cover', alt: block.settings.image.alt | escape }}
+              {% else %}
+                <div class="ofst-act__small-icon" aria-hidden="true">
+                  {% if block.settings.kind == 'Bedtime story' %}
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="{% if block.settings.tone == 'yellow' %}#E09A1F{% elsif block.settings.tone == 'coral' %}#C04646{% else %}#264653{% endif %}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-4 2V5z"/><path d="M8 7h8M8 11h8"/></svg>
+                  {% else %}
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="{% if block.settings.tone == 'yellow' %}#E09A1F{% elsif block.settings.tone == 'coral' %}#C04646{% else %}#264653{% endif %}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></svg>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+            <div class="ofst-act__small-body">
+              <span class="ofst-act__meta">{{ block.settings.kind | escape }} · {{ block.settings.duration | escape }}</span>
+              <h3 class="ofst-act__small-title">{{ block.settings.title | escape }}</h3>
+              {% if block.settings.url != blank %}
+                <a href="{{ block.settings.url }}" class="ofst-link" style="margin-top:12px;font-size:13px">Read / watch →</a>
+              {% endif %}
+            </div>
+          </article>
+        {% endif %}
+      {% endfor %}
+
+      {% comment %} Fallback placeholder cards {% endcomment %}
+      {% if section.blocks.size == 0 %}
+        {% assign fallback_cards = "Bedtime story,yellow,Little Gear Who Wouldn't Turn,6 min read|Play guide,coral,10 ways to play with pipes,Free PDF|Parent note,warm,On the 4pm meltdown,5 min read" | split: "|" %}
+        {% for fc in fallback_cards %}
+          {% assign fc_parts = fc | split: "," %}
+          <article class="ofst-card ofst-act__small-card">
+            <div class="ofst-act__small-img" style="background:{% if fc_parts[1] == 'yellow' %}#FFE9B8{% elsif fc_parts[1] == 'coral' %}#FFD8D8{% else %}#E8DFD2{% endif %}">
+              <div class="ofst-act__small-icon" aria-hidden="true">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#264653" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></svg>
+              </div>
+            </div>
+            <div class="ofst-act__small-body">
+              <span class="ofst-act__meta">{{ fc_parts[0] }} · {{ fc_parts[3] }}</span>
+              <h3 class="ofst-act__small-title">{{ fc_parts[2] }}</h3>
+            </div>
+          </article>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #ofst-act-{{ section.id }} {
+    padding: 96px 0;
+    background: var(--ofst-bg-alt);
+  }
+  #ofst-act-{{ section.id }} .ofst-act__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  #ofst-act-{{ section.id }} .ofst-act__heading { margin-top: 10px; font-size: clamp(26px,3.2vw,44px); max-width: 560px; }
+  #ofst-act-{{ section.id }} .ofst-act__body    { margin-top: 12px; max-width: 620px; }
+  #ofst-act-{{ section.id }} .ofst-act__tabs    { display: flex; gap: 8px; flex-wrap: wrap; }
+  /* Grid: 1 big + 2-wide right side */
+  #ofst-act-{{ section.id }} .ofst-act__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 20px;
+  }
+  /* Featured card */
+  #ofst-act-{{ section.id }} .ofst-act__feature {
+    grid-row: span 2;
+    border-radius: var(--ofst-radius-lg);
+    overflow: hidden;
+    position: relative;
+    min-height: 460px;
+    box-shadow: var(--ofst-shadow);
+  }
+  #ofst-act-{{ section.id }} .ofst-act__feature-img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+  }
+  #ofst-act-{{ section.id }} .ofst-act__feature-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(38,70,83,0) 40%, rgba(38,70,83,.85));
+  }
+  #ofst-act-{{ section.id }} .ofst-act__play-btn {
+    position: absolute;
+    top: 44%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 72px; height: 72px;
+    border-radius: 36px;
+    background: rgba(255,255,255,.95);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    transition: transform .15s, box-shadow .15s;
+  }
+  #ofst-act-{{ section.id }} .ofst-act__play-btn:hover {
+    transform: translate(-50%,-50%) scale(1.07);
+    box-shadow: 0 14px 40px rgba(0,0,0,.4);
+  }
+  #ofst-act-{{ section.id }} .ofst-act__feature-body {
+    position: absolute;
+    left: 24px; right: 24px; bottom: 24px;
+    color: #fff;
+  }
+  #ofst-act-{{ section.id }} .ofst-act__feature-title {
+    color: #fff;
+    margin-top: 12px;
+    font-size: clamp(18px,2vw,26px);
+    max-width: 420px;
+  }
+  #ofst-act-{{ section.id }} .ofst-act__feature-sub {
+    font-size: 14px;
+    opacity: .9;
+    margin-top: 8px;
+  }
+  /* Small cards */
+  #ofst-act-{{ section.id }} .ofst-act__small-card { display: flex; flex-direction: column; }
+  #ofst-act-{{ section.id }} .ofst-act__small-img {
+    aspect-ratio: 16/10;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #ofst-act-{{ section.id }} .ofst-act__small-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+  #ofst-act-{{ section.id }} .ofst-act__small-body { padding: 16px 18px 18px; }
+  #ofst-act-{{ section.id }} .ofst-act__meta {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ofst-mid);
+  }
+  #ofst-act-{{ section.id }} .ofst-act__small-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-top: 6px;
+    line-height: 1.35;
+    color: #000;
+  }
+
+  @media (max-width: 900px) {
+    #ofst-act-{{ section.id }} .ofst-act__grid { grid-template-columns: 1fr 1fr; }
+    #ofst-act-{{ section.id }} .ofst-act__feature { grid-column: span 2; grid-row: span 1; min-height: 320px; }
+    #ofst-act-{{ section.id }} .ofst-act__header { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 600px) {
+    #ofst-act-{{ section.id }} { padding: 56px 0; }
+    #ofst-act-{{ section.id }} .ofst-act__grid { grid-template-columns: 1fr; }
+    #ofst-act-{{ section.id }} .ofst-act__feature { grid-column: span 1; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "OFST Activities Teaser",
+  "settings": [
+    { "type": "text",       "id": "eyebrow",          "label": "Eyebrow",         "default": "Activities Together 🎈" },
+    { "type": "text",       "id": "heading",           "label": "Heading",         "default": "Helpful stuff, from parents who've been there." },
+    { "type": "textarea",   "id": "body_text",         "label": "Body copy",       "default": "Short videos, bedtime stories, and honest play guides — made for the days the toddler is feral and you're out of ideas." },
+    { "type": "header",     "label": "Featured card" },
+    { "type": "image_picker","id": "feature_image",   "label": "Feature image" },
+    { "type": "text",       "id": "feature_tag",       "label": "Tag + duration",  "default": "Video · 3 min" },
+    { "type": "text",       "id": "feature_title",     "label": "Title",           "default": "Setting up the gear wall (without losing your mind)" },
+    { "type": "textarea",   "id": "feature_subtitle",  "label": "Subtitle",        "default": "Watch Maya walk through it in real time — toddler interruptions included." },
+    { "type": "url",        "id": "feature_url",       "label": "Link" }
+  ],
+  "blocks": [
+    {
+      "type": "activity_card",
+      "name": "Activity card",
+      "limit": 3,
+      "settings": [
+        { "type": "select",  "id": "kind",     "label": "Kind", "options": [{"value":"Video","label":"Video"},{"value":"Bedtime story","label":"Bedtime story"},{"value":"Play guide","label":"Play guide"},{"value":"Parent note","label":"Parent note"}], "default": "Play guide" },
+        { "type": "text",    "id": "duration", "label": "Duration / format", "default": "Free PDF" },
+        { "type": "text",    "id": "title",    "label": "Title", "default": "10 ways to play with pipes" },
+        { "type": "image_picker", "id": "image", "label": "Image (optional)" },
+        { "type": "select",  "id": "tone",     "label": "Background tone", "options": [{"value":"yellow","label":"Yellow"},{"value":"coral","label":"Coral"},{"value":"teal","label":"Teal"},{"value":"warm","label":"Warm"}], "default": "coral" },
+        { "type": "url",     "id": "url",      "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "OFST Activities Teaser" }]
+}
+{% endschema %}

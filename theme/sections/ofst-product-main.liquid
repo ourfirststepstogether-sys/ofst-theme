@@ -1,0 +1,347 @@
+{% comment %} OFST Product page — main section (gallery + info) {% endcomment %}
+
+<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
+
+<section id="ofst-pdp-{{ section.id }}" class="ofst-section ofst-pdp">
+  <div class="ofst-container">
+    {% comment %} Breadcrumb {% endcomment %}
+    <p class="ofst-pdp__crumb">
+      <a href="{{ routes.root_url }}">Home</a> /
+      <a href="{{ routes.collections_url }}">Shop</a> /
+      <a href="{{ product.collections.first.url | default: '/collections/all' }}">{{ product.collections.first.title | default: 'Wooden STEM Toys' }}</a> /
+      <span>{{ product.title }}</span>
+    </p>
+
+    <div class="ofst-pdp__layout">
+      {% comment %} ── Gallery ── {% endcomment %}
+      <div class="ofst-pdp__gallery">
+        <div class="ofst-pdp__main-img-wrap">
+          {% if product.featured_image != blank %}
+            {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'eager', class: 'ofst-img-cover ofst-pdp__main-img', alt: product.featured_image.alt | default: product.title | escape, id: 'ofst-pdp-main-img' }}
+          {% else %}
+            <div class="ofst-pdp__img-ph">[ product image ]</div>
+          {% endif %}
+
+          {% for tag in product.tags %}
+            {% if tag == 'best-seller' %}
+              <span class="ofst-chip ofst-chip-yellow ofst-pdp__gallery-badge">Best seller</span>
+            {% elsif tag == 'new' %}
+              <span class="ofst-chip ofst-chip-coral ofst-pdp__gallery-badge">New</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% comment %} Thumbnails {% endcomment %}
+        {% if product.images.size > 1 %}
+          <div class="ofst-pdp__thumbs" role="list" aria-label="Product images">
+            {% for image in product.images limit: 5 %}
+              <button
+                class="ofst-pdp__thumb {% if forloop.first %}ofst-pdp__thumb--active{% endif %}"
+                data-src="{{ image | image_url: width: 900 }}"
+                aria-label="View image {{ forloop.index }}"
+                role="listitem">
+                {{ image | image_url: width: 120 | image_tag: loading: 'lazy', class: 'ofst-img-cover', alt: image.alt | default: product.title | escape }}
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      {% comment %} ── Product info ── {% endcomment %}
+      <div class="ofst-pdp__info">
+        <p class="ofst-pdp__collection-name">
+          {% if product.collections.first %}{{ product.collections.first.title }}{% else %}Magnetic Wooden STEM Toys{% endif %}
+        </p>
+
+        <h1 class="ofst-display ofst-pdp__title">{{ product.title }}</h1>
+
+        {% comment %} Rating (via metafields) {% endcomment %}
+        {% if product.metafields.reviews.rating.value != blank %}
+          <div class="ofst-pdp__rating">
+            <div class="ofst-pdp__stars" aria-label="{{ product.metafields.reviews.rating.value }} stars">
+              {% assign rating_val = product.metafields.reviews.rating.value | round %}
+              {% for i in (1..5) %}
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="{% if i <= rating_val %}#FFB629{% else %}#e0e0e0{% endif %}" stroke="none" aria-hidden="true"><path d="M12 3l2.6 5.5 6 .6-4.5 4 1.3 6L12 16l-5.4 3.1 1.3-6-4.5-4 6-.6z"/></svg>
+              {% endfor %}
+            </div>
+            <span class="ofst-pdp__rating-num">{{ product.metafields.reviews.rating.value }}</span>
+            <span class="ofst-pdp__rating-count">· {{ product.metafields.reviews.rating_count }} real-parent reviews</span>
+          </div>
+        {% endif %}
+
+        <p class="ofst-pdp__desc">{{ product.description | strip_html | truncatewords: 40 }}</p>
+
+        {% comment %} Price {% endcomment %}
+        <div class="ofst-pdp__price-row">
+          <span class="ofst-pdp__price">{{ product.price | money }}</span>
+          {% if section.settings.show_shop_pay %}
+            <span class="ofst-chip ofst-chip-teal ofst-pdp__shop-pay">Pay in 4 with Shop Pay</span>
+          {% endif %}
+        </div>
+
+        {% comment %} Variant selector {% endcomment %}
+        {% unless product.has_only_default_variant %}
+          {% for option in product.options_with_values %}
+            <div class="ofst-pdp__option">
+              <div class="ofst-pdp__option-label">{{ option.name }}</div>
+              <div class="ofst-pdp__option-values">
+                {% for value in option.values %}
+                  <label class="ofst-pdp__option-value {% if option.selected_value == value %}ofst-pdp__option-value--active{% endif %}">
+                    <input type="radio" name="options[{{ option.name | escape }}]" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} class="sr-only">
+                    {{ value | escape }}
+                  </label>
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
+        {% endunless %}
+
+        {% comment %} Add to cart {% endcomment %}
+        {% form 'product', product, class: 'ofst-pdp__atc-form', novalidate: true %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+          <div class="ofst-pdp__atc-row">
+            <div class="ofst-pdp__qty" aria-label="Quantity">
+              <button type="button" class="ofst-pdp__qty-btn" data-action="decrement" aria-label="Decrease quantity">−</button>
+              <span class="ofst-pdp__qty-num" id="ofst-qty-{{ section.id }}">1</span>
+              <button type="button" class="ofst-pdp__qty-btn" data-action="increment" aria-label="Increase quantity">+</button>
+              <input type="hidden" name="quantity" value="1" id="ofst-qty-input-{{ section.id }}">
+            </div>
+
+            <button type="submit" class="ofst-btn ofst-btn-cta ofst-pdp__atc-btn" {% unless product.available %}disabled{% endunless %}>
+              {% if product.available %}
+                Add to cart · {{ product.price | money }}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              {% else %}
+                Sold out
+              {% endif %}
+            </button>
+          </div>
+
+          <button type="button" class="ofst-btn ofst-btn-outline ofst-pdp__wishlist-btn">
+            Add to wishlist
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 10c0 5.5-7 10-7 10z"/></svg>
+          </button>
+        {% endform %}
+
+        {% comment %} Trust grid {% endcomment %}
+        <div class="ofst-pdp__trust">
+          {% assign trust_items = "truck,Free US shipping $60+|shield,Real-parent tested|leaf,Solid birch · non-toxic|hand,Made by a 6-person shop" | split: "|" %}
+          {% for item in trust_items %}
+            {% assign parts = item | split: "," %}
+            <div class="ofst-pdp__trust-item">
+              {% case parts[0] %}
+                {% when 'truck' %}
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ofst-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg>
+                {% when 'shield' %}
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ofst-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+                {% when 'leaf' %}
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ofst-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20s2-10 16-16c0 14-10 16-16 16zM4 20l8-8"/></svg>
+                {% when 'hand' %}
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ofst-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10V5a1.5 1.5 0 013 0v5M10 10V4a1.5 1.5 0 013 0v6M13 10V5a1.5 1.5 0 013 0v7"/></svg>
+              {% endcase %}
+              {{ parts[1] }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #ofst-pdp-{{ section.id }} {
+    padding: 32px 0 64px;
+    background: var(--ofst-base);
+  }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__crumb {
+    font-size: 13px;
+    color: var(--ofst-mid);
+    margin-bottom: 20px;
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__crumb a { color: var(--ofst-mid); text-decoration: none; }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__crumb a:hover { color: var(--ofst-coral); }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__crumb span { color: #000; font-weight: 600; }
+  /* Layout */
+  #ofst-pdp-{{ section.id }} .ofst-pdp__layout {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+  }
+  /* Gallery */
+  #ofst-pdp-{{ section.id }} .ofst-pdp__main-img-wrap {
+    aspect-ratio: 1/1;
+    border-radius: var(--ofst-radius-lg);
+    overflow: hidden;
+    background: #EFE7DB;
+    position: relative;
+  }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__img-ph {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: ui-monospace,monospace; font-size: 11px; color: var(--ofst-mid); padding: 12px; text-align: center;
+  }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__gallery-badge { position: absolute; top: 16px; left: 16px; }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__thumbs {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+  }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__thumb {
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #EFE7DB;
+    border: 2px solid transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: border-color .15s;
+  }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__thumb--active { border-color: #000; }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__thumb:hover   { border-color: var(--ofst-coral); }
+  /* Info */
+  #ofst-pdp-{{ section.id }} .ofst-pdp__collection-name {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ofst-coral);
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__title { font-size: clamp(28px,3.5vw,40px); margin-top: 8px; line-height: 1.1; }
+  /* Rating */
+  #ofst-pdp-{{ section.id }} .ofst-pdp__rating {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--ofst-mid);
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__stars { display: flex; gap: 2px; }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__rating-num { font-weight: 600; color: #000; }
+  /* Desc */
+  #ofst-pdp-{{ section.id }} .ofst-pdp__desc { margin-top: 18px; font-size: 16px; line-height: 1.65; color: var(--ofst-mid); font-family: var(--ofst-font-body); }
+  /* Price */
+  #ofst-pdp-{{ section.id }} .ofst-pdp__price-row { margin-top: 22px; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__price { font-size: 34px; font-weight: 700; font-family: var(--ofst-font-display); color: #000; }
+  /* Options */
+  #ofst-pdp-{{ section.id }} .ofst-pdp__option { margin-top: 24px; }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__option-label { font-size: 13px; font-weight: 600; margin-bottom: 8px; font-family: var(--ofst-font-body); }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__option-values { display: flex; gap: 8px; flex-wrap: wrap; }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__option-value {
+    padding: 12px 16px;
+    border-radius: var(--ofst-radius-sm);
+    border: 2px solid rgba(38,70,83,.15);
+    background: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--ofst-font-body);
+    transition: border-color .15s;
+  }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__option-value--active { border-color: #000; }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__option-value:hover { border-color: var(--ofst-coral); }
+  /* ATC */
+  #ofst-pdp-{{ section.id }} .ofst-pdp__atc-form { margin-top: 20px; }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__atc-row { display: flex; gap: 10px; }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__qty {
+    display: inline-flex;
+    align-items: center;
+    background: #fff;
+    border-radius: var(--ofst-pill);
+    padding: 4px 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.05);
+    gap: 4px;
+  }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__qty-btn {
+    width: 36px; height: 36px;
+    font-size: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ofst-deep);
+    font-family: var(--ofst-font-body);
+    display: flex; align-items: center; justify-content: center;
+    transition: color .15s;
+  }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__qty-btn:hover { color: var(--ofst-coral); }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__qty-num { min-width: 24px; text-align: center; font-weight: 600; font-family: var(--ofst-font-body); }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__atc-btn { flex: 1; }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__wishlist-btn { margin-top: 10px; width: 100%; }
+  /* Trust grid */
+  #ofst-pdp-{{ section.id }} .ofst-pdp__trust {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    font-size: 13px;
+    font-family: var(--ofst-font-body);
+  }
+  #ofst-pdp-{{ section.id }} .ofst-pdp__trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #fff;
+    border-radius: var(--ofst-radius-sm);
+    color: var(--ofst-deep);
+  }
+  /* Accessibility */
+  .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
+
+  @media (max-width: 900px) {
+    #ofst-pdp-{{ section.id }} .ofst-pdp__layout { grid-template-columns: 1fr; gap: 32px; }
+  }
+</style>
+
+<script>
+  (function() {
+    var section = document.getElementById('ofst-pdp-{{ section.id }}');
+    if (!section) return;
+
+    /* Thumbnail switcher */
+    var mainImg = document.getElementById('ofst-pdp-main-img');
+    section.querySelectorAll('.ofst-pdp__thumb').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        if (mainImg) mainImg.src = btn.dataset.src;
+        section.querySelectorAll('.ofst-pdp__thumb').forEach(function(b) { b.classList.remove('ofst-pdp__thumb--active'); });
+        btn.classList.add('ofst-pdp__thumb--active');
+      });
+    });
+
+    /* Quantity stepper */
+    var qtyNum   = document.getElementById('ofst-qty-{{ section.id }}');
+    var qtyInput = document.getElementById('ofst-qty-input-{{ section.id }}');
+    var qty = 1;
+    section.querySelectorAll('.ofst-pdp__qty-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        if (btn.dataset.action === 'increment') { qty++; }
+        else if (btn.dataset.action === 'decrement' && qty > 1) { qty--; }
+        if (qtyNum) qtyNum.textContent = qty;
+        if (qtyInput) qtyInput.value = qty;
+      });
+    });
+
+    /* Variant selector highlight */
+    section.querySelectorAll('.ofst-pdp__option-value input').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        section.querySelectorAll('.ofst-pdp__option-value').forEach(function(l) { l.classList.remove('ofst-pdp__option-value--active'); });
+        radio.closest('.ofst-pdp__option-value').classList.add('ofst-pdp__option-value--active');
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "OFST Product Main",
+  "settings": [
+    { "type": "checkbox", "id": "show_shop_pay", "label": "Show Shop Pay badge", "default": true }
+  ],
+  "presets": [{ "name": "OFST Product Main" }]
+}
+{% endschema %}

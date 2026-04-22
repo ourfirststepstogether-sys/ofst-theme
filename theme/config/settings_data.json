@@ -1,0 +1,22 @@
+{
+  "current": {
+    "color_bg": "#FFFFFF",
+    "color_ink": "#000000",
+    "color_coral": "#FF6A6A",
+    "color_teal": "#7EC8D8",
+    "color_yellow": "#FFCC5C",
+    "color_base": "#E4DDD3",
+    "color_deep": "#264653"
+  },
+  "presets": {
+    "Default": {
+      "color_bg": "#FFFFFF",
+      "color_ink": "#000000",
+      "color_coral": "#FF6A6A",
+      "color_teal": "#7EC8D8",
+      "color_yellow": "#FFCC5C",
+      "color_base": "#E4DDD3",
+      "color_deep": "#264653"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+<section class="ofst-section" id="ofst-cart-{{ section.id }}">
+  <div class="ofst-container">
+    <h1 class="ofst-h1">{{ 'cart.general.title' | t }}</h1>
+
+    {% if cart.item_count > 0 %}
+      <form action="{{ routes.cart_url }}" method="post" novalidate class="ofst-cart-form">
+        <table class="ofst-cart-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>{{ 'products.product.price' | t }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart.items %}
+              <tr class="ofst-cart-row">
+                <td class="ofst-cart-cell ofst-cart-cell--product">
+                  {% if item.image %}
+                    <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.image.alt | escape }}" width="80" height="80" loading="lazy">
+                  {% endif %}
+                  <div>
+                    <a href="{{ item.url }}" class="ofst-link"><strong>{{ item.product.title }}</strong></a>
+                    {% unless item.product.has_only_default_variant %}
+                      <div class="ofst-muted">{{ item.variant.title }}</div>
+                    {% endunless %}
+                  </div>
+                </td>
+                <td class="ofst-cart-cell">
+                  <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="{{ 'products.product.quantity' | t }}" class="ofst-input ofst-input--qty">
+                  <a href="{{ item.url_to_remove }}" class="ofst-link ofst-link-muted">{{ 'cart.general.remove' | t }}</a>
+                </td>
+                <td class="ofst-cart-cell">{{ item.final_line_price | money }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <div class="ofst-cart-footer">
+          <p class="ofst-muted">{{ 'cart.general.taxes_shipping_at_checkout' | t }}</p>
+          <div class="ofst-cart-total">
+            <span>{{ 'cart.general.subtotal' | t }}</span>
+            <strong>{{ cart.total_price | money }}</strong>
+          </div>
+          <div class="ofst-cart-actions">
+            <button type="submit" name="update" class="ofst-btn ofst-btn-outline">{{ 'cart.general.update' | t }}</button>
+            <button type="submit" name="checkout" class="ofst-btn ofst-btn-cta">{{ 'cart.general.checkout' | t }}</button>
+          </div>
+        </div>
+      </form>
+    {% else %}
+      <p class="ofst-body">{{ 'cart.general.empty' | t }}</p>
+      <p>{{ 'cart.general.continue_browsing_html' | t }}</p>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  #ofst-cart-{{ section.id }} { padding: 48px 0; }
+  #ofst-cart-{{ section.id }} .ofst-cart-table { width: 100%; border-collapse: collapse; margin-top: 24px; }
+  #ofst-cart-{{ section.id }} .ofst-cart-table th { text-align: left; padding: 12px 8px; border-bottom: 2px solid var(--ofst-ink); font-family: var(--ofst-font-display); }
+  #ofst-cart-{{ section.id }} .ofst-cart-cell { padding: 16px 8px; border-bottom: 1px solid var(--ofst-base); vertical-align: top; }
+  #ofst-cart-{{ section.id }} .ofst-cart-cell--product { display: flex; gap: 12px; align-items: flex-start; }
+  #ofst-cart-{{ section.id }} .ofst-cart-cell img { border-radius: 12px; }
+  #ofst-cart-{{ section.id }} .ofst-input--qty { width: 72px; padding: 6px 8px; border: 1px solid var(--ofst-ink); border-radius: 8px; margin-right: 12px; }
+  #ofst-cart-{{ section.id }} .ofst-cart-footer { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
+  #ofst-cart-{{ section.id }} .ofst-cart-total { font-size: 1.25rem; display: flex; gap: 16px; align-items: baseline; }
+  #ofst-cart-{{ section.id }} .ofst-cart-actions { display: flex; gap: 12px; }
+</style>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [],
+  "presets": [{ "name": "Cart" }]
+}
+{% endschema %}

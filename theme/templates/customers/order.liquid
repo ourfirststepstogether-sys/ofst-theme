@@ -1,0 +1,63 @@
+<section class="ofst-section">
+  <div class="ofst-container">
+    <h1 class="ofst-h1">{{ 'customer.order.title' | t: name: order.name }}</h1>
+    <p class="ofst-muted">{{ 'customer.order.date_html' | t: date: order.created_at | date: "%B %d, %Y" }}</p>
+
+    {% if order.cancelled %}
+      <p class="ofst-error">{{ 'customer.order.cancelled_html' | t: date: order.cancelled_at | date: "%B %d, %Y" }}</p>
+      <p>{{ 'customer.order.cancelled_reason' | t: reason: order.cancel_reason }}</p>
+    {% endif %}
+
+    <table class="ofst-orders">
+      <thead>
+        <tr>
+          <th>{{ 'customer.order.product' | t }}</th>
+          <th>{{ 'customer.order.sku' | t }}</th>
+          <th>{{ 'customer.order.price' | t }}</th>
+          <th>{{ 'customer.order.quantity' | t }}</th>
+          <th>{{ 'customer.order.total' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for line_item in order.line_items %}
+          <tr>
+            <td>{{ line_item.title }}</td>
+            <td>{{ line_item.sku }}</td>
+            <td>{{ line_item.price | money }}</td>
+            <td>{{ line_item.quantity }}</td>
+            <td>{{ line_item.final_line_price | money }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr><td colspan="4">{{ 'customer.order.subtotal' | t }}</td><td>{{ order.subtotal_price | money }}</td></tr>
+        {% for shipping_method in order.shipping_methods %}
+          <tr><td colspan="4">{{ 'customer.order.shipping' | t }} ({{ shipping_method.title }})</td><td>{{ shipping_method.price | money }}</td></tr>
+        {% endfor %}
+        {% for tax_line in order.tax_lines %}
+          <tr><td colspan="4">{{ 'customer.order.tax' | t }} ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%)</td><td>{{ tax_line.price | money }}</td></tr>
+        {% endfor %}
+        <tr><td colspan="4"><strong>{{ 'customer.order.total' | t }}</strong></td><td><strong>{{ order.total_price | money }} {{ order.currency }}</strong></td></tr>
+      </tfoot>
+    </table>
+
+    <div class="ofst-order-meta">
+      <div>
+        <h3 class="ofst-h3">{{ 'customer.order.billing_address' | t }}</h3>
+        <p>{{ 'customer.order.payment_status' | t }}: {{ order.financial_status_label }}</p>
+        <p>{{ order.billing_address | format_address }}</p>
+      </div>
+      <div>
+        <h3 class="ofst-h3">{{ 'customer.order.shipping_address' | t }}</h3>
+        <p>{{ 'customer.order.fulfillment_status' | t }}: {{ order.fulfillment_status_label }}</p>
+        <p>{{ order.shipping_address | format_address }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .ofst-orders { width: 100%; border-collapse: collapse; margin-top: 24px; }
+  .ofst-orders th, .ofst-orders td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--ofst-base); }
+  .ofst-order-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; }
+  @media (max-width: 700px) { .ofst-order-meta { grid-template-columns: 1fr; } }
+</style>
