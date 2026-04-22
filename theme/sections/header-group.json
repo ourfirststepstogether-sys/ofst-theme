@@ -1,0 +1,15 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {
+        "mega_feature_badge": "Just landed",
+        "mega_feature_title": "The Magnetic Gear Wall Starter",
+        "mega_feature_sub": "Our #1 toy, now with 8 extra gears."
+      }
+    }
+  },
+  "order": ["header"]
+}

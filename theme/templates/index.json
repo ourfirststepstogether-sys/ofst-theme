@@ -3,15 +3,15 @@
     "hero": {
       "type": "ofst-hero",
       "settings": {
-        "badge_text": "🌱 New · Magnetic Gear Wall just landed",
-        "heading_line1": "Hey fellow warrior —",
+        "badge_text": "\ud83c\udf31 New \u00b7 Magnetic Gear Wall just landed",
+        "heading_line1": "Hey fellow warrior \u2014",
         "heading_line2": "let's play together today.",
         "accent_word": "together",
         "body_text": "Magnetic wooden STEM toys, bedtime stories, and honest play ideas from parents figuring this out right alongside you. One real moment at a time.",
         "cta_primary_text": "Shop magnetic toys",
-        "cta_primary_url": "/collections/magnetic-wooden-stem-toys",
+        "cta_primary_url": "",
         "cta_secondary_text": "Explore activities",
-        "cta_secondary_url": "/pages/activities-together",
+        "cta_secondary_url": "",
         "testimonial_quote": "\"My two-year-old played with the gear wall for 45 minutes. 45 minutes. Unheard of.\"",
         "testimonial_author": "Jamie, dad of two",
         "show_secondary_placeholder": true
@@ -20,20 +20,20 @@
     "featured-stem": {
       "type": "ofst-featured-stem",
       "settings": {
-        "eyebrow": "The hero stuff ✨",
-        "body_text": "Solid birch. Strong magnets. No screens, no batteries, no flashing lights. Just real hands building real things — together."
+        "eyebrow": "The hero stuff \u2728",
+        "body_text": "Solid birch. Strong magnets. No screens, no batteries, no flashing lights. Just real hands building real things \u2014 together."
       }
     },
     "activities-teaser": {
       "type": "ofst-activities-teaser",
       "settings": {
-        "eyebrow": "Activities Together 🎈",
+        "eyebrow": "Activities Together \ud83c\udf88",
         "heading": "Helpful stuff, from parents who've been there.",
-        "body_text": "Short videos, bedtime stories, and honest play guides — made for the days the toddler is feral and you're out of ideas.",
-        "feature_tag": "Video · 3 min",
+        "body_text": "Short videos, bedtime stories, and honest play guides \u2014 made for the days the toddler is feral and you're out of ideas.",
+        "feature_tag": "Video \u00b7 3 min",
         "feature_title": "Setting up the gear wall (without losing your mind)",
-        "feature_subtitle": "Watch Maya walk through it in real time — toddler interruptions included.",
-        "feature_url": "/pages/activities-together"
+        "feature_subtitle": "Watch Maya walk through it in real time \u2014 toddler interruptions included.",
+        "feature_url": ""
       },
       "blocks": {
         "card-1": {
@@ -64,12 +64,16 @@
           }
         }
       },
-      "blocks_order": ["card-1", "card-2", "card-3"]
+      "blocks_order": [
+        "card-1",
+        "card-2",
+        "card-3"
+      ]
     },
     "shop-by-category": {
       "type": "ofst-shop-by-category",
       "settings": {
-        "eyebrow": "Shop by category 🛍️",
+        "eyebrow": "Shop by category \ud83d\udecd\ufe0f",
         "heading": "Find what fits your kid today."
       },
       "blocks": {
@@ -77,9 +81,9 @@
           "type": "category",
           "settings": {
             "title": "Magnetic Wooden STEM Toys",
-            "subtitle": "14 pieces · the hero collection",
+            "subtitle": "14 pieces \u00b7 the hero collection",
             "tone": "teal",
-            "collection_url": "/collections/magnetic-wooden-stem-toys"
+            "collection_url": ""
           }
         },
         "cat-2": {
@@ -88,7 +92,7 @@
             "title": "Phone Book Covers",
             "subtitle": "A parent tool, in disguise",
             "tone": "yellow",
-            "collection_url": "/collections/phone-book-covers"
+            "collection_url": ""
           }
         },
         "cat-3": {
@@ -97,16 +101,20 @@
             "title": "Kids Clothing",
             "subtitle": "Soft, honest, made-to-last",
             "tone": "coral",
-            "collection_url": "/collections/kids-clothing"
+            "collection_url": ""
           }
         }
       },
-      "blocks_order": ["cat-1", "cat-2", "cat-3"]
+      "blocks_order": [
+        "cat-1",
+        "cat-2",
+        "cat-3"
+      ]
     },
     "testimonials": {
       "type": "ofst-testimonials",
       "settings": {
-        "eyebrow": "Real parent moments 💖",
+        "eyebrow": "Real parent moments \ud83d\udc96",
         "heading": "Not reviews. Just honest notes from fellow parents."
       },
       "blocks": {
@@ -135,23 +143,27 @@
           }
         }
       },
-      "blocks_order": ["tmn-1", "tmn-2", "tmn-3"]
+      "blocks_order": [
+        "tmn-1",
+        "tmn-2",
+        "tmn-3"
+      ]
     },
     "phone-book-banner": {
       "type": "ofst-phone-book-banner",
       "settings": {
-        "badge_text": "The unusual one 📓",
+        "badge_text": "The unusual one \ud83d\udcd3",
         "heading": "A phone book cover, for the way parents actually use phones.",
         "body_text": "Yes, a phone book cover. Hand-bound, refillable, keeps little hands busy during the pediatrician waiting room. A strange little thing we're weirdly proud of.",
         "cta_text": "Discover this special parent tool",
-        "cta_url": "/collections/for-adults"
+        "cta_url": ""
       }
     },
     "newsletter": {
       "type": "ofst-newsletter",
       "settings": {
         "heading": "Join the Journey",
-        "body_text": "Weekly meal ideas, new toy releases, play guides, and occasional discount codes — straight to your inbox. Unsubscribe whenever. No judgment.",
+        "body_text": "Weekly meal ideas, new toy releases, play guides, and occasional discount codes \u2014 straight to your inbox. Unsubscribe whenever. No judgment.",
         "placeholder": "your@inbox.com",
         "submit_text": "Count me in",
         "fine_print": "~1 email a week. Pinky promise."
@@ -160,8 +172,8 @@
     "final-cta": {
       "type": "ofst-final-cta",
       "settings": {
-        "quote": "\"We're taking these first steps together — one real moment at a time.\"",
-        "signature": "— The OFST family"
+        "quote": "\"We're taking these first steps together \u2014 one real moment at a time.\"",
+        "signature": "\u2014 The OFST family"
       }
     }
   },

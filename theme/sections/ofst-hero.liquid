@@ -1,6 +1,5 @@
 {% comment %} OFST Hero Banner — Section 1 of 8 on the homepage {% endcomment %}
 
-<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
 
 <section id="ofst-hero-{{ section.id }}" class="ofst-section ofst-hero" aria-label="Hero banner">
   {% comment %} Decorative background circles {% endcomment %}
@@ -44,7 +43,7 @@
           </a>
         {% endif %}
         {% if section.settings.cta_secondary_text != blank %}
-          <a href="{{ section.settings.cta_secondary_url | default: '/pages/activities-together' }}" class="ofst-btn ofst-btn-outline">
+          <a href="{{ section.settings.cta_secondary_url | default: pages['activities-together'].url | default: routes.root_url }}" class="ofst-btn ofst-btn-outline">
             {{ section.settings.cta_secondary_text | escape }}
           </a>
         {% endif %}
@@ -299,11 +298,11 @@
     { "type": "url",   "id": "cta_primary_url",      "label": "Primary CTA link" },
     { "type": "text",  "id": "cta_secondary_text",   "label": "Secondary CTA label",    "default": "Explore activities" },
     { "type": "url",   "id": "cta_secondary_url",    "label": "Secondary CTA link" },
-    { "type": "header","label": "Media" },
+    { "type": "header","content": "Media" },
     { "type": "image_picker", "id": "image_main",    "label": "Main hero image" },
     { "type": "image_picker", "id": "image_secondary","label": "Secondary image (bottom-left collage)" },
     { "type": "checkbox","id": "show_secondary_placeholder","label": "Show secondary image slot","default": true },
-    { "type": "header","label": "Floating testimonial" },
+    { "type": "header","content": "Floating testimonial" },
     { "type": "textarea","id": "testimonial_quote",  "label": "Quote",                  "default": "\"My two-year-old played with the gear wall for 45 minutes. 45 minutes. Unheard of.\"" },
     { "type": "text",  "id": "testimonial_author",   "label": "Author",                 "default": "Jamie, dad of two" }
   ],

@@ -1,6 +1,5 @@
 {% comment %} OFST Phone Book / For Adults Banner — Section 6 of 8 on the homepage {% endcomment %}
 
-<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
 
 <section id="ofst-pbb-{{ section.id }}" class="ofst-section ofst-pbb">
   <div class="ofst-container">
@@ -11,7 +10,7 @@
         <h2 class="ofst-pbb__heading">{{ section.settings.heading | default: 'A phone book cover, for the way parents actually use phones.' | escape }}</h2>
         <p class="ofst-pbb__body">{{ section.settings.body_text | default: "Yes, a phone book cover. Hand-bound, refillable, keeps little hands busy during the pediatrician waiting room. A strange little thing we're weirdly proud of." | escape }}</p>
         {% if section.settings.cta_text != blank %}
-          <a href="{{ section.settings.cta_url | default: '/collections/for-adults' }}" class="ofst-btn ofst-btn-cta ofst-pbb__cta">
+          <a href="{{ section.settings.cta_url | default: collections['for-adults'].url | default: routes.all_products_collection_url }}" class="ofst-btn ofst-btn-cta ofst-pbb__cta">
             {{ section.settings.cta_text | escape }}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>

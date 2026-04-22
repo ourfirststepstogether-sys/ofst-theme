@@ -1,0 +1,36 @@
+{%- comment -%}
+  Renders a link only if the referenced Shopify resource exists.
+  Usage:
+    {% render 'ofst-safe-link', type: 'collection', handle: 'my-collection', label: 'Shop' %}
+    {% render 'ofst-safe-link', type: 'page', handle: 'about', label: 'About', class: 'ofst-link' %}
+    {% render 'ofst-safe-link', type: 'blog', handle: 'news', label: 'News' %}
+    {% render 'ofst-safe-link', type: 'product', handle: 'gift-card', label: 'Gift Cards' %}
+    {% render 'ofst-safe-link', type: 'url', url: '/search', label: 'Search' %}
+
+  Optional params:
+    wrapper: 'li'  (wraps the link in that tag, only if the resource exists)
+    class:   CSS class for the <a>
+    fallback_url: if set, renders a link to that URL when the primary target doesn't exist
+{%- endcomment -%}
+{%- assign _obj = nil -%}
+{%- case type -%}
+  {%- when 'collection' -%}{%- assign _obj = collections[handle] -%}{%- if _obj.handle == blank -%}{%- assign _obj = nil -%}{%- endif -%}
+  {%- when 'page' -%}{%- assign _obj = pages[handle] -%}{%- if _obj.handle == blank -%}{%- assign _obj = nil -%}{%- endif -%}
+  {%- when 'blog' -%}{%- assign _obj = blogs[handle] -%}{%- if _obj.handle == blank -%}{%- assign _obj = nil -%}{%- endif -%}
+  {%- when 'product' -%}{%- assign _obj = all_products[handle] -%}{%- if _obj.handle == blank -%}{%- assign _obj = nil -%}{%- endif -%}
+  {%- when 'url' -%}{%- assign _url = url -%}
+{%- endcase -%}
+
+{%- if type == 'url' -%}
+  {%- if wrapper -%}<{{ wrapper }}>{%- endif -%}
+  <a href="{{ _url | default: '#' }}"{% if class %} class="{{ class }}"{% endif %}>{{ label }}</a>
+  {%- if wrapper -%}</{{ wrapper }}>{%- endif -%}
+{%- elsif _obj != nil -%}
+  {%- if wrapper -%}<{{ wrapper }}>{%- endif -%}
+  <a href="{{ _obj.url }}"{% if class %} class="{{ class }}"{% endif %}>{{ label }}</a>
+  {%- if wrapper -%}</{{ wrapper }}>{%- endif -%}
+{%- elsif fallback_url != blank -%}
+  {%- if wrapper -%}<{{ wrapper }}>{%- endif -%}
+  <a href="{{ fallback_url }}"{% if class %} class="{{ class }}"{% endif %}>{{ label }}</a>
+  {%- if wrapper -%}</{{ wrapper }}>{%- endif -%}
+{%- endif -%}

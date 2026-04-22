@@ -29,12 +29,12 @@
   <body class="ofst-body template-{{ template.name | handle }}">
     <a class="ofst-skip-link" href="#MainContent">Skip to content</a>
 
-    {% section 'ofst-header' %}
+    {% sections 'header-group' %}
 
     <main id="MainContent" role="main">
       {{ content_for_layout }}
     </main>
 
-    {% section 'ofst-footer' %}
+    {% sections 'footer-group' %}
   </body>
 </html>

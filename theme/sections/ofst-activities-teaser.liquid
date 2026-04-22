@@ -1,6 +1,5 @@
 {% comment %} OFST Activities Together teaser — Section 3 of 8 on the homepage {% endcomment %}
 
-<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
 
 <section id="ofst-act-{{ section.id }}" class="ofst-section ofst-act-teaser">
   <div class="ofst-container">
@@ -31,7 +30,7 @@
         {% endif %}
         <div class="ofst-act__feature-overlay" aria-hidden="true"></div>
 
-        <a href="{{ section.settings.feature_url | default: '/pages/activities-together' }}" class="ofst-act__play-btn" aria-label="Play video">
+        <a href="{{ section.settings.feature_url | default: pages['activities-together'].url | default: routes.root_url }}" class="ofst-act__play-btn" aria-label="Play video">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="var(--ofst-coral)" stroke="none" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>
         </a>
 
@@ -220,7 +219,7 @@
     { "type": "text",       "id": "eyebrow",          "label": "Eyebrow",         "default": "Activities Together 🎈" },
     { "type": "text",       "id": "heading",           "label": "Heading",         "default": "Helpful stuff, from parents who've been there." },
     { "type": "textarea",   "id": "body_text",         "label": "Body copy",       "default": "Short videos, bedtime stories, and honest play guides — made for the days the toddler is feral and you're out of ideas." },
-    { "type": "header",     "label": "Featured card" },
+    { "type": "header",     "content": "Featured card" },
     { "type": "image_picker","id": "feature_image",   "label": "Feature image" },
     { "type": "text",       "id": "feature_tag",       "label": "Tag + duration",  "default": "Video · 3 min" },
     { "type": "text",       "id": "feature_title",     "label": "Title",           "default": "Setting up the gear wall (without losing your mind)" },

@@ -1,6 +1,5 @@
 {% comment %} OFST Site Footer {% endcomment %}
 
-<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
 
 <footer id="ofst-footer-{{ section.id }}" class="ofst-section ofst-footer" role="contentinfo">
   <div class="ofst-footer__main ofst-container">
@@ -21,35 +20,35 @@
       {% endform %}
     </div>
 
-    {% comment %} Link columns {% endcomment %}
+    {% comment %} Link columns — all links render only if the referenced resource exists {% endcomment %}
     <div class="ofst-footer__links">
       <h4 class="ofst-footer__col-title">Shop</h4>
       <ul class="ofst-footer__col-list" role="list">
-        <li><a href="/collections/magnetic-wooden-stem-toys">Magnetic Wooden STEM Toys</a></li>
-        <li><a href="/collections/phone-book-covers">Phone Book Covers</a></li>
-        <li><a href="/collections/kids-clothing">Kids Clothing</a></li>
-        <li><a href="/products/gift-card">Gift Cards</a></li>
-        <li><a href="/collections/sale">Sale</a></li>
+        {% render 'ofst-safe-link', type: 'collection', handle: 'magnetic-wooden-stem-toys', label: 'Magnetic Wooden STEM Toys', wrapper: 'li' %}
+        {% render 'ofst-safe-link', type: 'collection', handle: 'phone-book-covers', label: 'Phone Book Covers', wrapper: 'li' %}
+        {% render 'ofst-safe-link', type: 'collection', handle: 'kids-clothing', label: 'Kids Clothing', wrapper: 'li' %}
+        {% render 'ofst-safe-link', type: 'product', handle: 'gift-card', label: 'Gift Cards', wrapper: 'li' %}
+        {% render 'ofst-safe-link', type: 'collection', handle: 'sale', label: 'Sale', wrapper: 'li' %}
       </ul>
     </div>
     <div class="ofst-footer__links">
       <h4 class="ofst-footer__col-title">Helpful Stuff</h4>
       <ul class="ofst-footer__col-list" role="list">
-        <li><a href="/pages/activities-together">Activities Together</a></li>
-        <li><a href="/pages/free-resources">Free Resources</a></li>
-        <li><a href="/blogs/bedtime-stories">Bedtime Stories</a></li>
-        <li><a href="/blogs/play-guides">Play Guides</a></li>
-        <li><a href="/pages/our-story">Our Story</a></li>
+        {% render 'ofst-safe-link', type: 'page', handle: 'activities-together', label: 'Activities Together', wrapper: 'li' %}
+        {% render 'ofst-safe-link', type: 'page', handle: 'free-resources', label: 'Free Resources', wrapper: 'li' %}
+        {% render 'ofst-safe-link', type: 'blog', handle: 'bedtime-stories', label: 'Bedtime Stories', wrapper: 'li' %}
+        {% render 'ofst-safe-link', type: 'blog', handle: 'play-guides', label: 'Play Guides', wrapper: 'li' %}
+        {% render 'ofst-safe-link', type: 'page', handle: 'our-story', label: 'Our Story', wrapper: 'li' %}
       </ul>
     </div>
     <div class="ofst-footer__links">
       <h4 class="ofst-footer__col-title">Care</h4>
       <ul class="ofst-footer__col-list" role="list">
-        <li><a href="/pages/shipping-and-returns">Shipping &amp; Returns</a></li>
-        <li><a href="/pages/faq">FAQ / Contact</a></li>
-        <li><a href="/pages/safety-and-compliance">Safety &amp; Compliance</a></li>
-        <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
-        <li><a href="/policies/terms-of-service">Terms</a></li>
+        {% render 'ofst-safe-link', type: 'page', handle: 'shipping-and-returns', label: 'Shipping & Returns', wrapper: 'li' %}
+        {% render 'ofst-safe-link', type: 'page', handle: 'faq', label: 'FAQ / Contact', wrapper: 'li' %}
+        {% render 'ofst-safe-link', type: 'page', handle: 'safety-and-compliance', label: 'Safety & Compliance', wrapper: 'li' %}
+        <li><a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}">Privacy Policy</a></li>
+        <li><a href="{{ shop.terms_of_service.url | default: '/policies/terms-of-service' }}">Terms</a></li>
       </ul>
     </div>
   </div>
@@ -196,13 +195,16 @@
 
 {% schema %}
 {
-  "name": "OFST Footer",
+  "name": "Footer",
   "settings": [
     { "type": "textarea", "id": "tagline",       "label": "Brand tagline", "default": "Real first steps. No judgment. Just hustle together. Magnetic wooden STEM toys and thoughtful parent tools, made for the messy, beautiful middle." },
     { "type": "url",      "id": "instagram_url", "label": "Instagram URL" },
     { "type": "url",      "id": "tiktok_url",    "label": "TikTok URL" },
     { "type": "url",      "id": "pinterest_url", "label": "Pinterest URL" },
     { "type": "url",      "id": "youtube_url",   "label": "YouTube URL" }
-  ]
+  ],
+  "enabled_on": {
+    "groups": ["footer"]
+  }
 }
 {% endschema %}

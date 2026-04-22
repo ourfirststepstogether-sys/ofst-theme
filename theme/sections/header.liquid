@@ -4,7 +4,6 @@
   Drop this into your Tinker theme as a replacement or reference for header.liquid.
 {% endcomment %}
 
-<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
 
 <header id="ofst-header-{{ section.id }}" class="ofst-section ofst-header" role="banner">
   <div class="ofst-header__inner ofst-container">
@@ -27,15 +26,21 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
           </button>
         </li>
-        <li class="ofst-header__nav-item">
-          <a href="{{ section.settings.activities_url | default: '/pages/activities-together' }}" class="ofst-header__nav-link">Activities Together</a>
-        </li>
-        <li class="ofst-header__nav-item">
-          <a href="{{ section.settings.resources_url | default: '/pages/free-resources' }}" class="ofst-header__nav-link">Free Resources</a>
-        </li>
-        <li class="ofst-header__nav-item">
-          <a href="{{ section.settings.story_url | default: '/pages/our-story' }}" class="ofst-header__nav-link">Our Story</a>
-        </li>
+        {% if section.settings.activities_url != blank %}
+          <li class="ofst-header__nav-item"><a href="{{ section.settings.activities_url }}" class="ofst-header__nav-link">Activities Together</a></li>
+        {% elsif pages['activities-together'].handle != blank %}
+          <li class="ofst-header__nav-item"><a href="{{ pages['activities-together'].url }}" class="ofst-header__nav-link">Activities Together</a></li>
+        {% endif %}
+        {% if section.settings.resources_url != blank %}
+          <li class="ofst-header__nav-item"><a href="{{ section.settings.resources_url }}" class="ofst-header__nav-link">Free Resources</a></li>
+        {% elsif pages['free-resources'].handle != blank %}
+          <li class="ofst-header__nav-item"><a href="{{ pages['free-resources'].url }}" class="ofst-header__nav-link">Free Resources</a></li>
+        {% endif %}
+        {% if section.settings.story_url != blank %}
+          <li class="ofst-header__nav-item"><a href="{{ section.settings.story_url }}" class="ofst-header__nav-link">Our Story</a></li>
+        {% elsif pages['our-story'].handle != blank %}
+          <li class="ofst-header__nav-item"><a href="{{ pages['our-story'].url }}" class="ofst-header__nav-link">Our Story</a></li>
+        {% endif %}
       </ul>
     </nav>
 
@@ -80,12 +85,14 @@
       <div class="ofst-mega__col">
         <h4 class="ofst-mega__col-title">Wooden STEM Toys</h4>
         <ul class="ofst-mega__list" role="list">
-          <li><a href="/collections/gear-walls">Gear Walls</a></li>
-          <li><a href="/collections/pipe-ramp-sets">Pipe &amp; Ramp Sets</a></li>
-          <li><a href="/collections/building-magnets">Building Magnets</a></li>
-          <li><a href="/collections/expansion-packs">Expansion Packs</a></li>
-          <li><a href="/collections/starter-kits">Starter Kits</a></li>
-          <li class="ofst-mega__all"><a href="/collections/magnetic-wooden-stem-toys">All Wooden Toys →</a></li>
+          {% render 'ofst-safe-link', type: 'collection', handle: 'gear-walls', label: 'Gear Walls', wrapper: 'li' %}
+          {% render 'ofst-safe-link', type: 'collection', handle: 'pipe-ramp-sets', label: 'Pipe & Ramp Sets', wrapper: 'li' %}
+          {% render 'ofst-safe-link', type: 'collection', handle: 'building-magnets', label: 'Building Magnets', wrapper: 'li' %}
+          {% render 'ofst-safe-link', type: 'collection', handle: 'expansion-packs', label: 'Expansion Packs', wrapper: 'li' %}
+          {% render 'ofst-safe-link', type: 'collection', handle: 'starter-kits', label: 'Starter Kits', wrapper: 'li' %}
+          {% assign _stem = collections['magnetic-wooden-stem-toys'] %}
+          {% if _stem.handle == blank %}{% assign _stem = collections.all %}{% endif %}
+          <li class="ofst-mega__all"><a href="{{ _stem.url | default: routes.all_products_collection_url }}">All Wooden Toys →</a></li>
         </ul>
       </div>
 
@@ -93,11 +100,12 @@
       <div class="ofst-mega__col">
         <h4 class="ofst-mega__col-title">Kids Clothing</h4>
         <ul class="ofst-mega__list" role="list">
-          <li><a href="/collections/kids-basics">Basics</a></li>
-          <li><a href="/collections/kids-sleepwear">Sleepwear</a></li>
-          <li><a href="/collections/organic-line">Organic Line</a></li>
-          <li><a href="/collections/kids-gift-sets">Gift Sets</a></li>
-          <li class="ofst-mega__all"><a href="/collections/kids-clothing">All Clothing →</a></li>
+          {% render 'ofst-safe-link', type: 'collection', handle: 'kids-basics', label: 'Basics', wrapper: 'li' %}
+          {% render 'ofst-safe-link', type: 'collection', handle: 'kids-sleepwear', label: 'Sleepwear', wrapper: 'li' %}
+          {% render 'ofst-safe-link', type: 'collection', handle: 'organic-line', label: 'Organic Line', wrapper: 'li' %}
+          {% render 'ofst-safe-link', type: 'collection', handle: 'kids-gift-sets', label: 'Gift Sets', wrapper: 'li' %}
+          {% assign _kids = collections['kids-clothing'] %}
+          {% if _kids.handle != blank %}<li class="ofst-mega__all"><a href="{{ _kids.url }}">All Clothing →</a></li>{% endif %}
         </ul>
       </div>
 
@@ -105,11 +113,12 @@
       <div class="ofst-mega__col">
         <h4 class="ofst-mega__col-title">For Adults</h4>
         <ul class="ofst-mega__list" role="list">
-          <li><a href="/collections/phone-book-covers">Phone Book Covers</a></li>
-          <li><a href="/collections/parent-journals">Parent Journals</a></li>
-          <li><a href="/collections/coffee-mugs">Coffee &amp; Mugs</a></li>
-          <li><a href="/collections/gift-bundles">Gift Bundles</a></li>
-          <li class="ofst-mega__all"><a href="/collections/for-adults">All For Adults →</a></li>
+          {% render 'ofst-safe-link', type: 'collection', handle: 'phone-book-covers', label: 'Phone Book Covers', wrapper: 'li' %}
+          {% render 'ofst-safe-link', type: 'collection', handle: 'parent-journals', label: 'Parent Journals', wrapper: 'li' %}
+          {% render 'ofst-safe-link', type: 'collection', handle: 'coffee-mugs', label: 'Coffee & Mugs', wrapper: 'li' %}
+          {% render 'ofst-safe-link', type: 'collection', handle: 'gift-bundles', label: 'Gift Bundles', wrapper: 'li' %}
+          {% assign _adult = collections['for-adults'] %}
+          {% if _adult.handle != blank %}<li class="ofst-mega__all"><a href="{{ _adult.url }}">All For Adults →</a></li>{% endif %}
         </ul>
       </div>
 
@@ -125,7 +134,10 @@
           <span class="ofst-chip ofst-chip-yellow" style="font-size:11px">{{ section.settings.mega_feature_badge | default: 'Just landed' }}</span>
           <h5 class="ofst-mega__feature-title">{{ section.settings.mega_feature_title | default: 'The Magnetic Gear Wall Starter' | escape }}</h5>
           <p class="ofst-mega__feature-sub">{{ section.settings.mega_feature_sub | default: 'Our #1 toy, now with 8 extra gears.' | escape }}</p>
-          <a href="{{ section.settings.mega_feature_url | default: '/products/magnetic-gear-wall-starter' }}" class="ofst-mega__feature-link">
+          {% assign _feature_url = section.settings.mega_feature_url %}
+          {% if _feature_url == blank %}{% assign _feature_url = collections['magnetic-wooden-stem-toys'].url %}{% endif %}
+          {% if _feature_url == blank %}{% assign _feature_url = routes.all_products_collection_url %}{% endif %}
+          <a href="{{ _feature_url }}" class="ofst-mega__feature-link">
             Shop it
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
@@ -143,7 +155,8 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ofst-teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
         30-day no-questions returns
       </span>
-      <a href="/collections/sale" class="ofst-mega__trust-sale">Shop the Sale →</a>
+      {% assign _sale = collections['sale'] %}
+      {% if _sale.handle != blank %}<a href="{{ _sale.url }}" class="ofst-mega__trust-sale">Shop the Sale →</a>{% endif %}
     </div>
   </div>
 
@@ -154,12 +167,12 @@
     </button>
     <nav>
       <ul class="ofst-mobile-nav__list" role="list">
-        <li><a href="/collections/magnetic-wooden-stem-toys">Wooden STEM Toys</a></li>
-        <li><a href="/collections/kids-clothing">Kids Clothing</a></li>
-        <li><a href="/collections/for-adults">For Adults</a></li>
-        <li><a href="{{ section.settings.activities_url | default: '/pages/activities-together' }}">Activities Together</a></li>
-        <li><a href="{{ section.settings.resources_url | default: '/pages/free-resources' }}">Free Resources</a></li>
-        <li><a href="{{ section.settings.story_url | default: '/pages/our-story' }}">Our Story</a></li>
+        {% render 'ofst-safe-link', type: 'collection', handle: 'magnetic-wooden-stem-toys', label: 'Wooden STEM Toys', wrapper: 'li' %}
+        {% render 'ofst-safe-link', type: 'collection', handle: 'kids-clothing', label: 'Kids Clothing', wrapper: 'li' %}
+        {% render 'ofst-safe-link', type: 'collection', handle: 'for-adults', label: 'For Adults', wrapper: 'li' %}
+        {% if section.settings.activities_url != blank %}<li><a href="{{ section.settings.activities_url }}">Activities Together</a></li>{% else %}{% render 'ofst-safe-link', type: 'page', handle: 'activities-together', label: 'Activities Together', wrapper: 'li' %}{% endif %}
+        {% if section.settings.resources_url != blank %}<li><a href="{{ section.settings.resources_url }}">Free Resources</a></li>{% else %}{% render 'ofst-safe-link', type: 'page', handle: 'free-resources', label: 'Free Resources', wrapper: 'li' %}{% endif %}
+        {% if section.settings.story_url != blank %}<li><a href="{{ section.settings.story_url }}">Our Story</a></li>{% else %}{% render 'ofst-safe-link', type: 'page', handle: 'our-story', label: 'Our Story', wrapper: 'li' %}{% endif %}
       </ul>
     </nav>
   </div>
@@ -488,18 +501,21 @@
 
 {% schema %}
 {
-  "name": "OFST Header",
+  "name": "Header",
   "settings": [
     { "type": "image_picker", "id": "logo",               "label": "Logo image (overrides wordmark)" },
     { "type": "url",          "id": "activities_url",     "label": "Activities Together URL" },
     { "type": "url",          "id": "resources_url",      "label": "Free Resources URL" },
     { "type": "url",          "id": "story_url",          "label": "Our Story URL" },
-    { "type": "header",       "label": "Mega menu featured tile" },
+    { "type": "header",       "content": "Mega menu featured tile" },
     { "type": "image_picker", "id": "mega_feature_image", "label": "Featured image" },
     { "type": "text",         "id": "mega_feature_badge", "label": "Badge",          "default": "Just landed" },
     { "type": "text",         "id": "mega_feature_title", "label": "Title",           "default": "The Magnetic Gear Wall Starter" },
     { "type": "text",         "id": "mega_feature_sub",   "label": "Subtitle",        "default": "Our #1 toy, now with 8 extra gears." },
     { "type": "url",          "id": "mega_feature_url",   "label": "Link" }
-  ]
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  }
 }
 {% endschema %}

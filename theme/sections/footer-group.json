@@ -1,0 +1,13 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "tagline": "Real first steps. No judgment. Just hustle together. Magnetic wooden STEM toys and thoughtful parent tools, made for the messy, beautiful middle."
+      }
+    }
+  },
+  "order": ["footer"]
+}

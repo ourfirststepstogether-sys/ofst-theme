@@ -1,6 +1,5 @@
 {% comment %} OFST Activities Together content hub {% endcomment %}
 
-<link rel="stylesheet" href="{{ 'ofst-theme.css' | asset_url }}">
 
 {% comment %} Page header {% endcomment %}
 <section id="ofst-acthub-{{ section.id }}" class="ofst-section ofst-acthub">
@@ -258,7 +257,7 @@
     { "type": "textarea",     "id": "body_text",            "label": "Body copy",         "default": "Short videos, bedtime stories, play guides, and honest notes from the middle of it. No pretending it's easy." },
     { "type": "blog",         "id": "blog",                 "label": "Blog" },
     { "type": "range",        "id": "articles_per_page",    "label": "Articles per page", "min": 3, "max": 12, "step": 3, "default": 6 },
-    { "type": "header",       "label": "Featured video" },
+    { "type": "header",       "content": "Featured video" },
     { "type": "image_picker", "id": "feature_image",        "label": "Feature image" },
     { "type": "url",          "id": "feature_video_url",    "label": "Video link" },
     { "type": "text",         "id": "feature_tag",          "label": "Tag",               "default": "Video · 4 min" },
