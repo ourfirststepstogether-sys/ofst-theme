@@ -8,17 +8,92 @@
         "body_text": "Printables, checklists, and scripts we made because we needed them ourselves. Steal them, print them, scribble on them. Pass them along."
       },
       "blocks": {
-        "res-1": { "type": "resource", "settings": { "title": "The rainy-day activity deck", "description": "30 printable cards for screen-free afternoons", "pages": "30 cards · PDF", "tone": "coral" } },
-        "res-2": { "type": "resource", "settings": { "title": "Meltdown playbook", "description": "A single laminated sheet that lives on your fridge", "pages": "1 page · PDF", "tone": "yellow" } },
-        "res-3": { "type": "resource", "settings": { "title": "Toddler-led gear wall guide", "description": "12 ways to play, by developmental stage", "pages": "14 pages · PDF", "tone": "teal" } },
-        "res-4": { "type": "resource", "settings": { "title": "Bedtime routine worksheet", "description": "Fill-in for your family's actual bedtime", "pages": "2 pages · PDF", "tone": "warm" } },
-        "res-5": { "type": "resource", "settings": { "title": "The honest chore chart", "description": "Ages 2–8, with 'we tried & it didn't work' notes", "pages": "4 pages · PDF", "tone": "coral" } },
-        "res-6": { "type": "resource", "settings": { "title": "Gift-ask script for grandparents", "description": "What to ask for (and how to ask nicely)", "pages": "1 page · PDF", "tone": "yellow" } },
-        "res-7": { "type": "resource", "settings": { "title": "Pediatrician visit prep sheet", "description": "Questions, notes, and a coloring page", "pages": "3 pages · PDF", "tone": "teal" } },
-        "res-8": { "type": "resource", "settings": { "title": "Sunday reset checklist", "description": "The list we actually use on Sundays", "pages": "1 page · PDF", "tone": "warm" } }
+        "res-1": {
+          "type": "resource",
+          "settings": {
+            "title": "The rainy-day activity deck",
+            "description": "30 printable cards for screen-free afternoons",
+            "pages": "30 cards · PDF",
+            "tone": "coral"
+          }
+        },
+        "res-2": {
+          "type": "resource",
+          "settings": {
+            "title": "Meltdown playbook",
+            "description": "A single laminated sheet that lives on your fridge",
+            "pages": "1 page · PDF",
+            "tone": "yellow"
+          }
+        },
+        "res-3": {
+          "type": "resource",
+          "settings": {
+            "title": "Toddler-led gear wall guide",
+            "description": "12 ways to play, by developmental stage",
+            "pages": "14 pages · PDF",
+            "tone": "teal"
+          }
+        },
+        "res-4": {
+          "type": "resource",
+          "settings": {
+            "title": "Bedtime routine worksheet",
+            "description": "Fill-in for your family's actual bedtime",
+            "pages": "2 pages · PDF",
+            "tone": "warm"
+          }
+        },
+        "res-5": {
+          "type": "resource",
+          "settings": {
+            "title": "The honest chore chart",
+            "description": "Ages 2–8, with 'we tried & it didn't work' notes",
+            "pages": "4 pages · PDF",
+            "tone": "coral"
+          }
+        },
+        "res-6": {
+          "type": "resource",
+          "settings": {
+            "title": "Gift-ask script for grandparents",
+            "description": "What to ask for (and how to ask nicely)",
+            "pages": "1 page · PDF",
+            "tone": "yellow"
+          }
+        },
+        "res-7": {
+          "type": "resource",
+          "settings": {
+            "title": "Pediatrician visit prep sheet",
+            "description": "Questions, notes, and a coloring page",
+            "pages": "3 pages · PDF",
+            "tone": "teal"
+          }
+        },
+        "res-8": {
+          "type": "resource",
+          "settings": {
+            "title": "Sunday reset checklist",
+            "description": "The list we actually use on Sundays",
+            "pages": "1 page · PDF",
+            "tone": "warm"
+          }
+        }
       },
-      "blocks_order": ["res-1","res-2","res-3","res-4","res-5","res-6","res-7","res-8"]
+      "blocks_order": [
+        "res-1",
+        "res-2",
+        "res-3",
+        "res-4",
+        "res-5",
+        "res-6",
+        "res-7",
+        "res-8"
+      ]
     }
   },
-  "order": ["resources"]
+  "order": [
+    "resources"
+  ]
 }

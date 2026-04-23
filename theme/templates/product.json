@@ -19,5 +19,9 @@
       }
     }
   },
-  "order": ["product-main", "product-tabs", "product-related"]
+  "order": [
+    "product-main",
+    "product-tabs",
+    "product-related"
+  ]
 }

@@ -7,5 +7,7 @@
       }
     }
   },
-  "order": ["policies"]
+  "order": [
+    "policies"
+  ]
 }

@@ -11,5 +11,7 @@
       }
     }
   },
-  "order": ["header"]
+  "order": [
+    "header"
+  ]
 }

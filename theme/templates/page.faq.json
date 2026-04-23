@@ -11,17 +11,76 @@
         "email_wholesale": "wholesale@ourfirststeps.com"
       },
       "blocks": {
-        "faq-1": { "type": "faq", "settings": { "question": "What age are your toys designed for?", "answer": "Most of our wooden gear walls and STEM sets are designed for ages 18 months through 6 years. Each product page lists the recommended age range and developmental stage so you can find the right fit." } },
-        "faq-2": { "type": "faq", "settings": { "question": "Are your products safe for toddlers?", "answer": "Yes. Every OFST product is made from sustainably sourced hardwood with non-toxic, water-based finishes. All products meet or exceed ASTM F963 and EN71 toy safety standards. We test every new design before it ships." } },
-        "faq-3": { "type": "faq", "settings": { "question": "How long does shipping take?", "answer": "We ship from our Michigan workshop. Standard shipping is 3–7 business days. Expedited options are available at checkout. Custom and engraved orders add 2–4 business days." } },
-        "faq-4": { "type": "faq", "settings": { "question": "What's your return policy?", "answer": "We accept returns within 30 days of delivery for unused items in original packaging. If something arrives damaged, just send us a photo and we'll sort it out right away — no shipping the item back." } },
-        "faq-5": { "type": "faq", "settings": { "question": "Can I get a gear wall customized?", "answer": "Yes! We offer name engraving and custom color combinations on select gear walls. Choose the 'Customize' option on the product page, or email us directly for larger custom orders." } },
-        "faq-6": { "type": "faq", "settings": { "question": "Do you offer wholesale or bulk pricing?", "answer": "We work with small boutiques, children's museums, and schools. Email wholesale@ourfirststeps.com with your business info and we'll get back to you within 2 business days." } },
-        "faq-7": { "type": "faq", "settings": { "question": "What's the difference between your gear wall sizes?", "answer": "The Mini (12\"×12\") fits on a door or small wall — great for apartments. The Standard (18\"×24\") is our most popular and fits 6–8 gears. The Studio (24\"×36\") is for serious gear enthusiasts and fills a full wall section." } },
-        "faq-8": { "type": "faq", "settings": { "question": "Are the resources really free?", "answer": "Yes, completely free — no email required for most of them. We made these because we needed them and figured other parents might too. A few have an optional email signup if you want updates when we add new ones." } }
+        "faq-1": {
+          "type": "faq",
+          "settings": {
+            "question": "What age are your toys designed for?",
+            "answer": "Most of our wooden gear walls and STEM sets are designed for ages 18 months through 6 years. Each product page lists the recommended age range and developmental stage so you can find the right fit."
+          }
+        },
+        "faq-2": {
+          "type": "faq",
+          "settings": {
+            "question": "Are your products safe for toddlers?",
+            "answer": "Yes. Every OFST product is made from sustainably sourced hardwood with non-toxic, water-based finishes. All products meet or exceed ASTM F963 and EN71 toy safety standards. We test every new design before it ships."
+          }
+        },
+        "faq-3": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "We ship from our Michigan workshop. Standard shipping is 3–7 business days. Expedited options are available at checkout. Custom and engraved orders add 2–4 business days."
+          }
+        },
+        "faq-4": {
+          "type": "faq",
+          "settings": {
+            "question": "What's your return policy?",
+            "answer": "We accept returns within 30 days of delivery for unused items in original packaging. If something arrives damaged, just send us a photo and we'll sort it out right away — no shipping the item back."
+          }
+        },
+        "faq-5": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I get a gear wall customized?",
+            "answer": "Yes! We offer name engraving and custom color combinations on select gear walls. Choose the 'Customize' option on the product page, or email us directly for larger custom orders."
+          }
+        },
+        "faq-6": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer wholesale or bulk pricing?",
+            "answer": "We work with small boutiques, children's museums, and schools. Email wholesale@ourfirststeps.com with your business info and we'll get back to you within 2 business days."
+          }
+        },
+        "faq-7": {
+          "type": "faq",
+          "settings": {
+            "question": "What's the difference between your gear wall sizes?",
+            "answer": "The Mini (12\"×12\") fits on a door or small wall — great for apartments. The Standard (18\"×24\") is our most popular and fits 6–8 gears. The Studio (24\"×36\") is for serious gear enthusiasts and fills a full wall section."
+          }
+        },
+        "faq-8": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the resources really free?",
+            "answer": "Yes, completely free — no email required for most of them. We made these because we needed them and figured other parents might too. A few have an optional email signup if you want updates when we add new ones."
+          }
+        }
       },
-      "blocks_order": ["faq-1","faq-2","faq-3","faq-4","faq-5","faq-6","faq-7","faq-8"]
+      "blocks_order": [
+        "faq-1",
+        "faq-2",
+        "faq-3",
+        "faq-4",
+        "faq-5",
+        "faq-6",
+        "faq-7",
+        "faq-8"
+      ]
     }
   },
-  "order": ["faq-contact"]
+  "order": [
+    "faq-contact"
+  ]
 }
