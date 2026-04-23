@@ -9,9 +9,7 @@
         "accent_word": "together",
         "body_text": "Magnetic wooden STEM toys, bedtime stories, and honest play ideas from parents figuring this out right alongside you. One real moment at a time.",
         "cta_primary_text": "Shop magnetic toys",
-        "cta_primary_url": "",
         "cta_secondary_text": "Explore activities",
-        "cta_secondary_url": "",
         "testimonial_quote": "\"My two-year-old played with the gear wall for 45 minutes. 45 minutes. Unheard of.\"",
         "testimonial_author": "Jamie, dad of two",
         "show_secondary_placeholder": true
@@ -32,8 +30,7 @@
         "body_text": "Short videos, bedtime stories, and honest play guides \u2014 made for the days the toddler is feral and you're out of ideas.",
         "feature_tag": "Video \u00b7 3 min",
         "feature_title": "Setting up the gear wall (without losing your mind)",
-        "feature_subtitle": "Watch Maya walk through it in real time \u2014 toddler interruptions included.",
-        "feature_url": ""
+        "feature_subtitle": "Watch Maya walk through it in real time \u2014 toddler interruptions included."
       },
       "blocks": {
         "card-1": {
@@ -82,8 +79,7 @@
           "settings": {
             "title": "Magnetic Wooden STEM Toys",
             "subtitle": "14 pieces \u00b7 the hero collection",
-            "tone": "teal",
-            "collection_url": ""
+            "tone": "teal"
           }
         },
         "cat-2": {
@@ -91,8 +87,7 @@
           "settings": {
             "title": "Phone Book Covers",
             "subtitle": "A parent tool, in disguise",
-            "tone": "yellow",
-            "collection_url": ""
+            "tone": "yellow"
           }
         },
         "cat-3": {
@@ -100,8 +95,7 @@
           "settings": {
             "title": "Kids Clothing",
             "subtitle": "Soft, honest, made-to-last",
-            "tone": "coral",
-            "collection_url": ""
+            "tone": "coral"
           }
         }
       },
@@ -155,8 +149,7 @@
         "badge_text": "The unusual one \ud83d\udcd3",
         "heading": "A phone book cover, for the way parents actually use phones.",
         "body_text": "Yes, a phone book cover. Hand-bound, refillable, keeps little hands busy during the pediatrician waiting room. A strange little thing we're weirdly proud of.",
-        "cta_text": "Discover this special parent tool",
-        "cta_url": ""
+        "cta_text": "Discover this special parent tool"
       }
     },
     "newsletter": {
